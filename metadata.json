@@ -1,0 +1,6 @@
+{
+  "name": "احجزلي – E7gezly by AdStartup",
+  "description": "خدمة حجز مواعيد الأطباء في القاهرة في دقيقة - احجزلي من AdStartup",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

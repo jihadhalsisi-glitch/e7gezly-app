@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عقد اشتراك — احجزلي E7gezly by AdStartup</title>
+  <meta name="description" content="عقد اشتراك العيادات والأطباء في خدمة احجزلي E7gezly by AdStartup" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-canvas: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-hairline: #e2e8f0;
+      --indigo-dark: #312e81;
+      --indigo-primary: #4338ca;
+      --indigo-soft: #eef2ff;
+      --indigo-border: #c7d2fe;
+      --lime: #a3e635;
+      --lime-soft: #f7fee7;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --danger-border: #fecaca;
+      --radius-card: 18px;
+      --radius-control: 12px;
+      --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(49, 46, 129, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select {
+      font-family: inherit;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Top Bar */
+    .topbar {
+      background-color: var(--indigo-dark);
+      color: #ffffff;
+      border-bottom: 3px solid var(--lime);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .topbar-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background-color: var(--indigo-primary);
+      border: 1px solid rgba(163, 230, 53, 0.45);
+      color: var(--lime);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 0.8rem;
+      color: var(--lime);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--indigo-dark) 0%, var(--indigo-primary) 100%);
+      color: #ffffff;
+      padding: 28px 16px 32px;
+    }
+
+    .hero-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.25rem, 3vw, 1.85rem);
+      font-weight: 700;
+      line-height: 1.35;
+      text-wrap: balance;
+    }
+
+    .hero-title .accent {
+      color: var(--lime);
+    }
+
+    .hero-desc {
+      font-size: 0.96rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 68ch;
+    }
+
+    /* Main Content */
+    .main-wrap {
+      flex: 1;
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px 16px 56px;
+    }
+
+    .section-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--indigo-dark);
+      margin-bottom: 14px;
+    }
+
+    /* Numbered Terms Cards */
+    .terms-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    @media (min-width: 760px) {
+      .terms-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .term-card-full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-card);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .term-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .term-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background-color: var(--indigo-dark);
+      color: var(--lime);
+      font-size: 0.92rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+      margin-top: 2px;
+    }
+
+    .term-text {
+      font-size: 0.94rem;
+      color: var(--text-primary);
+      line-height: 1.72;
+    }
+
+    /* Form Card */
+    .form-card {
+      border-color: var(--indigo-border);
+      padding: 24px 20px;
+    }
+
+    .form-header {
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: 18px;
+    }
+
+    .form-header h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--indigo-dark);
+    }
+
+    .form-header p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 640px) {
+      .form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .req-mark {
+      color: var(--indigo-primary);
+      font-weight: 700;
+    }
+
+    .input-ctrl, .select-ctrl {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .input-ctrl:focus, .select-ctrl:focus {
+      outline: none;
+      border-color: var(--indigo-primary);
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.15);
+    }
+
+    .input-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .agree-box {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: var(--radius-control);
+      background-color: var(--indigo-soft);
+      border: 1px solid var(--indigo-border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .agree-checkbox {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--indigo-primary);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .agree-text {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--indigo-dark);
+    }
+
+    .state-error {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: var(--radius-control);
+      background-color: var(--danger-soft);
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 18px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius-control);
+      background: linear-gradient(135deg, var(--indigo-dark) 0%, var(--indigo-primary) 100%);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(49, 46, 129, 0.25);
+      transition: opacity 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      opacity: 0.94;
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-primary::after {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 3px;
+      background-color: var(--lime);
+      flex-shrink: 0;
+    }
+
+    /* Success Screen */
+    .success-card {
+      max-width: 620px;
+      margin: 24px auto 0;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--indigo-border);
+      border-radius: var(--radius-card);
+      padding: 32px 24px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background-color: var(--indigo-dark);
+      color: var(--lime);
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--indigo-dark);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .success-summary {
+      text-align: right;
+      border-top: 1px solid var(--border-hairline);
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.92rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .summary-key {
+      color: var(--text-muted);
+    }
+
+    .summary-val {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      padding: 16px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </div>
+        <span class="brand-title">احجزلي E7gezly</span>
+      </div>
+      <span class="brand-sub">by AdStartup</span>
+    </div>
+  </header>
+
+  <section class="hero-banner">
+    <div class="hero-inner">
+      <h1 class="hero-title">عقد اشتراك — <span class="accent">احجزلي E7gezly by AdStartup</span></h1>
+      <p class="hero-desc">يرجى قراءة بنود الاشتراك والخدمة التالية بعناية، ثم ملء بيانات العيادة وتسجيل موافقتك الإلكترونية بالأسفل لبدء التفعيل.</p>
+    </div>
+  </section>
+
+  <main class="main-wrap">
+    <div id="agreement-flow">
+      <h2 class="section-title">بنود العقد</h2>
+
+      <section class="terms-grid" aria-label="بنود عقد الاشتراك">
+        <article class="card term-card">
+          <span class="term-num">1</span>
+          <p class="term-text">الخدمة: إعلانات ممولة على Google و ChatGPT حسب التخصص والمنطقة + إدارة الحجوزات: احجزلي يؤكد الحجز مع المريض ويرسله على واتساب العيادة.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">2</span>
+          <p class="term-text">الرسوم: باقة إعلانية شهرية مقدمًا + عمولة 10% من قيمة الكشف عن كل حجز مؤكد، تُحاسب أسبوعيًا.</p>
+        </article>
+
+        <article class="card term-card term-card-full">
+          <span class="term-num">3</span>
+          <p class="term-text">الباقات: 10–15 حجز مؤكد = 5,000 ج.م | 20–30 حجز = 9,000 ج.م (الحد الأقصى للدكتور الواحد) | 40–60 حجز = 17,000 ج.م (للمراكز، 3 دكاترة أو أكثر).</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">4</span>
+          <p class="term-text">الدفع: InstaPay فقط مقدمًا، ولا يوجد استرداد نقدي للباقات.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">5</span>
+          <p class="term-text">ضمان العدد: لو الشهر انتهى بعدد حجوزات مؤكدة أقل من نطاق الباقة، العجز يترحّل مجانًا للشهر التالي.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">6</span>
+          <p class="term-text">المريض يدفع الكشف في العيادة مباشرة، واحجزلي لا يحصّل أي مبالغ من المرضى.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">7</span>
+          <p class="term-text">توزيع الحجوزات على أقرب ميعاد متاح، واسم الدكتور يظهر في الإعلانات.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">8</span>
+          <p class="term-text">حد أقصى 15 عيادة لكل تخصص في كل منطقة.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">9</span>
+          <p class="term-text">بدون حصرية وبدون التزام طويل: من حق العيادة الاستمرار على تطبيقات الحجز الأخرى وإيقاف التجديد أي شهر.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">10</span>
+          <p class="term-text">تقرير أسبوعي بالحجوزات وتسوية العمولة أسبوعيًا.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">11</span>
+          <p class="term-text">التزامات العيادة: مواعيد عمل صحيحة، استقبال الحجوزات على الواتساب وتأكيدها، والإبلاغ الصحيح عن حضور المرضى (ويحق لاحجزلي التحقق مع المريض).</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">12</span>
+          <p class="term-text">تفعيل الإعلانات خلال أسبوع تقريبًا من الدفع واستلام البيانات (نموذج التعريف + صور العيادة + صورة الدكتور + كارنيه النقابة).</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">13</span>
+          <p class="term-text">احجزلي وسيط تسويق وحجز وليس مقدم خدمة طبية، والمسؤولية الطبية كاملة على الطبيب.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">14</span>
+          <p class="term-text">بيانات المرضى تُستخدم للحجز فقط.</p>
+        </article>
+
+        <article class="card term-card term-card-full">
+          <span class="term-num">15</span>
+          <p class="term-text">الموافقة الإلكترونية على هذه الصفحة تُسجّل بالتاريخ والوقت وتُعد قبولًا بالشروط.</p>
+        </article>
+      </section>
+
+      <!-- Agreement Form Card -->
+      <section class="card form-card" aria-labelledby="form-heading">
+        <div class="form-header">
+          <h2 id="form-heading">نموذج الموافقة والاشتراك</h2>
+          <p>سجّل بياناتك واختر الباقة المناسبة للموافقة على العقد.</p>
+        </div>
+
+        <form id="agreement-form" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="doctor-name">اسم الدكتور <span class="req-mark">*</span></label>
+              <input id="doctor-name" type="text" class="input-ctrl" placeholder="مثال: د. أحمد محمود" required />
+            </div>
+
+            <div class="field">
+              <label for="clinic-name">اسم العيادة/المركز</label>
+              <input id="clinic-name" type="text" class="input-ctrl" placeholder="مثال: عيادة النور التخصصية" />
+            </div>
+
+            <div class="field">
+              <label for="phone">رقم الموبايل <span class="req-mark">*</span></label>
+              <input
+                id="phone"
+                type="tel"
+                dir="ltr"
+                inputmode="numeric"
+                maxlength="11"
+                class="input-ctrl tabular-nums"
+                placeholder="01xxxxxxxxx"
+                required
+              />
+              <span class="input-hint">رقم موبايل مصري يبدأ بـ 01 ومكون من 11 رقم</span>
+            </div>
+
+            <div class="field">
+              <label for="specialty">التخصص</label>
+              <input id="specialty" type="text" class="input-ctrl" placeholder="مثال: باطنة / عظام / جلدية" />
+            </div>
+
+            <div class="field">
+              <label for="area">المنطقة</label>
+              <input id="area" type="text" class="input-ctrl" placeholder="مثال: مدينة نصر / المهندسين" />
+            </div>
+
+            <div class="field">
+              <label for="package">الباقة <span class="req-mark">*</span></label>
+              <select id="package" class="select-ctrl" required>
+                <option value="">اختر الباقة...</option>
+                <option value="5000">10–15 حجز مؤكد = 5,000 ج.م</option>
+                <option value="9000">20–30 حجز = 9,000 ج.م (الحد الأقصى للدكتور الواحد)</option>
+                <option value="17000">40–60 حجز = 17,000 ج.م (للمراكز، 3 دكاترة أو أكثر)</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="agree-box" for="agreed-checkbox">
+            <input id="agreed-checkbox" type="checkbox" class="agree-checkbox" required />
+            <span class="agree-text">قرأت الشروط وأوافق عليها</span>
+          </label>
+
+          <div id="form-error" class="state-error hidden" role="alert"></div>
+
+          <button id="submit-btn" type="submit" class="btn-primary">
+            سجّل موافقتي
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <!-- Success Screen -->
+    <section id="agreement-success" class="success-card hidden" aria-live="polite">
+      <div class="success-icon" aria-hidden="true">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 class="success-heading">تم تسجيل موافقتك ✅ هنتواصل معاك لإكمال التفعيل</h2>
+      <div class="success-summary">
+        <div class="summary-row">
+          <span class="summary-key">اسم الدكتور</span>
+          <span id="sum-doctor" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">العيادة/المركز</span>
+          <span id="sum-clinic" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">الموبايل</span>
+          <span id="sum-phone" class="summary-val tabular-nums" dir="ltr"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">التخصص والمنطقة</span>
+          <span id="sum-spec-area" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">الباقة</span>
+          <span id="sum-package" class="summary-val"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>احجزلي E7gezly by AdStartup</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function () {
+      const SUPABASE_URL = 'https://nubyqdyjtradjndauzkx.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_tyYjOcfnXLFvc4c96KoTvw_ipNGgavy';
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      const PACKAGE_LABELS = {
+        '5000': '10–15 حجز مؤكد = 5,000 ج.م',
+        '9000': '20–30 حجز = 9,000 ج.م (الحد الأقصى للدكتور الواحد)',
+        '17000': '40–60 حجز = 17,000 ج.م (للمراكز، 3 دكاترة أو أكثر)'
+      };
+
+      const el = {
+        flow: document.getElementById('agreement-flow'),
+        success: document.getElementById('agreement-success'),
+        form: document.getElementById('agreement-form'),
+        doctorName: document.getElementById('doctor-name'),
+        clinicName: document.getElementById('clinic-name'),
+        phone: document.getElementById('phone'),
+        specialty: document.getElementById('specialty'),
+        area: document.getElementById('area'),
+        packageSelect: document.getElementById('package'),
+        agreedCheckbox: document.getElementById('agreed-checkbox'),
+        formError: document.getElementById('form-error'),
+        submitBtn: document.getElementById('submit-btn'),
+        sumDoctor: document.getElementById('sum-doctor'),
+        sumClinic: document.getElementById('sum-clinic'),
+        sumPhone: document.getElementById('sum-phone'),
+        sumSpecArea: document.getElementById('sum-spec-area'),
+        sumPackage: document.getElementById('sum-package')
+      };
+
+      function normalizeDigits(str) {
+        const arabicNums = '٠١٢٣٤٥٦٧٨٩';
+        const persianNums = '۰۱۲۳۴۵۶۷۸۹';
+        return String(str || '')
+          .replace(/[٠-٩]/g, d => String(arabicNums.indexOf(d)))
+          .replace(/[۰-۹]/g, d => String(persianNums.indexOf(d)))
+          .replace(/[\s\-()]/g, '');
+      }
+
+      function showError(msg) {
+        if (!msg) {
+          el.formError.textContent = '';
+          el.formError.classList.add('hidden');
+        } else {
+          el.formError.textContent = msg;
+          el.formError.classList.remove('hidden');
+        }
+      }
+
+      el.form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        showError('');
+
+        const doctorName = el.doctorName.value.trim();
+        const clinicName = el.clinicName.value.trim();
+        const phone = normalizeDigits(el.phone.value);
+        el.phone.value = phone;
+        const specialty = el.specialty.value.trim();
+        const area = el.area.value.trim();
+        const pkg = el.packageSelect.value;
+        const agreed = el.agreedCheckbox.checked;
+
+        if (!doctorName || doctorName.length < 2) {
+          showError('من فضلك اكتب اسم الدكتور.');
+          el.doctorName.focus();
+          return;
+        }
+
+        if (!/^01[0-9]{9}$/.test(phone)) {
+          showError('رقم الموبايل لازم يكون رقم مصري صحيح يبدأ بـ 01 ومكون من 11 رقم.');
+          el.phone.focus();
+          return;
+        }
+
+        if (!pkg) {
+          showError('من فضلك اختار الباقة.');
+          el.packageSelect.focus();
+          return;
+        }
+
+        if (!agreed) {
+          showError('لازم توافق على الشروط الأول بتفعيل مربع "قرأت الشروط وأوافق عليها".');
+          el.agreedCheckbox.focus();
+          return;
+        }
+
+        el.submitBtn.disabled = true;
+        el.submitBtn.textContent = 'جاري تسجيل الموافقة...';
+
+        const { error } = await sb.from('agreements').insert({
+          doctor_name: doctorName,
+          clinic_name: clinicName,
+          phone: phone,
+          specialty: specialty,
+          area: area,
+          package: pkg
+        });
+
+        el.submitBtn.disabled = false;
+        el.submitBtn.textContent = 'سجّل موافقتي';
+
+        if (error) {
+          showError('حصلت مشكلة أثناء تسجيل الموافقة، تأكد من الاتصال وجرب تاني.');
+          return;
+        }
+
+        el.sumDoctor.textContent = doctorName;
+        el.sumClinic.textContent = clinicName || '—';
+        el.sumPhone.textContent = phone;
+        el.sumSpecArea.textContent = (specialty || '—') + ' · ' + (area || '—');
+        el.sumPackage.textContent = PACKAGE_LABELS[pkg] || pkg;
+
+        el.flow.classList.add('hidden');
+        el.success.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>

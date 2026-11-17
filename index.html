@@ -1,0 +1,1281 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>احجزلي – E7gezly by AdStartup | احجز دكتورك في دقيقة</title>
+  <meta name="description" content="احجزلي — خدمة حجز مواعيد الأطباء في القاهرة في دقيقة واحدة. اختار التخصص والمنطقة والميعاد المناسب." />
+  <meta property="og:title" content="احجزلي – E7gezly by AdStartup" />
+  <meta property="og:description" content="احجز دكتورك في دقيقة في القاهرة — اختار التخصص والمنطقة واليوم والميعاد بسهولة." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-canvas: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-hairline: #e2e8f0;
+      --teal: #0d9488;
+      --teal-hover: #0f766e;
+      --teal-soft: #f0fdfa;
+      --teal-border: #99f6e4;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --danger-border: #fecaca;
+      --success: #0d9488;
+      --radius-card: 18px;
+      --radius-control: 12px;
+      --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select {
+      font-family: inherit;
+    }
+
+    /* Header */
+    .topbar {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-hairline);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .topbar-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background-color: var(--teal);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .hero-banner {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 24px 16px;
+    }
+
+    .hero-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .hero-title span {
+      color: var(--teal);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 60ch;
+    }
+
+    /* Main layout */
+    .main-wrap {
+      flex: 1;
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (min-width: 900px) {
+      .booking-grid {
+        grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.95fr);
+      }
+    }
+
+    .steps-column {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card.is-locked {
+      opacity: 0.6;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .step-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      background-color: var(--bg-subtle);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .card.is-active .step-num {
+      background-color: var(--teal);
+      color: #ffffff;
+    }
+
+    .card.is-done .step-num {
+      background-color: var(--teal-soft);
+      color: var(--teal);
+      border: 1px solid var(--teal-border);
+    }
+
+    .step-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .step-selected-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--teal);
+    }
+
+    /* Chips Grid */
+    .chips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+      gap: 10px;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+      gap: 10px;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .chip-btn {
+      min-height: 46px;
+      padding: 10px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 2px;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+    }
+
+    .chip-btn:hover:not(:disabled) {
+      border-color: var(--teal);
+      background-color: var(--teal-soft);
+    }
+
+    .chip-btn:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    .chip-btn:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 2px;
+    }
+
+    .chip-btn.selected {
+      background-color: var(--teal);
+      border-color: var(--teal);
+      color: #ffffff;
+    }
+
+    .chip-btn .chip-sub {
+      font-size: 0.76rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .chip-btn.selected .chip-sub {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .slot-chip {
+      font-variant-numeric: tabular-nums;
+      min-height: 44px;
+    }
+
+    /* Form */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .input-ctrl {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.96rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .input-ctrl:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .input-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .btn-primary {
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius-control);
+      background-color: var(--teal);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--teal-hover);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      min-height: 44px;
+      padding: 10px 18px;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-control);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-subtle);
+      border-color: #cbd5e1;
+    }
+
+    /* Summary Card */
+    .summary-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 900px) {
+      .summary-card {
+        position: sticky;
+        top: 82px;
+      }
+    }
+
+    .summary-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: 14px;
+    }
+
+    .summary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.9rem;
+    }
+
+    .summary-key {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .summary-val {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .summary-val.is-empty {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .summary-note {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-hairline);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* Feedback / Empty / Loading */
+    .state-box {
+      padding: 16px;
+      border-radius: var(--radius-control);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .state-muted {
+      background-color: var(--bg-subtle);
+      color: var(--text-secondary);
+    }
+
+    .state-empty {
+      background-color: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      font-weight: 600;
+    }
+
+    .state-error {
+      background-color: var(--danger-soft);
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+      font-weight: 600;
+      text-align: right;
+      margin-top: 12px;
+    }
+
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .skeleton-item {
+      height: 46px;
+      border-radius: var(--radius-control);
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite linear;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skeleton-item { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* Success Panel */
+    .success-card {
+      max-width: 620px;
+      margin: 12px auto 0;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--teal-border);
+      border-radius: var(--radius-card);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background-color: var(--teal-soft);
+      color: var(--teal);
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .booking-id-box {
+      display: inline-block;
+      margin: 8px 0 20px;
+      padding: 8px 18px;
+      border-radius: 10px;
+      background-color: var(--teal-soft);
+      border: 1px solid var(--teal-border);
+      color: var(--teal-hover);
+      font-size: 1rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .success-details {
+      text-align: right;
+      border-top: 1px solid var(--border-hairline);
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 14px 0;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      padding: 16px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: var(--teal);
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </div>
+        <span class="brand-title">احجزلي</span>
+      </a>
+      <span class="brand-sub">القاهرة · خدمة حجز عيادات</span>
+    </div>
+  </header>
+
+  <section class="hero-banner">
+    <div class="hero-inner">
+      <h1 class="hero-title">احجزلي — <span>احجز دكتورك في دقيقة</span></h1>
+      <p class="hero-desc">اختار التخصص والمنطقة واليوم والميعاد المناسب ليك، وهنتواصل معاك لتأكيد الكشف.</p>
+    </div>
+  </section>
+
+  <main class="main-wrap">
+    <div id="booking-flow" class="booking-grid">
+      <div class="steps-column">
+        <!-- Step 1: Specialty -->
+        <section id="step-1" class="card is-active" aria-labelledby="step-1-title">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-num">١</span>
+              <h2 id="step-1-title" class="step-title">اختار التخصص</h2>
+            </div>
+            <span id="chosen-specialty-label" class="step-selected-label"></span>
+          </div>
+          <div id="specialties-container">
+            <div class="skeleton-grid">
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 2: Area -->
+        <section id="step-2" class="card is-locked" aria-labelledby="step-2-title">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-num">٢</span>
+              <h2 id="step-2-title" class="step-title">اختار المنطقة</h2>
+            </div>
+            <span id="chosen-area-label" class="step-selected-label"></span>
+          </div>
+          <div id="areas-container">
+            <div class="state-box state-muted">اختار التخصص الأول علشان نعرضلك المناطق المتاحة</div>
+          </div>
+        </section>
+
+        <!-- Step 3: Day -->
+        <section id="step-3" class="card is-locked" aria-labelledby="step-3-title">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-num">٣</span>
+              <h2 id="step-3-title" class="step-title">اختار اليوم</h2>
+            </div>
+            <span id="chosen-day-label" class="step-selected-label"></span>
+          </div>
+          <div id="days-container">
+            <div class="state-box state-muted">اختار التخصص والمنطقة الأول</div>
+          </div>
+        </section>
+
+        <!-- Step 4: Slot -->
+        <section id="step-4" class="card is-locked" aria-labelledby="step-4-title">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-num">٤</span>
+              <h2 id="step-4-title" class="step-title">اختار الميعاد</h2>
+            </div>
+            <span id="chosen-slot-label" class="step-selected-label"></span>
+          </div>
+          <div id="slots-container">
+            <div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>
+          </div>
+        </section>
+
+        <!-- Step 5: Patient Form -->
+        <section id="step-5" class="card is-locked" aria-labelledby="step-5-title">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-num">٥</span>
+              <h2 id="step-5-title" class="step-title">بياناتك لتأكيد الحجز</h2>
+            </div>
+          </div>
+          <form id="booking-form" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="patient-name">الاسم بالكامل</label>
+                <input
+                  id="patient-name"
+                  type="text"
+                  class="input-ctrl"
+                  placeholder="مثال: أحمد محمد علي"
+                  autocomplete="name"
+                  disabled
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="patient-phone">رقم الموبايل</label>
+                <input
+                  id="patient-phone"
+                  type="tel"
+                  dir="ltr"
+                  inputmode="numeric"
+                  maxlength="11"
+                  class="input-ctrl"
+                  placeholder="01xxxxxxxxx"
+                  autocomplete="tel"
+                  disabled
+                  required
+                />
+                <span class="input-hint">رقم موبايل مصري يبدأ بـ 01 (11 رقم)</span>
+              </div>
+            </div>
+
+            <div id="form-error" class="state-box state-error hidden" role="alert"></div>
+
+            <div style="margin-top: 16px;">
+              <button id="submit-booking-btn" type="submit" class="btn-primary" disabled>
+                أكد الحجز
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <!-- Summary Sidebar -->
+      <aside class="summary-card" aria-label="ملخص الحجز">
+        <h3 class="summary-title">ملخص حجزك</h3>
+        <div class="summary-list">
+          <div class="summary-row">
+            <span class="summary-key">التخصص</span>
+            <span id="sum-specialty" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">المنطقة</span>
+            <span id="sum-area" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">اليوم</span>
+            <span id="sum-day" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">الميعاد</span>
+            <span id="sum-slot" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+        </div>
+        <p class="summary-note">
+          بعد تأكيد الحجز، فريق احجزلي هيتصل بيك أو يبعتلك رسالة واتساب خلال شوية لتأكيد العنوان وتفاصيل الكشف.
+        </p>
+      </aside>
+    </div>
+
+    <!-- Success View -->
+    <section id="booking-success" class="success-card hidden" aria-live="polite">
+      <div class="success-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 class="success-heading">تم الحجز ✅ هنتصل بيك أو هنبعتلك واتساب خلال شوية لتأكيد الميعاد</h2>
+      <div class="booking-id-box">رقم الحجز: <span id="success-booking-id"></span></div>
+
+      <div class="success-details">
+        <div class="summary-row">
+          <span class="summary-key">الاسم</span>
+          <span id="success-name" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">الموبايل</span>
+          <span id="success-phone" class="summary-val" dir="ltr"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">التخصص</span>
+          <span id="success-specialty" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">المنطقة</span>
+          <span id="success-area" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">اليوم والميعاد</span>
+          <span id="success-datetime" class="summary-val"></span>
+        </div>
+      </div>
+
+      <button id="new-booking-btn" type="button" class="btn-secondary">حجز ميعاد جديد</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>احجزلي – E7gezly by AdStartup</span>
+      <a href="admin.html">لوحة الإدارة</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function () {
+      const SUPABASE_URL = 'https://nubyqdyjtradjndauzkx.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_tyYjOcfnXLFvc4c96KoTvw_ipNGgavy';
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      const state = {
+        specialties: [],
+        areas: [],
+        days: [],
+        specialtyId: null,
+        specialtyName: '',
+        areaId: null,
+        areaName: '',
+        day: null,
+        dayLabel: '',
+        slot: null,
+        slotLabel: '',
+        slotsRequestId: 0,
+        submitting: false
+      };
+
+      const el = {
+        bookingFlow: document.getElementById('booking-flow'),
+        bookingSuccess: document.getElementById('booking-success'),
+        step1: document.getElementById('step-1'),
+        step2: document.getElementById('step-2'),
+        step3: document.getElementById('step-3'),
+        step4: document.getElementById('step-4'),
+        step5: document.getElementById('step-5'),
+        specialtiesContainer: document.getElementById('specialties-container'),
+        areasContainer: document.getElementById('areas-container'),
+        daysContainer: document.getElementById('days-container'),
+        slotsContainer: document.getElementById('slots-container'),
+        chosenSpecialtyLabel: document.getElementById('chosen-specialty-label'),
+        chosenAreaLabel: document.getElementById('chosen-area-label'),
+        chosenDayLabel: document.getElementById('chosen-day-label'),
+        chosenSlotLabel: document.getElementById('chosen-slot-label'),
+        sumSpecialty: document.getElementById('sum-specialty'),
+        sumArea: document.getElementById('sum-area'),
+        sumDay: document.getElementById('sum-day'),
+        sumSlot: document.getElementById('sum-slot'),
+        patientName: document.getElementById('patient-name'),
+        patientPhone: document.getElementById('patient-phone'),
+        bookingForm: document.getElementById('booking-form'),
+        formError: document.getElementById('form-error'),
+        submitBtn: document.getElementById('submit-booking-btn'),
+        successBookingId: document.getElementById('success-booking-id'),
+        successName: document.getElementById('success-name'),
+        successPhone: document.getElementById('success-phone'),
+        successSpecialty: document.getElementById('success-specialty'),
+        successArea: document.getElementById('success-area'),
+        successDatetime: document.getElementById('success-datetime'),
+        newBookingBtn: document.getElementById('new-booking-btn')
+      };
+
+      function normalizeDigits(str) {
+        const arabicNums = '٠١٢٣٤٥٦٧٨٩';
+        const persianNums = '۰۱۲۳۴۵۶۷۸۹';
+        return String(str || '')
+          .replace(/[٠-٩]/g, d => String(arabicNums.indexOf(d)))
+          .replace(/[۰-۹]/g, d => String(persianNums.indexOf(d)))
+          .replace(/[\s\-()]/g, '');
+      }
+
+      function getCairoNext7Days() {
+        const fmtCairo = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'Africa/Cairo',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        });
+        const todayStr = fmtCairo.format(new Date());
+        const [y, m, d] = todayStr.split('-').map(Number);
+        const baseUtc = new Date(Date.UTC(y, m - 1, d));
+
+        const days = [];
+        for (let i = 0; i < 7; i++) {
+          const dt = new Date(baseUtc.getTime() + i * 86400000);
+          const iso = dt.toISOString().slice(0, 10);
+          const dateShort = dt.toLocaleDateString('ar-EG', {
+            day: 'numeric',
+            month: 'short',
+            timeZone: 'UTC'
+          });
+          const weekday = dt.toLocaleDateString('ar-EG', {
+            weekday: 'long',
+            timeZone: 'UTC'
+          });
+
+          let mainLabel = weekday;
+          let subLabel = dateShort;
+          let fullLabel = weekday + ' ' + dateShort;
+
+          if (i === 0) {
+            mainLabel = 'النهارده';
+            fullLabel = 'النهارده (' + weekday + ' ' + dateShort + ')';
+          } else if (i === 1) {
+            mainLabel = 'بكره';
+            fullLabel = 'بكره (' + weekday + ' ' + dateShort + ')';
+          }
+
+          days.push({ iso, mainLabel, subLabel, fullLabel });
+        }
+        return days;
+      }
+
+      function formatSlotTime(slotStr) {
+        const parts = String(slotStr || '').split(':').map(Number);
+        const dt = new Date(2000, 0, 1, parts[0] || 0, parts[1] || 0, parts[2] || 0);
+        return dt.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit' });
+      }
+
+      function updateSummary() {
+        setSummaryField(el.sumSpecialty, state.specialtyName);
+        setSummaryField(el.sumArea, state.areaName);
+        setSummaryField(el.sumDay, state.dayLabel);
+        setSummaryField(el.sumSlot, state.slotLabel);
+
+        el.chosenSpecialtyLabel.textContent = state.specialtyName || '';
+        el.chosenAreaLabel.textContent = state.areaName || '';
+        el.chosenDayLabel.textContent = state.dayLabel || '';
+        el.chosenSlotLabel.textContent = state.slotLabel || '';
+
+        el.step1.className = 'card ' + (state.specialtyId ? 'is-done' : 'is-active');
+        el.step2.className = 'card ' + (!state.specialtyId ? 'is-locked' : state.areaId ? 'is-done' : 'is-active');
+        el.step3.className = 'card ' + (!state.areaId ? 'is-locked' : state.day ? 'is-done' : 'is-active');
+        el.step4.className = 'card ' + (!state.day ? 'is-locked' : state.slot ? 'is-done' : 'is-active');
+        el.step5.className = 'card ' + (!state.slot ? 'is-locked' : 'is-active');
+
+        const formReady = Boolean(state.specialtyId && state.areaId && state.day && state.slot);
+        el.patientName.disabled = !formReady || state.submitting;
+        el.patientPhone.disabled = !formReady || state.submitting;
+        el.submitBtn.disabled = !formReady || state.submitting;
+      }
+
+      function setSummaryField(node, value) {
+        if (value) {
+          node.textContent = value;
+          node.classList.remove('is-empty');
+        } else {
+          node.textContent = 'لسه ما اخترتش';
+          node.classList.add('is-empty');
+        }
+      }
+
+      function showFormError(msg) {
+        if (!msg) {
+          el.formError.textContent = '';
+          el.formError.classList.add('hidden');
+        } else {
+          el.formError.textContent = msg;
+          el.formError.classList.remove('hidden');
+        }
+      }
+
+      function renderSpecialties() {
+        if (!state.specialties.length) {
+          el.specialtiesContainer.innerHTML = '<div class="state-box state-empty">مفيش تخصصات متاحة حالياً</div>';
+          return;
+        }
+        const grid = document.createElement('div');
+        grid.className = 'chips-grid';
+        state.specialties.forEach(item => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'chip-btn' + (state.specialtyId === item.id ? ' selected' : '');
+          btn.textContent = item.name_ar;
+          btn.addEventListener('click', () => selectSpecialty(item));
+          grid.appendChild(btn);
+        });
+        el.specialtiesContainer.innerHTML = '';
+        el.specialtiesContainer.appendChild(grid);
+      }
+
+      function renderAreas() {
+        if (!state.specialtyId) {
+          el.areasContainer.innerHTML = '<div class="state-box state-muted">اختار التخصص الأول علشان نعرضلك المناطق المتاحة</div>';
+          return;
+        }
+        if (!state.areas.length) {
+          el.areasContainer.innerHTML = '<div class="state-box state-empty">مفيش مناطق متاحة حالياً</div>';
+          return;
+        }
+        const grid = document.createElement('div');
+        grid.className = 'chips-grid';
+        state.areas.forEach(item => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'chip-btn' + (state.areaId === item.id ? ' selected' : '');
+          btn.textContent = item.name_ar;
+          btn.addEventListener('click', () => selectArea(item));
+          grid.appendChild(btn);
+        });
+        el.areasContainer.innerHTML = '';
+        el.areasContainer.appendChild(grid);
+      }
+
+      function renderDays() {
+        if (!state.specialtyId || !state.areaId) {
+          el.daysContainer.innerHTML = '<div class="state-box state-muted">اختار التخصص والمنطقة الأول</div>';
+          return;
+        }
+        const grid = document.createElement('div');
+        grid.className = 'days-grid';
+        state.days.forEach(dayObj => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'chip-btn' + (state.day === dayObj.iso ? ' selected' : '');
+
+          const mainSpan = document.createElement('span');
+          mainSpan.textContent = dayObj.mainLabel;
+          const subSpan = document.createElement('span');
+          subSpan.className = 'chip-sub';
+          subSpan.textContent = dayObj.subLabel;
+
+          btn.appendChild(mainSpan);
+          btn.appendChild(subSpan);
+          btn.addEventListener('click', () => selectDay(dayObj));
+          grid.appendChild(btn);
+        });
+        el.daysContainer.innerHTML = '';
+        el.daysContainer.appendChild(grid);
+      }
+
+      function selectSpecialty(item) {
+        if (state.specialtyId === item.id) return;
+        state.specialtyId = item.id;
+        state.specialtyName = item.name_ar;
+        state.slot = null;
+        state.slotLabel = '';
+        showFormError('');
+        renderSpecialties();
+        renderAreas();
+        renderDays();
+        updateSummary();
+        if (state.areaId && state.day) {
+          fetchSlots();
+        } else {
+          el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
+          el.step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+
+      function selectArea(item) {
+        if (state.areaId === item.id) return;
+        state.areaId = item.id;
+        state.areaName = item.name_ar;
+        state.slot = null;
+        state.slotLabel = '';
+        showFormError('');
+        renderAreas();
+        renderDays();
+        updateSummary();
+        if (state.day) {
+          fetchSlots();
+        } else {
+          el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
+          el.step3.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+
+      function selectDay(dayObj) {
+        state.day = dayObj.iso;
+        state.dayLabel = dayObj.fullLabel;
+        state.slot = null;
+        state.slotLabel = '';
+        showFormError('');
+        renderDays();
+        updateSummary();
+        fetchSlots();
+      }
+
+      async function fetchSlots() {
+        const reqId = ++state.slotsRequestId;
+        el.slotsContainer.innerHTML =
+          '<div class="skeleton-grid">' +
+          '<div class="skeleton-item"></div><div class="skeleton-item"></div>' +
+          '<div class="skeleton-item"></div><div class="skeleton-item"></div>' +
+          '</div>';
+
+        const { data, error } = await sb.rpc('get_slots', {
+          p_specialty: state.specialtyId,
+          p_area: state.areaId,
+          p_day: state.day
+        });
+
+        if (reqId !== state.slotsRequestId) return;
+
+        if (error) {
+          el.slotsContainer.innerHTML =
+            '<div class="state-box state-error">حصلت مشكلة في تحميل المواعيد، جرب تاني.</div>';
+          return;
+        }
+
+        const rows = Array.isArray(data) ? data : [];
+        if (!rows.length) {
+          el.slotsContainer.innerHTML =
+            '<div class="state-box state-empty">مفيش مواعيد متاحة هنا اليوم — جرب يوم تاني أو منطقة تانية</div>';
+          return;
+        }
+
+        const grid = document.createElement('div');
+        grid.className = 'slots-grid';
+        rows.forEach(row => {
+          const slotVal = row.slot;
+          const label = formatSlotTime(slotVal);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'chip-btn slot-chip' + (state.slot === slotVal ? ' selected' : '');
+          btn.textContent = label;
+          btn.addEventListener('click', () => {
+            state.slot = slotVal;
+            state.slotLabel = label;
+            showFormError('');
+            Array.from(grid.children).forEach(c => c.classList.remove('selected'));
+            btn.classList.add('selected');
+            updateSummary();
+            el.step5.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          });
+          grid.appendChild(btn);
+        });
+        el.slotsContainer.innerHTML = '';
+        el.slotsContainer.appendChild(grid);
+      }
+
+      function mapBookError(errCode) {
+        switch (errCode) {
+          case 'bad_input':
+            return 'تأكد من كتابة الاسم ورقم الموبايل بشكل صحيح (رقم يبدأ بـ 01 ومكون من 11 رقم).';
+          case 'too_many':
+            return 'عملت حجوزات كتير في وقت قصير، جرب تاني بعد شوية.';
+          case 'slot_taken':
+            return 'الميعاد ده لسه محجوز حالاً، اختار ميعاد تاني لو سمحت.';
+          default:
+            return 'حصلت مشكلة أثناء تأكيد الحجز، جرب تاني.';
+        }
+      }
+
+      el.bookingForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        showFormError('');
+
+        if (!state.specialtyId || !state.areaId || !state.day || !state.slot) {
+          showFormError('اختار التخصص والمنطقة واليوم والميعاد الأول.');
+          return;
+        }
+
+        const name = el.patientName.value.trim();
+        const phone = normalizeDigits(el.patientPhone.value);
+        el.patientPhone.value = phone;
+
+        if (name.length < 2) {
+          showFormError('اكتب اسمك بالكامل (حرفين على الأقل).');
+          el.patientName.focus();
+          return;
+        }
+
+        if (!/^01[0-9]{9}$/.test(phone)) {
+          showFormError('رقم الموبايل لازم يكون رقم مصري صحيح يبدأ بـ 01 ومكون من 11 رقم.');
+          el.patientPhone.focus();
+          return;
+        }
+
+        state.submitting = true;
+        el.submitBtn.textContent = 'جاري تأكيد الحجز...';
+        updateSummary();
+
+        const { data, error } = await sb.rpc('book_slot', {
+          p_specialty: state.specialtyId,
+          p_area: state.areaId,
+          p_day: state.day,
+          p_slot: state.slot,
+          p_name: name,
+          p_phone: phone
+        });
+
+        state.submitting = false;
+        el.submitBtn.textContent = 'أكد الحجز';
+        updateSummary();
+
+        if (error) {
+          showFormError('حصلت مشكلة في الاتصال، جرب تاني لو سمحت.');
+          return;
+        }
+
+        const res = Array.isArray(data) ? data[0] : data;
+        if (!res || !res.ok) {
+          const errCode = res && res.error ? res.error : '';
+          showFormError(mapBookError(errCode));
+          if (errCode === 'slot_taken') {
+            state.slot = null;
+            state.slotLabel = '';
+            updateSummary();
+            fetchSlots();
+          }
+          return;
+        }
+
+        el.successBookingId.textContent = '#' + res.booking_id;
+        el.successName.textContent = name;
+        el.successPhone.textContent = phone;
+        el.successSpecialty.textContent = state.specialtyName;
+        el.successArea.textContent = state.areaName;
+        el.successDatetime.textContent = state.dayLabel + ' — ' + state.slotLabel;
+
+        el.bookingFlow.classList.add('hidden');
+        el.bookingSuccess.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      el.newBookingBtn.addEventListener('click', function () {
+        state.specialtyId = null;
+        state.specialtyName = '';
+        state.areaId = null;
+        state.areaName = '';
+        state.day = null;
+        state.dayLabel = '';
+        state.slot = null;
+        state.slotLabel = '';
+        el.patientName.value = '';
+        el.patientPhone.value = '';
+        showFormError('');
+        el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
+        renderSpecialties();
+        renderAreas();
+        renderDays();
+        updateSummary();
+        el.bookingSuccess.classList.add('hidden');
+        el.bookingFlow.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      async function init() {
+        state.days = getCairoNext7Days();
+        updateSummary();
+
+        const [specRes, areaRes] = await Promise.all([
+          sb.from('specialties').select('id, name_ar').eq('active', true).order('id'),
+          sb.from('areas').select('id, name_ar').eq('active', true).order('id')
+        ]);
+
+        if (specRes.error) {
+          el.specialtiesContainer.innerHTML =
+            '<div class="state-box state-error">مقدرناش نحمل التخصصات، اعمل تحديث للصفحة وجرب تاني.</div>';
+        } else {
+          state.specialties = specRes.data || [];
+          renderSpecialties();
+        }
+
+        if (!areaRes.error) {
+          state.areas = areaRes.data || [];
+        }
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
