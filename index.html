@@ -3,17 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M4L6Q78W');</script>
+  <!-- End Google Tag Manager -->
   <meta name="theme-color" content="#0d9488" />
   <title>احجزلي | احجز دكتورك في دقيقة — أقرب ميعاد في منطقتك</title>
   <meta name="description" content="اختار التخصص والمنطقة، واحجز كشفك في أقل من دقيقة مع احجزلي — من غير تطبيق، من غير حساب، ومن غير ما تدفع أي حاجة مقدمًا." />
+  <link rel="canonical" href="https://e7gezly-app.vip/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ar_EG" />
   <meta property="og:site_name" content="احجزلي – E7gezly by AdStartup" />
+  <meta property="og:url" content="https://e7gezly-app.vip/" />
   <meta property="og:title" content="احجزلي | احجز دكتورك في دقيقة — أقرب ميعاد في منطقتك" />
   <meta property="og:description" content="اختار التخصص والمنطقة، واحجز كشفك في أقل من دقيقة — من غير تطبيق، من غير حساب، والكشف بيتدفع في العيادة." />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="احجزلي | احجز دكتورك في دقيقة" />
   <meta name="twitter:description" content="احجز كشفك في أقل من دقيقة في منطقتك، تأكيد سريع على واتساب والكشف في العيادة." />
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2670836706701296');
+  fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -43,7 +62,7 @@
         "name": "أقدر ألغي أو أغيّر الميعاد؟",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "أيوه، رد على رسالة التأكيد"
+          "text": "أيوه، رد على رسالة التأكيد أو كلمنا واتساب على 01144988882"
         }
       },
       {
@@ -771,9 +790,72 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
     }
+
+    /* Floating WhatsApp Button */
+    .wa-float {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 50;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: #25D366;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .wa-float:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+    }
+
+    .wa-tooltip {
+      position: absolute;
+      left: 66px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #0f172a;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 10px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+
+    .wa-float:hover .wa-tooltip,
+    .wa-float:focus-visible .wa-tooltip {
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .wa-float {
+        bottom: 16px;
+        left: 16px;
+      }
+      .wa-tooltip {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M4L6Q78W" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <!-- Meta Pixel Code (noscript) -->
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2670836706701296&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code (noscript) -->
   <!-- 1. Sticky Header -->
   <header class="header">
     <div class="container header-inner">
@@ -1034,7 +1116,7 @@
             <span>أقدر ألغي أو أغيّر الميعاد؟</span>
             <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-panel">أيوه، رد على رسالة التأكيد</div>
+          <div class="faq-panel">أيوه، رد على رسالة التأكيد أو كلمنا واتساب على <span dir="ltr">01144988882</span></div>
         </div>
 
         <div class="faq-item">
@@ -1072,9 +1154,17 @@
       <div class="footer-links">
         <a href="book.html">احجز كشف</a>
         <a href="contract.html">انضم كطبيب</a>
+        <a id="footer-wa-link" href="https://wa.me/201144988882" target="_blank" rel="noopener">واتساب: <span dir="ltr">0114 498 8882</span></a>
       </div>
     </div>
   </footer>
+
+  <a id="wa-float-btn" class="wa-float" href="https://wa.me/201144988882" target="_blank" rel="noopener" aria-label="محتاج مساعدة؟ كلمنا واتساب" title="محتاج مساعدة؟ كلمنا واتساب">
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+      <path d="M16.004 3.2c-7.062 0-12.8 5.738-12.8 12.8 0 2.256.59 4.458 1.71 6.398L3.1 28.9l6.678-1.752a12.74 12.74 0 0 0 6.226 1.622h.006c7.06 0 12.796-5.738 12.796-12.8 0-3.42-1.332-6.634-3.75-9.054A12.71 12.71 0 0 0 16.004 3.2zm7.454 18.212c-.314.884-1.832 1.69-2.54 1.794-.648.096-1.468.136-2.37-.15-.546-.174-1.248-.406-2.146-.794-3.776-1.63-6.242-5.432-6.43-5.682-.188-.25-1.536-2.044-1.536-3.9 0-1.856.972-2.768 1.316-3.144.344-.376.752-.47 1.002-.47.25 0 .5.002.72.012.232.012.542-.088.848.648.314.752 1.068 2.606 1.162 2.794.094.188.156.408.032.658-.124.25-.188.408-.376.626-.188.22-.396.49-.564.658-.188.188-.384.392-.164.768.22.376.976 1.61 2.096 2.608 1.44 1.284 2.654 1.682 3.03 1.87.376.188.596.156.814-.094.22-.25.94-1.096 1.19-1.472.25-.376.502-.314.846-.188.344.126 2.194 1.034 2.57 1.222.376.188.626.282.72.438.094.158.094.91-.22 1.794z"/>
+    </svg>
+    <span class="wa-tooltip">محتاج مساعدة؟ كلمنا واتساب</span>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
@@ -1147,8 +1237,23 @@
         populateQuickGovernorates(specId);
       });
 
+      const waUrl = 'https://wa.me/201144988882?text=' + encodeURIComponent('أهلاً احجزلي 👋 محتاج مساعدة في حجز كشف');
+      [document.getElementById('wa-float-btn'), document.getElementById('footer-wa-link')].forEach(el => {
+        if (!el) return;
+        el.href = waUrl;
+        el.addEventListener('click', () => {
+          if (window.fbq) fbq('track', 'Contact');
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: 'whatsapp_click' });
+        });
+      });
+
       qsForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        const selectedSpecName = qsSpec.value && qsSpec.selectedIndex >= 0
+          ? qsSpec.options[qsSpec.selectedIndex].textContent
+          : 'كل التخصصات';
+        if (window.fbq) fbq('track', 'Search', { content_category: selectedSpecName });
         const params = new URLSearchParams();
         if (qsSpec.value) params.set('spec', qsSpec.value);
         if (qsGov.value) params.set('gov', qsGov.value);
