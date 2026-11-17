@@ -1,0 +1,1812 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d9488" />
+  <title>احجز كشفك | احجزلي – E7gezly by AdStartup</title>
+  <meta name="description" content="اختار التخصص والمحافظة والمنطقة والميعاد المناسب ليك واحجز كشفك في أقل من دقيقة مع احجزلي." />
+  <meta property="og:title" content="احجز كشفك | احجزلي" />
+  <meta property="og:description" content="اختار التخصص والمنطقة واليوم والميعاد المناسب ليك واحجز في دقيقة." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-canvas: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-hairline: #e2e8f0;
+      --teal: #0d9488;
+      --teal-hover: #0f766e;
+      --teal-soft: #f0fdfa;
+      --teal-border: #99f6e4;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --danger-border: #fecaca;
+      --amber-bg: #fffbeb;
+      --amber-border: #fde68a;
+      --amber-text: #92400e;
+      --radius-card: 18px;
+      --radius-control: 12px;
+      --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select {
+      font-family: inherit;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Top Bar */
+    .topbar {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-hairline);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .topbar-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background-color: var(--teal);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .back-link {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .back-link:hover {
+      color: var(--teal);
+      background-color: var(--teal-soft);
+    }
+
+    /* Hero Strip */
+    .page-head {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 20px 16px;
+    }
+
+    .page-head-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      font-size: clamp(1.3rem, 3vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .page-title span {
+      color: var(--teal);
+    }
+
+    .page-sub {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Main Grid */
+    .main-wrap {
+      flex: 1;
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 16px 96px;
+    }
+
+    @media (min-width: 900px) {
+      .main-wrap {
+        padding-bottom: 48px;
+      }
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    @media (min-width: 900px) {
+      .booking-grid {
+        grid-template-columns: minmax(0, 1.65fr) minmax(300px, 0.95fr);
+      }
+    }
+
+    .form-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .step-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background-color: var(--teal-soft);
+      border: 1px solid var(--teal-border);
+      color: var(--teal);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .section-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* Selects & Inputs */
+    .fields-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .filters-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    @media (min-width: 560px) {
+      .filters-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .optional-tag {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .select-ctrl, .input-ctrl {
+      width: 100%;
+      min-height: 48px;
+      padding: 10px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .select-ctrl:focus, .input-ctrl:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .select-ctrl:disabled, .input-ctrl:disabled {
+      background-color: var(--bg-subtle);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    .fee-hint {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--teal-hover);
+      background-color: var(--teal-soft);
+      border: 1px solid var(--teal-border);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .fee-hint.is-warn {
+      background-color: var(--amber-bg);
+      border-color: var(--amber-border);
+      color: var(--amber-text);
+    }
+
+    /* Horizontally Scrollable Days */
+    .days-scroller {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .day-chip {
+      flex: 0 0 auto;
+      min-width: 104px;
+      min-height: 58px;
+      padding: 8px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      text-align: center;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .day-chip:hover:not(:disabled) {
+      border-color: var(--teal);
+      background-color: var(--teal-soft);
+    }
+
+    .day-chip.selected {
+      background-color: var(--teal);
+      border-color: var(--teal);
+      color: #ffffff;
+    }
+
+    .day-chip-main {
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .day-chip-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .day-chip.selected .day-chip-sub {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Time Slots Grouped */
+    .period-group {
+      margin-bottom: 14px;
+    }
+
+    .period-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .period-heading {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+      gap: 8px;
+    }
+
+    .slot-chip {
+      min-height: 44px;
+      padding: 8px 10px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .slot-chip:hover {
+      border-color: var(--teal);
+      background-color: var(--teal-soft);
+    }
+
+    .slot-chip.selected {
+      background-color: var(--teal);
+      border-color: var(--teal);
+      color: #ffffff;
+    }
+
+    /* Patient Form */
+    .patient-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 600px) {
+      .patient-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .input-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .btn-primary {
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: var(--radius-control);
+      background-color: var(--teal);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--teal-hover);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      min-height: 44px;
+      padding: 10px 18px;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-control);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-subtle);
+    }
+
+    /* Summary Sidebar (Desktop) */
+    .summary-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 900px) {
+      .summary-card {
+        position: sticky;
+        top: 80px;
+      }
+    }
+
+    .summary-title {
+      font-size: 1rem;
+      font-weight: 700;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: 12px;
+    }
+
+    .summary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.9rem;
+    }
+
+    .summary-key {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .summary-val {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .summary-val.is-empty {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .summary-note {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-hairline);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* Mobile Sticky Bottom Bar */
+    .mobile-sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      background-color: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border-hairline);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.06);
+    }
+
+    @media (min-width: 900px) {
+      .mobile-sticky-bar {
+        display: none;
+      }
+    }
+
+    .mobile-bar-time {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .mobile-bar-label {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .mobile-bar-val {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mobile-bar-btn {
+      min-height: 44px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: var(--teal);
+      color: #ffffff;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .mobile-bar-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* States */
+    .state-box {
+      padding: 14px 16px;
+      border-radius: var(--radius-control);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .state-muted {
+      background-color: var(--bg-subtle);
+      color: var(--text-secondary);
+    }
+
+    .state-empty {
+      background-color: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      color: var(--amber-text);
+      font-weight: 600;
+    }
+
+    .state-error {
+      background-color: var(--danger-soft);
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+      font-weight: 600;
+      text-align: right;
+      margin-top: 12px;
+    }
+
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+      gap: 8px;
+    }
+
+    .skeleton-item {
+      height: 44px;
+      border-radius: var(--radius-control);
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite linear;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skeleton-item { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* Success Card */
+    .success-card {
+      max-width: 620px;
+      margin: 12px auto 0;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--teal-border);
+      border-radius: var(--radius-card);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background-color: var(--teal-soft);
+      color: var(--teal);
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-heading {
+      font-size: 1.22rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .booking-id-box {
+      display: inline-block;
+      margin: 6px 0 18px;
+      padding: 8px 18px;
+      border-radius: 10px;
+      background-color: var(--teal-soft);
+      border: 1px solid var(--teal-border);
+      color: var(--teal-hover);
+      font-size: 1rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .success-details {
+      text-align: right;
+      border-top: 1px solid var(--border-hairline);
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 14px 0;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .fee-notice-box {
+      background-color: var(--teal-soft);
+      border: 1px solid var(--teal-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--teal-hover);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .followup-note {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      padding: 16px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </div>
+        <span class="brand-title">احجزلي</span>
+      </a>
+      <a href="index.html" class="back-link">الصفحة الرئيسية</a>
+    </div>
+  </header>
+
+  <section class="page-head">
+    <div class="page-head-inner">
+      <h1 class="page-title">احجز كشفك في <span>دقيقة</span></h1>
+      <p class="page-sub">اختار التخصص والمحافظة والمنطقة والميعاد المتاح، وهنأكد معاك قبل ما تروح.</p>
+    </div>
+  </section>
+
+  <main class="main-wrap">
+    <div id="booking-flow" class="booking-grid">
+      <div class="form-col">
+        <!-- Selection Card: 1-4 -->
+        <section class="card" aria-labelledby="select-step-title">
+          <div class="section-head">
+            <span class="step-badge">١</span>
+            <h2 id="select-step-title" class="section-title">اختار التخصص والمكان</h2>
+          </div>
+
+          <div id="init-loading" class="state-box state-muted">جاري تحميل التخصصات والمحافظات المتاحة...</div>
+          <div id="init-error" class="state-box state-error hidden" role="alert"></div>
+
+          <div id="selectors-wrap" class="fields-stack hidden">
+            <div class="field">
+              <label for="sel-specialty">التخصص</label>
+              <select id="sel-specialty" class="select-ctrl">
+                <option value="">اختار التخصص...</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="sel-governorate">المحافظة</label>
+              <select id="sel-governorate" class="select-ctrl" disabled>
+                <option value="">اختار التخصص الأول...</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="sel-area">المنطقة</label>
+              <select id="sel-area" class="select-ctrl" disabled>
+                <option value="">اختار المحافظة الأول...</option>
+              </select>
+            </div>
+
+            <!-- Optional filters row -->
+            <div id="filters-section" class="hidden">
+              <div class="filters-row">
+                <div class="field">
+                  <label for="sel-gender">النوع <span class="optional-tag">(اختياري)</span></label>
+                  <select id="sel-gender" class="select-ctrl">
+                    <option value="">أي</option>
+                    <option value="male">دكتور</option>
+                    <option value="female">دكتورة</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="sel-price">سعر الكشف <span class="optional-tag">(اختياري)</span></label>
+                  <select id="sel-price" class="select-ctrl">
+                    <option value="">أي سعر</option>
+                    <option value="lt300">أقل من 300 ج.م</option>
+                    <option value="300-500">300–500 ج.م</option>
+                    <option value="500-800">500–800 ج.م</option>
+                    <option value="800plus">800 ج.م أو أكتر</option>
+                  </select>
+                </div>
+              </div>
+              <div id="fee-range-hint" class="fee-hint hidden" style="margin-top: 10px;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Day Selection: 5 -->
+        <section id="day-card" class="card" aria-labelledby="day-step-title">
+          <div class="section-head">
+            <span class="step-badge">٢</span>
+            <h2 id="day-step-title" class="section-title">اختار اليوم</h2>
+          </div>
+          <div id="days-container">
+            <div class="state-box state-muted">اختار التخصص والمحافظة والمنطقة الأول</div>
+          </div>
+        </section>
+
+        <!-- Time Slot Selection: 6 -->
+        <section id="slot-card" class="card" aria-labelledby="slot-step-title">
+          <div class="section-head">
+            <span class="step-badge">٣</span>
+            <h2 id="slot-step-title" class="section-title">اختار الميعاد</h2>
+          </div>
+          <div id="slots-container">
+            <div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>
+          </div>
+          <div id="slot-alert" class="state-box state-error hidden" role="alert"></div>
+        </section>
+
+        <!-- Patient Details: 7 -->
+        <section id="patient-card" class="card" aria-labelledby="patient-step-title">
+          <div class="section-head">
+            <span class="step-badge">٤</span>
+            <h2 id="patient-step-title" class="section-title">بياناتك لتأكيد الحجز</h2>
+          </div>
+
+          <form id="booking-form" novalidate>
+            <div class="patient-grid">
+              <div class="field">
+                <label for="patient-name">الاسم بالكامل</label>
+                <input
+                  id="patient-name"
+                  type="text"
+                  class="input-ctrl"
+                  placeholder="مثال: أحمد محمد علي"
+                  autocomplete="name"
+                  disabled
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="patient-phone">رقم الموبايل</label>
+                <input
+                  id="patient-phone"
+                  type="tel"
+                  dir="ltr"
+                  inputmode="numeric"
+                  maxlength="11"
+                  class="input-ctrl tabular-nums"
+                  placeholder="01xxxxxxxxx"
+                  autocomplete="tel"
+                  disabled
+                  required
+                />
+                <span class="input-hint">رقم موبايل مصري (010 / 011 / 012 / 015)</span>
+              </div>
+            </div>
+
+            <div id="form-error" class="state-box state-error hidden" role="alert"></div>
+
+            <div style="margin-top: 16px;">
+              <button id="submit-booking-btn" type="submit" class="btn-primary" disabled>
+                أكد الحجز
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <!-- Desktop Summary Card -->
+      <aside class="summary-card" aria-label="ملخص الحجز">
+        <h3 class="summary-title">ملخص حجزك</h3>
+        <div class="summary-list">
+          <div class="summary-row">
+            <span class="summary-key">التخصص</span>
+            <span id="sum-specialty" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">المحافظة</span>
+            <span id="sum-governorate" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">المنطقة</span>
+            <span id="sum-area" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">اليوم</span>
+            <span id="sum-day" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">الميعاد</span>
+            <span id="sum-slot" class="summary-val is-empty">لسه ما اخترتش</span>
+          </div>
+        </div>
+        <p class="summary-note">
+          مفيش أي دفع مقدم — الكشف بيتدفع في العيادة مباشرة بعد تأكيد الحجز.
+        </p>
+      </aside>
+    </div>
+
+    <!-- Success Screen -->
+    <section id="booking-success" class="success-card hidden" aria-live="polite">
+      <div class="success-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 class="success-heading">تم تسجيل حجزك بنجاح ✅</h2>
+      <div class="booking-id-box">رقم الحجز: <span id="success-booking-id"></span></div>
+
+      <div class="success-details">
+        <div class="summary-row">
+          <span class="summary-key">التخصص</span>
+          <span id="success-specialty" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">المحافظة</span>
+          <span id="success-governorate" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">المنطقة</span>
+          <span id="success-area" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">اليوم</span>
+          <span id="success-day" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">الميعاد</span>
+          <span id="success-slot" class="summary-val"></span>
+        </div>
+      </div>
+
+      <div id="success-fee-box" class="fee-notice-box"></div>
+      <p class="followup-note">هنكلمك أو نبعتلك واتساب لتأكيد الميعاد واسم الدكتور وعنوان العيادة</p>
+
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button id="new-booking-btn" type="button" class="btn-secondary">حجز ميعاد جديد</button>
+        <a href="index.html" class="btn-secondary">العودة للرئيسية</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Sticky Bottom Bar -->
+  <div id="mobile-sticky-bar" class="mobile-sticky-bar">
+    <div class="mobile-bar-time">
+      <span class="mobile-bar-label">الميعاد المختار</span>
+      <span id="mobile-bar-val" class="mobile-bar-val">لسه ما اخترتش ميعاد</span>
+    </div>
+    <button id="mobile-confirm-btn" type="button" class="mobile-bar-btn" disabled>أكد الحجز</button>
+  </div>
+
+  <footer class="footer">
+    <span>احجزلي — E7gezly by AdStartup</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function () {
+      const SUPABASE_URL = 'https://nubyqdyjtradjndauzkx.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_tyYjOcfnXLFvc4c96KoTvw_ipNGgavy';
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      const PRICE_RANGES = {
+        'lt300': { min: null, max: 300, match: f => f <= 300 },
+        '300-500': { min: 300, max: 500, match: f => f >= 300 && f <= 500 },
+        '500-800': { min: 500, max: 800, match: f => f >= 500 && f <= 800 },
+        '800plus': { min: 800, max: null, match: f => f >= 800 }
+      };
+
+      const state = {
+        governorates: [],
+        options: [],
+        days: [],
+        specialtyId: null,
+        specialtyName: '',
+        governorateId: null,
+        governorateName: '',
+        areaId: null,
+        areaName: '',
+        gender: '',
+        price: '',
+        day: null,
+        dayLabel: '',
+        slot: null,
+        slotLabel: '',
+        slotsRequestId: 0,
+        submitting: false
+      };
+
+      const el = {
+        bookingFlow: document.getElementById('booking-flow'),
+        bookingSuccess: document.getElementById('booking-success'),
+        initLoading: document.getElementById('init-loading'),
+        initError: document.getElementById('init-error'),
+        selectorsWrap: document.getElementById('selectors-wrap'),
+        selSpecialty: document.getElementById('sel-specialty'),
+        selGovernorate: document.getElementById('sel-governorate'),
+        selArea: document.getElementById('sel-area'),
+        filtersSection: document.getElementById('filters-section'),
+        selGender: document.getElementById('sel-gender'),
+        selPrice: document.getElementById('sel-price'),
+        feeRangeHint: document.getElementById('fee-range-hint'),
+        daysContainer: document.getElementById('days-container'),
+        slotsContainer: document.getElementById('slots-container'),
+        slotAlert: document.getElementById('slot-alert'),
+        patientName: document.getElementById('patient-name'),
+        patientPhone: document.getElementById('patient-phone'),
+        bookingForm: document.getElementById('booking-form'),
+        formError: document.getElementById('form-error'),
+        submitBtn: document.getElementById('submit-booking-btn'),
+        mobileStickyBar: document.getElementById('mobile-sticky-bar'),
+        mobileBarVal: document.getElementById('mobile-bar-val'),
+        mobileConfirmBtn: document.getElementById('mobile-confirm-btn'),
+        sumSpecialty: document.getElementById('sum-specialty'),
+        sumGovernorate: document.getElementById('sum-governorate'),
+        sumArea: document.getElementById('sum-area'),
+        sumDay: document.getElementById('sum-day'),
+        sumSlot: document.getElementById('sum-slot'),
+        successBookingId: document.getElementById('success-booking-id'),
+        successSpecialty: document.getElementById('success-specialty'),
+        successGovernorate: document.getElementById('success-governorate'),
+        successArea: document.getElementById('success-area'),
+        successDay: document.getElementById('success-day'),
+        successSlot: document.getElementById('success-slot'),
+        successFeeBox: document.getElementById('success-fee-box'),
+        newBookingBtn: document.getElementById('new-booking-btn')
+      };
+
+      function normalizeDigits(str) {
+        const arabicNums = '٠١٢٣٤٥٦٧٨٩';
+        const persianNums = '۰۱۲۳۴۵۶۷۸۹';
+        return String(str || '')
+          .replace(/[٠-٩]/g, d => String(arabicNums.indexOf(d)))
+          .replace(/[۰-۹]/g, d => String(persianNums.indexOf(d)))
+          .replace(/[\s\-()]/g, '');
+      }
+
+      function getCairoNext14Days() {
+        const fmtCairo = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'Africa/Cairo',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        });
+        const todayStr = fmtCairo.format(new Date());
+        const [y, m, d] = todayStr.split('-').map(Number);
+        const baseUtc = new Date(Date.UTC(y, m - 1, d));
+
+        const days = [];
+        for (let i = 0; i < 14; i++) {
+          const dt = new Date(baseUtc.getTime() + i * 86400000);
+          const iso = dt.toISOString().slice(0, 10);
+          const dateShort = dt.toLocaleDateString('ar-EG', {
+            day: 'numeric',
+            month: 'short',
+            timeZone: 'UTC'
+          });
+          const weekday = dt.toLocaleDateString('ar-EG', {
+            weekday: 'long',
+            timeZone: 'UTC'
+          });
+
+          let mainLabel = weekday;
+          let subLabel = dateShort;
+          let fullLabel = weekday + ' ' + dateShort;
+
+          if (i === 0) {
+            mainLabel = 'النهارده';
+            fullLabel = 'النهارده (' + weekday + ' ' + dateShort + ')';
+          } else if (i === 1) {
+            mainLabel = 'بكره';
+            fullLabel = 'بكره (' + weekday + ' ' + dateShort + ')';
+          }
+
+          days.push({ iso, mainLabel, subLabel, fullLabel });
+        }
+        return days;
+      }
+
+      function formatSlotTime(slotStr) {
+        const parts = String(slotStr || '').split(':').map(Number);
+        const dt = new Date(2000, 0, 1, parts[0] || 0, parts[1] || 0, parts[2] || 0);
+        return dt.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit' });
+      }
+
+      function getSlotPeriod(slotStr) {
+        const parts = String(slotStr || '').split(':').map(Number);
+        const hh = parts[0] || 0;
+        const mm = parts[1] || 0;
+        if (hh < 12) return 'morning';
+        if (hh < 17 || (hh === 17 && mm === 0)) return 'afternoon';
+        return 'evening';
+      }
+
+      function setSummaryField(node, value) {
+        if (value) {
+          node.textContent = value;
+          node.classList.remove('is-empty');
+        } else {
+          node.textContent = 'لسه ما اخترتش';
+          node.classList.add('is-empty');
+        }
+      }
+
+      function showFormError(msg) {
+        if (!msg) {
+          el.formError.textContent = '';
+          el.formError.classList.add('hidden');
+        } else {
+          el.formError.textContent = msg;
+          el.formError.classList.remove('hidden');
+        }
+      }
+
+      function showSlotAlert(msg) {
+        if (!msg) {
+          el.slotAlert.textContent = '';
+          el.slotAlert.classList.add('hidden');
+        } else {
+          el.slotAlert.textContent = msg;
+          el.slotAlert.classList.remove('hidden');
+        }
+      }
+
+      function updateUIState() {
+        setSummaryField(el.sumSpecialty, state.specialtyName);
+        setSummaryField(el.sumGovernorate, state.governorateName);
+        setSummaryField(el.sumArea, state.areaName);
+        setSummaryField(el.sumDay, state.dayLabel);
+        setSummaryField(el.sumSlot, state.slotLabel);
+
+        if (state.slotLabel && state.dayLabel) {
+          el.mobileBarVal.textContent = state.dayLabel + ' · ' + state.slotLabel;
+        } else if (state.dayLabel) {
+          el.mobileBarVal.textContent = state.dayLabel + ' — اختار الميعاد';
+        } else {
+          el.mobileBarVal.textContent = 'لسه ما اخترتش ميعاد';
+        }
+
+        const ready = Boolean(state.specialtyId && state.governorateId && state.areaId && state.day && state.slot);
+        el.patientName.disabled = !ready || state.submitting;
+        el.patientPhone.disabled = !ready || state.submitting;
+        el.submitBtn.disabled = !ready || state.submitting;
+        el.mobileConfirmBtn.disabled = !ready || state.submitting;
+      }
+
+      function populateSpecialties() {
+        const specMap = new Map();
+        state.options.forEach(r => {
+          if (r.specialty_id != null && !specMap.has(r.specialty_id)) {
+            specMap.set(r.specialty_id, r.specialty);
+          }
+        });
+        const specs = Array.from(specMap.entries()).map(([id, name]) => ({ id, name }));
+        specs.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+
+        el.selSpecialty.innerHTML = '<option value="">اختار التخصص...</option>';
+        specs.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = String(s.id);
+          opt.textContent = s.name;
+          el.selSpecialty.appendChild(opt);
+        });
+      }
+
+      function populateGovernorates() {
+        el.selGovernorate.innerHTML = '';
+        if (!state.specialtyId) {
+          el.selGovernorate.disabled = true;
+          const opt = document.createElement('option');
+          opt.value = '';
+          opt.textContent = 'اختار التخصص الأول...';
+          el.selGovernorate.appendChild(opt);
+          return;
+        }
+
+        const availableGovIds = new Set(
+          state.options
+            .filter(r => r.specialty_id === state.specialtyId)
+            .map(r => r.governorate_id)
+        );
+
+        const availableGovs = [];
+        const comingSoonGovs = [];
+        state.governorates.forEach(g => {
+          if (availableGovIds.has(g.id)) {
+            availableGovs.push(g);
+          } else {
+            comingSoonGovs.push(g);
+          }
+        });
+
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = 'اختار المحافظة...';
+        el.selGovernorate.appendChild(placeholder);
+
+        availableGovs.forEach(g => {
+          const opt = document.createElement('option');
+          opt.value = String(g.id);
+          opt.textContent = g.name_ar;
+          el.selGovernorate.appendChild(opt);
+        });
+
+        comingSoonGovs.forEach(g => {
+          const opt = document.createElement('option');
+          opt.value = String(g.id);
+          opt.textContent = g.name_ar + ' (قريبًا)';
+          opt.disabled = true;
+          el.selGovernorate.appendChild(opt);
+        });
+
+        el.selGovernorate.disabled = false;
+      }
+
+      function populateAreas() {
+        el.selArea.innerHTML = '';
+        if (!state.specialtyId || !state.governorateId) {
+          el.selArea.disabled = true;
+          const opt = document.createElement('option');
+          opt.value = '';
+          opt.textContent = 'اختار المحافظة الأول...';
+          el.selArea.appendChild(opt);
+          return;
+        }
+
+        const areaMap = new Map();
+        state.options.forEach(r => {
+          if (r.specialty_id === state.specialtyId && r.governorate_id === state.governorateId && r.area_id != null) {
+            if (!areaMap.has(r.area_id)) areaMap.set(r.area_id, r.area);
+          }
+        });
+
+        const areas = Array.from(areaMap.entries()).map(([id, name]) => ({ id, name }));
+        areas.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = 'اختار المنطقة...';
+        el.selArea.appendChild(placeholder);
+
+        areas.forEach(a => {
+          const opt = document.createElement('option');
+          opt.value = String(a.id);
+          opt.textContent = a.name;
+          el.selArea.appendChild(opt);
+        });
+
+        el.selArea.disabled = false;
+      }
+
+      function getBaseRowsForSpecialtyArea() {
+        if (!state.specialtyId || !state.areaId) return [];
+        return state.options.filter(r =>
+          r.specialty_id === state.specialtyId &&
+          r.governorate_id === state.governorateId &&
+          r.area_id === state.areaId
+        );
+      }
+
+      function updateFiltersAvailabilityAndHint() {
+        if (!state.specialtyId || !state.areaId) {
+          el.filtersSection.classList.add('hidden');
+          el.feeRangeHint.classList.add('hidden');
+          return;
+        }
+
+        el.filtersSection.classList.remove('hidden');
+        const baseRows = getBaseRowsForSpecialtyArea();
+
+        // Enable/disable gender options based on specialty + area
+        const hasMale = baseRows.some(r => r.gender === 'male');
+        const hasFemale = baseRows.some(r => r.gender === 'female');
+        Array.from(el.selGender.options).forEach(opt => {
+          if (opt.value === 'male') opt.disabled = !hasMale;
+          if (opt.value === 'female') opt.disabled = !hasFemale;
+        });
+        if (state.gender === 'male' && !hasMale) {
+          state.gender = '';
+          el.selGender.value = '';
+        }
+        if (state.gender === 'female' && !hasFemale) {
+          state.gender = '';
+          el.selGender.value = '';
+        }
+
+        // Enable/disable price options based on specialty + area
+        Array.from(el.selPrice.options).forEach(opt => {
+          if (!opt.value) return;
+          const rule = PRICE_RANGES[opt.value];
+          const matches = rule ? baseRows.some(r => rule.match(Number(r.fee))) : true;
+          opt.disabled = !matches;
+        });
+        if (state.price) {
+          const rule = PRICE_RANGES[state.price];
+          if (!rule || !baseRows.some(r => rule.match(Number(r.fee)))) {
+            state.price = '';
+            el.selPrice.value = '';
+          }
+        }
+
+        // Compute fee hint from currently matching rows
+        const matchingRows = baseRows.filter(r => {
+          if (state.gender && r.gender !== state.gender) return false;
+          if (state.price) {
+            const rule = PRICE_RANGES[state.price];
+            if (rule && !rule.match(Number(r.fee))) return false;
+          }
+          return true;
+        });
+
+        el.feeRangeHint.classList.remove('hidden', 'is-warn');
+        if (!matchingRows.length) {
+          el.feeRangeHint.textContent = 'مفيش دكاترة بالمواصفات دي — جرب تغير الفلاتر';
+          el.feeRangeHint.classList.add('is-warn');
+        } else {
+          const fees = matchingRows.map(r => Number(r.fee)).filter(n => !Number.isNaN(n));
+          const minFee = Math.min(...fees);
+          const maxFee = Math.max(...fees);
+          if (minFee === maxFee) {
+            el.feeRangeHint.textContent = 'سعر الكشف: ' + minFee.toLocaleString('ar-EG') + ' ج.م';
+          } else {
+            el.feeRangeHint.textContent = 'الكشف من ' + minFee.toLocaleString('ar-EG') + ' لـ ' + maxFee.toLocaleString('ar-EG') + ' ج.م';
+          }
+        }
+      }
+
+      function renderDays() {
+        if (!state.specialtyId || !state.governorateId || !state.areaId) {
+          el.daysContainer.innerHTML = '<div class="state-box state-muted">اختار التخصص والمحافظة والمنطقة الأول</div>';
+          return;
+        }
+
+        const scroller = document.createElement('div');
+        scroller.className = 'days-scroller';
+        state.days.forEach(dayObj => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'day-chip' + (state.day === dayObj.iso ? ' selected' : '');
+
+          const main = document.createElement('span');
+          main.className = 'day-chip-main';
+          main.textContent = dayObj.mainLabel;
+
+          const sub = document.createElement('span');
+          sub.className = 'day-chip-sub';
+          sub.textContent = dayObj.subLabel;
+
+          btn.appendChild(main);
+          btn.appendChild(sub);
+          btn.addEventListener('click', () => {
+            state.day = dayObj.iso;
+            state.dayLabel = dayObj.fullLabel;
+            state.slot = null;
+            state.slotLabel = '';
+            showSlotAlert('');
+            showFormError('');
+            renderDays();
+            updateUIState();
+            fetchSlots();
+          });
+
+          scroller.appendChild(btn);
+        });
+
+        el.daysContainer.innerHTML = '';
+        el.daysContainer.appendChild(scroller);
+      }
+
+      function getPriceBounds() {
+        if (!state.price || !PRICE_RANGES[state.price]) {
+          return { p_fee_min: null, p_fee_max: null };
+        }
+        return {
+          p_fee_min: PRICE_RANGES[state.price].min,
+          p_fee_max: PRICE_RANGES[state.price].max
+        };
+      }
+
+      async function fetchSlots() {
+        if (!state.specialtyId || !state.areaId || !state.day) {
+          el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
+          return;
+        }
+
+        const reqId = ++state.slotsRequestId;
+        el.slotsContainer.innerHTML =
+          '<div class="skeleton-grid">' +
+          '<div class="skeleton-item"></div><div class="skeleton-item"></div>' +
+          '<div class="skeleton-item"></div><div class="skeleton-item"></div>' +
+          '</div>';
+
+        const { p_fee_min, p_fee_max } = getPriceBounds();
+        const { data, error } = await sb.rpc('get_slots', {
+          p_specialty: state.specialtyId,
+          p_area: state.areaId,
+          p_day: state.day,
+          p_gender: state.gender || null,
+          p_fee_min,
+          p_fee_max
+        });
+
+        if (reqId !== state.slotsRequestId) return;
+
+        if (error) {
+          el.slotsContainer.innerHTML =
+            '<div class="state-box state-error">حصلت مشكلة في تحميل المواعيد، جرب تاني.</div>';
+          return;
+        }
+
+        const rows = Array.isArray(data) ? data : [];
+        if (!rows.length) {
+          el.slotsContainer.innerHTML =
+            '<div class="state-box state-empty">مفيش مواعيد متاحة اليوم ده — جرب يوم تاني أو غيّر الفلاتر</div>';
+          return;
+        }
+
+        const groups = {
+          morning: { title: 'صباحًا', items: [] },
+          afternoon: { title: 'بعد الظهر', items: [] },
+          evening: { title: 'مساءً', items: [] }
+        };
+
+        rows.forEach(row => {
+          const period = getSlotPeriod(row.slot);
+          groups[period].items.push(row.slot);
+        });
+
+        const wrapper = document.createElement('div');
+        ['morning', 'afternoon', 'evening'].forEach(key => {
+          const grp = groups[key];
+          if (!grp.items.length) return;
+
+          const section = document.createElement('div');
+          section.className = 'period-group';
+
+          const heading = document.createElement('div');
+          heading.className = 'period-heading';
+          heading.textContent = grp.title;
+          section.appendChild(heading);
+
+          const grid = document.createElement('div');
+          grid.className = 'slots-grid';
+          grp.items.forEach(slotVal => {
+            const label = formatSlotTime(slotVal);
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'slot-chip' + (state.slot === slotVal ? ' selected' : '');
+            btn.textContent = label;
+            btn.addEventListener('click', () => {
+              state.slot = slotVal;
+              state.slotLabel = label;
+              showSlotAlert('');
+              showFormError('');
+              wrapper.querySelectorAll('.slot-chip').forEach(c => c.classList.remove('selected'));
+              btn.classList.add('selected');
+              updateUIState();
+            });
+            grid.appendChild(btn);
+          });
+
+          section.appendChild(grid);
+          wrapper.appendChild(section);
+        });
+
+        el.slotsContainer.innerHTML = '';
+        el.slotsContainer.appendChild(wrapper);
+      }
+
+      // Cascade reset helpers
+      function resetFromGovernorate() {
+        state.governorateId = null;
+        state.governorateName = '';
+        resetFromArea();
+      }
+
+      function resetFromArea() {
+        state.areaId = null;
+        state.areaName = '';
+        resetFromFilters();
+      }
+
+      function resetFromFilters() {
+        state.gender = '';
+        state.price = '';
+        el.selGender.value = '';
+        el.selPrice.value = '';
+        resetFromDay();
+      }
+
+      function resetFromDay() {
+        state.day = null;
+        state.dayLabel = '';
+        resetFromSlot();
+      }
+
+      function resetFromSlot() {
+        state.slot = null;
+        state.slotLabel = '';
+        showSlotAlert('');
+        showFormError('');
+      }
+
+      // Dropdown Listeners
+      el.selSpecialty.addEventListener('change', () => {
+        const val = el.selSpecialty.value ? Number(el.selSpecialty.value) : null;
+        state.specialtyId = val;
+        state.specialtyName = val ? el.selSpecialty.options[el.selSpecialty.selectedIndex].textContent : '';
+        resetFromGovernorate();
+        populateGovernorates();
+        populateAreas();
+        updateFiltersAvailabilityAndHint();
+        renderDays();
+        el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
+        updateUIState();
+      });
+
+      el.selGovernorate.addEventListener('change', () => {
+        const val = el.selGovernorate.value ? Number(el.selGovernorate.value) : null;
+        state.governorateId = val;
+        state.governorateName = val ? el.selGovernorate.options[el.selGovernorate.selectedIndex].textContent : '';
+        resetFromArea();
+        populateAreas();
+        updateFiltersAvailabilityAndHint();
+        renderDays();
+        el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
+        updateUIState();
+      });
+
+      el.selArea.addEventListener('change', () => {
+        const val = el.selArea.value ? Number(el.selArea.value) : null;
+        state.areaId = val;
+        state.areaName = val ? el.selArea.options[el.selArea.selectedIndex].textContent : '';
+        resetFromFilters();
+        updateFiltersAvailabilityAndHint();
+        renderDays();
+        el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
+        updateUIState();
+      });
+
+      el.selGender.addEventListener('change', () => {
+        state.gender = el.selGender.value;
+        resetFromSlot();
+        updateFiltersAvailabilityAndHint();
+        updateUIState();
+        if (state.day) fetchSlots();
+      });
+
+      el.selPrice.addEventListener('change', () => {
+        state.price = el.selPrice.value;
+        resetFromSlot();
+        updateFiltersAvailabilityAndHint();
+        updateUIState();
+        if (state.day) fetchSlots();
+      });
+
+      // Mobile sticky button triggers form submit (or scrolls if fields empty)
+      el.mobileConfirmBtn.addEventListener('click', () => {
+        if (!el.patientName.value.trim() || !el.patientPhone.value.trim()) {
+          document.getElementById('patient-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        el.bookingForm.requestSubmit();
+      });
+
+      // Form Submission
+      el.bookingForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        showFormError('');
+        showSlotAlert('');
+
+        if (!state.specialtyId || !state.governorateId || !state.areaId || !state.day || !state.slot) {
+          showFormError('اختار التخصص والمحافظة والمنطقة واليوم والميعاد الأول.');
+          return;
+        }
+
+        const name = el.patientName.value.trim();
+        const phone = normalizeDigits(el.patientPhone.value);
+        el.patientPhone.value = phone;
+
+        if (name.length < 2) {
+          showFormError('اكتب الاسم بالكامل (حرفين على الأقل).');
+          el.patientName.focus();
+          return;
+        }
+
+        if (!/^01[0125][0-9]{8}$/.test(phone)) {
+          showFormError('رقم الموبايل لازم يبدأ بـ 010 أو 011 أو 012 أو 015 ويكون 11 رقم.');
+          el.patientPhone.focus();
+          return;
+        }
+
+        state.submitting = true;
+        el.submitBtn.textContent = 'جاري تأكيد الحجز...';
+        el.mobileConfirmBtn.textContent = 'جاري التأكيد...';
+        updateUIState();
+
+        const { p_fee_min, p_fee_max } = getPriceBounds();
+        const { data, error } = await sb.rpc('book_slot', {
+          p_specialty: state.specialtyId,
+          p_area: state.areaId,
+          p_day: state.day,
+          p_slot: state.slot,
+          p_name: name,
+          p_phone: phone,
+          p_gender: state.gender || null,
+          p_fee_min,
+          p_fee_max
+        });
+
+        state.submitting = false;
+        el.submitBtn.textContent = 'أكد الحجز';
+        el.mobileConfirmBtn.textContent = 'أكد الحجز';
+        updateUIState();
+
+        if (error) {
+          showFormError('حصلت مشكلة في الاتصال، جرب تاني لو سمحت.');
+          return;
+        }
+
+        const res = Array.isArray(data) ? data[0] : data;
+        if (!res || !res.ok) {
+          const code = res && res.error ? res.error : '';
+          if (code === 'slot_taken') {
+            state.slot = null;
+            state.slotLabel = '';
+            updateUIState();
+            showSlotAlert('الميعاد ده اتحجز حالًا — اختار ميعاد تاني');
+            showFormError('الميعاد ده اتحجز حالًا — اختار ميعاد تاني');
+            document.getElementById('slot-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            fetchSlots();
+          } else if (code === 'too_many') {
+            showFormError('عندك حجوزات كتير النهارده، كلمنا لو محتاج مساعدة');
+          } else if (code === 'bad_input') {
+            showFormError('تأكد من كتابة الاسم ورقم الموبايل بشكل صحيح (010 / 011 / 012 / 015).');
+          } else {
+            showFormError('حصل خطأ أثناء تأكيد الحجز، جرب تاني لو سمحت.');
+          }
+          return;
+        }
+
+        // Analytics event
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'booking_confirmed',
+          booking_id: res.booking_id,
+          specialty: state.specialtyName,
+          governorate: state.governorateName,
+          area: state.areaName,
+          value: res.fee,
+          currency: 'EGP'
+        });
+
+        el.successBookingId.textContent = '#' + res.booking_id;
+        el.successSpecialty.textContent = state.specialtyName;
+        el.successGovernorate.textContent = state.governorateName;
+        el.successArea.textContent = state.areaName;
+        el.successDay.textContent = state.dayLabel;
+        el.successSlot.textContent = state.slotLabel;
+        el.successFeeBox.textContent = 'سعر الكشف: ' + Number(res.fee || 0).toLocaleString('ar-EG') + ' ج.م — بيتدفع في العيادة';
+
+        el.bookingFlow.classList.add('hidden');
+        el.mobileStickyBar.classList.add('hidden');
+        el.bookingSuccess.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      el.newBookingBtn.addEventListener('click', () => {
+        state.specialtyId = null;
+        state.specialtyName = '';
+        el.selSpecialty.value = '';
+        resetFromGovernorate();
+        populateGovernorates();
+        populateAreas();
+        updateFiltersAvailabilityAndHint();
+        renderDays();
+        el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
+        el.patientName.value = '';
+        el.patientPhone.value = '';
+        updateUIState();
+        el.bookingSuccess.classList.add('hidden');
+        el.bookingFlow.classList.remove('hidden');
+        el.mobileStickyBar.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      function applyUrlPrefill() {
+        const params = new URLSearchParams(window.location.search);
+        const specParam = params.get('spec');
+        const govParam = params.get('gov');
+        const areaParam = params.get('area');
+        const genderParam = params.get('gender');
+        const priceParam = params.get('price');
+
+        if (specParam) {
+          const specOpt = Array.from(el.selSpecialty.options).find(o => o.value === specParam && !o.disabled);
+          if (specOpt) {
+            el.selSpecialty.value = specParam;
+            state.specialtyId = Number(specParam);
+            state.specialtyName = specOpt.textContent;
+            populateGovernorates();
+          }
+        }
+
+        if (state.specialtyId && govParam) {
+          const govOpt = Array.from(el.selGovernorate.options).find(o => o.value === govParam && !o.disabled);
+          if (govOpt) {
+            el.selGovernorate.value = govParam;
+            state.governorateId = Number(govParam);
+            state.governorateName = govOpt.textContent;
+            populateAreas();
+          }
+        }
+
+        if (state.specialtyId && state.governorateId && areaParam) {
+          const areaOpt = Array.from(el.selArea.options).find(o => o.value === areaParam && !o.disabled);
+          if (areaOpt) {
+            el.selArea.value = areaParam;
+            state.areaId = Number(areaParam);
+            state.areaName = areaOpt.textContent;
+            updateFiltersAvailabilityAndHint();
+            renderDays();
+          }
+        }
+
+        if (state.specialtyId && state.areaId) {
+          if (genderParam === 'male' || genderParam === 'female') {
+            const gOpt = Array.from(el.selGender.options).find(o => o.value === genderParam && !o.disabled);
+            if (gOpt) {
+              el.selGender.value = genderParam;
+              state.gender = genderParam;
+            }
+          }
+          if (priceParam && PRICE_RANGES[priceParam]) {
+            const pOpt = Array.from(el.selPrice.options).find(o => o.value === priceParam && !o.disabled);
+            if (pOpt) {
+              el.selPrice.value = priceParam;
+              state.price = priceParam;
+            }
+          }
+          updateFiltersAvailabilityAndHint();
+        }
+      }
+
+      async function init() {
+        state.days = getCairoNext14Days();
+        updateUIState();
+
+        const [govRes, optRes] = await Promise.all([
+          sb.from('governorates').select('id,name_ar,sort').order('sort'),
+          sb.rpc('get_options')
+        ]);
+
+        el.initLoading.classList.add('hidden');
+
+        if (govRes.error || optRes.error) {
+          el.initError.textContent = 'حصلت مشكلة في تحميل البيانات المتاحة، حدّث الصفحة وجرب تاني.';
+          el.initError.classList.remove('hidden');
+          return;
+        }
+
+        state.governorates = govRes.data || [];
+        state.options = Array.isArray(optRes.data) ? optRes.data : [];
+
+        el.selectorsWrap.classList.remove('hidden');
+        populateSpecialties();
+        populateGovernorates();
+        populateAreas();
+        applyUrlPrefill();
+        updateUIState();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>

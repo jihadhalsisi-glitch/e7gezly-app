@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#312e81" />
   <title>عقد اشتراك — احجزلي E7gezly by AdStartup</title>
   <meta name="description" content="عقد اشتراك العيادات والأطباء في خدمة احجزلي E7gezly by AdStartup" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,7 +53,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    button, input, select {
+    button, input, select, textarea {
       font-family: inherit;
     }
 
@@ -88,6 +89,8 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      text-decoration: none;
+      color: #ffffff;
     }
 
     .brand-mark {
@@ -111,10 +114,26 @@
     }
 
     .brand-sub {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--lime);
       font-weight: 600;
+    }
+
+    .home-link {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 7px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
       white-space: nowrap;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .home-link:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: var(--lime);
     }
 
     /* Hero Banner */
@@ -159,7 +178,7 @@
     }
 
     .section-title {
-      font-size: 1.12rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--indigo-dark);
       margin-bottom: 14px;
@@ -170,7 +189,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 12px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     @media (min-width: 760px) {
@@ -186,7 +205,7 @@
       background-color: var(--bg-surface);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-card);
-      padding: 18px 20px;
+      padding: 20px;
       box-shadow: var(--shadow-card);
     }
 
@@ -194,6 +213,7 @@
       display: flex;
       align-items: flex-start;
       gap: 14px;
+      padding: 18px 20px;
     }
 
     .term-num {
@@ -218,28 +238,46 @@
       line-height: 1.72;
     }
 
-    /* Form Card */
-    .form-card {
+    /* Form Sections */
+    .form-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form-section-card {
       border-color: var(--indigo-border);
-      padding: 24px 20px;
     }
 
-    .form-header {
-      padding-bottom: 14px;
+    .form-section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--border-hairline);
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
-    .form-header h2 {
-      font-size: 1.15rem;
+    .form-section-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background-color: var(--indigo-soft);
+      border: 1px solid var(--indigo-border);
+      color: var(--indigo-primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .form-section-title {
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--indigo-dark);
-    }
-
-    .form-header p {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      margin-top: 4px;
     }
 
     .form-grid {
@@ -252,6 +290,9 @@
       .form-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+      .field-full {
+        grid-column: 1 / -1;
+      }
     }
 
     .field {
@@ -260,18 +301,18 @@
       gap: 6px;
     }
 
-    .field label {
+    .field label, .field-label {
       font-size: 0.9rem;
       font-weight: 600;
       color: var(--text-primary);
     }
 
-    .req-mark {
-      color: var(--indigo-primary);
+    .req-star {
+      color: var(--danger);
       font-weight: 700;
     }
 
-    .input-ctrl, .select-ctrl {
+    .input-ctrl, .select-ctrl, .textarea-ctrl {
       width: 100%;
       min-height: 46px;
       padding: 10px 14px;
@@ -283,10 +324,21 @@
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .input-ctrl:focus, .select-ctrl:focus {
+    .textarea-ctrl {
+      min-height: 86px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .input-ctrl:focus, .select-ctrl:focus, .textarea-ctrl:focus {
       outline: none;
       border-color: var(--indigo-primary);
       box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.15);
+    }
+
+    .input-ctrl.is-invalid, .select-ctrl.is-invalid, .textarea-ctrl.is-invalid {
+      border-color: var(--danger);
+      background-color: #fffafb;
     }
 
     .input-hint {
@@ -294,8 +346,90 @@
       color: var(--text-muted);
     }
 
+    .field-error {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--danger);
+      display: none;
+    }
+
+    .field-error.visible {
+      display: block;
+    }
+
+    /* Radio Pills (Gender) */
+    .radio-pills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .radio-pill {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 8px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .radio-pill input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .radio-pill:has(input:checked) {
+      background-color: var(--indigo-dark);
+      border-color: var(--indigo-dark);
+      color: #ffffff;
+    }
+
+    .radio-pill:has(input:focus-visible) {
+      outline: 2px solid var(--indigo-primary);
+      outline-offset: 2px;
+    }
+
+    /* Collapsible Maps Help */
+    .maps-help {
+      margin-top: 6px;
+      border-radius: 10px;
+      background-color: var(--indigo-soft);
+      border: 1px solid var(--indigo-border);
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      color: var(--indigo-dark);
+    }
+
+    .maps-help summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .maps-help summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .maps-help p {
+      margin-top: 6px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* Agreement & Submit */
     .agree-box {
-      margin-top: 16px;
       padding: 14px 16px;
       border-radius: var(--radius-control);
       background-color: var(--indigo-soft);
@@ -321,20 +455,18 @@
     }
 
     .state-error {
-      margin-top: 14px;
       padding: 12px 14px;
       border-radius: var(--radius-control);
       background-color: var(--danger-soft);
       border: 1px solid var(--danger-border);
       color: var(--danger);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 600;
     }
 
     .btn-primary {
       width: 100%;
       min-height: 52px;
-      margin-top: 18px;
       padding: 12px 24px;
       border: none;
       border-radius: var(--radius-control);
@@ -352,7 +484,7 @@
     }
 
     .btn-primary:hover:not(:disabled) {
-      opacity: 0.94;
+      opacity: 0.93;
     }
 
     .btn-primary:active:not(:disabled) {
@@ -360,8 +492,16 @@
     }
 
     .btn-primary:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
+      background: #94a3b8;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-primary:disabled:hover {
+      opacity: 0.5;
+      transform: none;
     }
 
     .btn-primary::after {
@@ -371,6 +511,10 @@
       border-radius: 3px;
       background-color: var(--lime);
       flex-shrink: 0;
+    }
+
+    .btn-primary:disabled::after {
+      background-color: #cbd5e1;
     }
 
     /* Success Screen */
@@ -449,22 +593,25 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand">
+      <a href="index.html" class="brand">
         <div class="brand-mark" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 5v14M5 12h14"/>
           </svg>
         </div>
-        <span class="brand-title">احجزلي E7gezly</span>
-      </div>
-      <span class="brand-sub">by AdStartup</span>
+        <div>
+          <span class="brand-title">احجزلي E7gezly</span>
+          <span class="brand-sub" dir="ltr"> by AdStartup</span>
+        </div>
+      </a>
+      <a href="index.html" class="home-link">الصفحة الرئيسية</a>
     </div>
   </header>
 
   <section class="hero-banner">
     <div class="hero-inner">
       <h1 class="hero-title">عقد اشتراك — <span class="accent">احجزلي E7gezly by AdStartup</span></h1>
-      <p class="hero-desc">يرجى قراءة بنود الاشتراك والخدمة التالية بعناية، ثم ملء بيانات العيادة وتسجيل موافقتك الإلكترونية بالأسفل لبدء التفعيل.</p>
+      <p class="hero-desc">يرجى قراءة بنود الاشتراك والخدمة التالية بعناية، ثم ملء بيانات الطبيب والعيادة وتسجيل موافقتك الإلكترونية بالأسفل لبدء التفعيل.</p>
     </div>
   </section>
 
@@ -543,79 +690,229 @@
           <p class="term-text">بيانات المرضى تُستخدم للحجز فقط.</p>
         </article>
 
-        <article class="card term-card term-card-full">
+        <article class="card term-card">
           <span class="term-num">15</span>
+          <p class="term-text">البيانات المسجلة في النموذج (سعر الكشف، المواعيد، العنوان، اللوكيشن) هي اللي هتظهر للمرضى وهتُستخدم في الإعلانات وتأكيد الحجوزات، والعيادة مسؤولة عن إبلاغنا بأي تغيير فيها.</p>
+        </article>
+
+        <article class="card term-card">
+          <span class="term-num">16</span>
           <p class="term-text">الموافقة الإلكترونية على هذه الصفحة تُسجّل بالتاريخ والوقت وتُعد قبولًا بالشروط.</p>
         </article>
       </section>
 
-      <!-- Agreement Form Card -->
-      <section class="card form-card" aria-labelledby="form-heading">
-        <div class="form-header">
-          <h2 id="form-heading">نموذج الموافقة والاشتراك</h2>
-          <p>سجّل بياناتك واختر الباقة المناسبة للموافقة على العقد.</p>
-        </div>
+      <!-- Agreement Form -->
+      <h2 class="section-title">نموذج التسجيل والموافقة</h2>
 
-        <form id="agreement-form" novalidate>
+      <form id="agreement-form" class="form-sections" novalidate>
+        <!-- Section 1: بيانات الطبيب -->
+        <section class="card form-section-card" aria-labelledby="sec1-title">
+          <div class="form-section-head">
+            <span class="form-section-badge">1</span>
+            <h3 id="sec1-title" class="form-section-title">بيانات الطبيب</h3>
+          </div>
+
           <div class="form-grid">
-            <div class="field">
-              <label for="doctor-name">اسم الدكتور <span class="req-mark">*</span></label>
+            <div class="field" data-field="doctor_name">
+              <label for="doctor-name">اسم الدكتور <span class="req-star">*</span></label>
               <input id="doctor-name" type="text" class="input-ctrl" placeholder="مثال: د. أحمد محمود" required />
+              <div class="field-error" id="err-doctor_name"></div>
             </div>
 
-            <div class="field">
-              <label for="clinic-name">اسم العيادة/المركز</label>
-              <input id="clinic-name" type="text" class="input-ctrl" placeholder="مثال: عيادة النور التخصصية" />
+            <div class="field" data-field="gender">
+              <span class="field-label">النوع <span class="req-star">*</span></span>
+              <div class="radio-pills">
+                <label class="radio-pill">
+                  <input type="radio" name="gender" value="male" />
+                  <span>دكتور</span>
+                </label>
+                <label class="radio-pill">
+                  <input type="radio" name="gender" value="female" />
+                  <span>دكتورة</span>
+                </label>
+              </div>
+              <div class="field-error" id="err-gender"></div>
             </div>
 
-            <div class="field">
-              <label for="phone">رقم الموبايل <span class="req-mark">*</span></label>
-              <input
-                id="phone"
-                type="tel"
-                dir="ltr"
-                inputmode="numeric"
-                maxlength="11"
-                class="input-ctrl tabular-nums"
-                placeholder="01xxxxxxxxx"
-                required
-              />
-              <span class="input-hint">رقم موبايل مصري يبدأ بـ 01 ومكون من 11 رقم</span>
-            </div>
-
-            <div class="field">
-              <label for="specialty">التخصص</label>
-              <input id="specialty" type="text" class="input-ctrl" placeholder="مثال: باطنة / عظام / جلدية" />
-            </div>
-
-            <div class="field">
-              <label for="area">المنطقة</label>
-              <input id="area" type="text" class="input-ctrl" placeholder="مثال: مدينة نصر / المهندسين" />
-            </div>
-
-            <div class="field">
-              <label for="package">الباقة <span class="req-mark">*</span></label>
-              <select id="package" class="select-ctrl" required>
-                <option value="">اختر الباقة...</option>
-                <option value="5000">10–15 حجز مؤكد = 5,000 ج.م</option>
-                <option value="9000">20–30 حجز = 9,000 ج.م (الحد الأقصى للدكتور الواحد)</option>
-                <option value="17000">40–60 حجز = 17,000 ج.م (للمراكز، 3 دكاترة أو أكثر)</option>
+            <div class="field" data-field="specialty">
+              <label for="specialty-select">التخصص <span class="req-star">*</span></label>
+              <select id="specialty-select" class="select-ctrl" required>
+                <option value="">جاري تحميل التخصصات...</option>
               </select>
+              <div class="field-error" id="err-specialty"></div>
             </div>
+
+            <div id="specialty-other-wrap" class="field hidden" data-field="specialty_other">
+              <label for="specialty-other">اكتب التخصص <span class="req-star">*</span></label>
+              <input id="specialty-other" type="text" class="input-ctrl" placeholder="مثال: جراحة أوعية دموية" />
+              <div class="field-error" id="err-specialty_other"></div>
+            </div>
+
+            <div class="field" data-field="fee">
+              <label for="fee">سعر الكشف بالجنيه <span class="req-star">*</span></label>
+              <input id="fee" type="number" min="50" max="10000" step="1" class="input-ctrl tabular-nums" placeholder="مثال: 400" required />
+              <div class="field-error" id="err-fee"></div>
+            </div>
+
+            <div class="field" data-field="phone">
+              <label for="phone">رقم موبايل الدكتور <span class="req-star">*</span></label>
+              <input id="phone" type="tel" dir="ltr" inputmode="numeric" maxlength="11" class="input-ctrl tabular-nums" placeholder="01xxxxxxxxx" required />
+              <span class="input-hint">رقم موبايل مصري (010 / 011 / 012 / 015)</span>
+              <div class="field-error" id="err-phone"></div>
+            </div>
+
+            <div class="field" data-field="email">
+              <label for="email">البريد الإلكتروني</label>
+              <input id="email" type="email" dir="ltr" class="input-ctrl" placeholder="doctor@example.com" />
+              <div class="field-error" id="err-email"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: بيانات العيادة -->
+        <section class="card form-section-card" aria-labelledby="sec2-title">
+          <div class="form-section-head">
+            <span class="form-section-badge">2</span>
+            <h3 id="sec2-title" class="form-section-title">بيانات العيادة</h3>
+          </div>
+
+          <div class="form-grid">
+            <div class="field" data-field="clinic_name">
+              <label for="clinic-name">اسم العيادة أو المركز</label>
+              <input id="clinic-name" type="text" class="input-ctrl" placeholder="مثال: عيادة النور التخصصية" />
+              <div class="field-error" id="err-clinic_name"></div>
+            </div>
+
+            <div class="field" data-field="clinic_whatsapp">
+              <label for="clinic-whatsapp">رقم واتساب العيادة لاستقبال الحجوزات <span class="req-star">*</span></label>
+              <input id="clinic-whatsapp" type="tel" dir="ltr" inputmode="numeric" maxlength="11" class="input-ctrl tabular-nums" placeholder="01xxxxxxxxx" required />
+              <span class="input-hint">رقم واتساب مصري (010 / 011 / 012 / 015)</span>
+              <div class="field-error" id="err-clinic_whatsapp"></div>
+            </div>
+
+            <div class="field field-full" data-field="working_hours">
+              <label for="working-hours">مواعيد العمل <span class="req-star">*</span></label>
+              <textarea id="working-hours" class="textarea-ctrl" placeholder="مثال: السبت للخميس من 5 م لـ 10 م — الجمعة إجازة" required></textarea>
+              <div class="field-error" id="err-working_hours"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: عنوان العيادة -->
+        <section class="card form-section-card" aria-labelledby="sec3-title">
+          <div class="form-section-head">
+            <span class="form-section-badge">3</span>
+            <h3 id="sec3-title" class="form-section-title">عنوان العيادة</h3>
+          </div>
+
+          <div class="form-grid">
+            <div class="field" data-field="governorate">
+              <label for="governorate-select">المحافظة <span class="req-star">*</span></label>
+              <select id="governorate-select" class="select-ctrl" required>
+                <option value="">جاري تحميل المحافظات...</option>
+              </select>
+              <div class="field-error" id="err-governorate"></div>
+            </div>
+
+            <div class="field" data-field="area">
+              <label for="area-input">المنطقة أو الحي <span class="req-star">*</span></label>
+              <input id="area-input" type="text" list="areas-datalist" class="input-ctrl" placeholder="مثال: مدينة نصر" required />
+              <datalist id="areas-datalist"></datalist>
+              <div class="field-error" id="err-area"></div>
+            </div>
+
+            <div class="field field-full" data-field="address_street">
+              <label for="address-street">الشارع ورقم العقار <span class="req-star">*</span></label>
+              <input id="address-street" type="text" class="input-ctrl" placeholder="مثال: 15 شارع عباس العقاد" required />
+              <div class="field-error" id="err-address_street"></div>
+            </div>
+
+            <div class="field" data-field="address_floor">
+              <label for="address-floor">الدور ورقم الشقة</label>
+              <input id="address-floor" type="text" class="input-ctrl" placeholder="مثال: الدور الثالث - شقة 6" />
+            </div>
+
+            <div class="field" data-field="address_landmark">
+              <label for="address-landmark">علامة مميزة</label>
+              <input id="address-landmark" type="text" class="input-ctrl" placeholder="مثال: بجوار صيدلية ..." />
+            </div>
+
+            <div class="field field-full" data-field="maps_url">
+              <label for="maps-url">رابط Google Maps <span class="req-star">*</span></label>
+              <input id="maps-url" type="url" dir="ltr" class="input-ctrl" placeholder="https://maps.app.goo.gl/..." required />
+              <div class="field-error" id="err-maps_url"></div>
+              <details class="maps-help">
+                <summary>إزاي أجيب الرابط؟ ▾</summary>
+                <p>افتح Google Maps ← دوّر على العيادة أو اضغط مطوّلًا على مكانها ← مشاركة ← نسخ الرابط ← الصقه هنا.</p>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: السوشيال ميديا والموقع -->
+        <section class="card form-section-card" aria-labelledby="sec4-title">
+          <div class="form-section-head">
+            <span class="form-section-badge">4</span>
+            <h3 id="sec4-title" class="form-section-title">السوشيال ميديا والموقع <span style="font-weight:400; font-size:0.85rem; color:var(--text-muted);">(اختياري)</span></h3>
+          </div>
+
+          <div class="form-grid">
+            <div class="field" data-field="facebook_url">
+              <label for="facebook-url">فيسبوك</label>
+              <input id="facebook-url" type="url" dir="ltr" class="input-ctrl" placeholder="https://facebook.com/..." />
+              <div class="field-error" id="err-facebook_url"></div>
+            </div>
+
+            <div class="field" data-field="instagram_url">
+              <label for="instagram-url">انستجرام</label>
+              <input id="instagram-url" type="url" dir="ltr" class="input-ctrl" placeholder="https://instagram.com/..." />
+              <div class="field-error" id="err-instagram_url"></div>
+            </div>
+
+            <div class="field" data-field="website_url">
+              <label for="website-url">الموقع الإلكتروني</label>
+              <input id="website-url" type="url" dir="ltr" class="input-ctrl" placeholder="https://..." />
+              <div class="field-error" id="err-website_url"></div>
+            </div>
+
+            <div class="field" data-field="other_link">
+              <label for="other-link">رابط آخر</label>
+              <input id="other-link" type="url" dir="ltr" class="input-ctrl" placeholder="https://..." />
+              <div class="field-error" id="err-other_link"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: الباقة والموافقة -->
+        <section class="card form-section-card" aria-labelledby="sec5-title">
+          <div class="form-section-head">
+            <span class="form-section-badge">5</span>
+            <h3 id="sec5-title" class="form-section-title">الباقة وتأكيد الموافقة</h3>
+          </div>
+
+          <div class="field" data-field="package" style="margin-bottom: 16px;">
+            <label for="package">الباقة <span class="req-star">*</span></label>
+            <select id="package" class="select-ctrl" required>
+              <option value="">اختر الباقة...</option>
+              <option value="5000">10–15 حجز مؤكد = 5,000 ج.م</option>
+              <option value="9000">20–30 حجز = 9,000 ج.م (الحد الأقصى للدكتور الواحد)</option>
+              <option value="17000">40–60 حجز = 17,000 ج.م (للمراكز، 3 دكاترة أو أكثر)</option>
+            </select>
+            <div class="field-error" id="err-package"></div>
           </div>
 
           <label class="agree-box" for="agreed-checkbox">
-            <input id="agreed-checkbox" type="checkbox" class="agree-checkbox" required />
-            <span class="agree-text">قرأت الشروط وأوافق عليها</span>
+            <input id="agreed-checkbox" type="checkbox" class="agree-checkbox" />
+            <span class="agree-text">قرأت شروط العقد وأوافق عليها</span>
           </label>
 
-          <div id="form-error" class="state-error hidden" role="alert"></div>
+          <div id="submit-global-error" class="state-error hidden" style="margin-top: 14px;" role="alert"></div>
 
-          <button id="submit-btn" type="submit" class="btn-primary">
+          <button id="submit-btn" type="submit" class="btn-primary" style="margin-top: 16px;" disabled>
             سجّل موافقتي
           </button>
-        </form>
-      </section>
+        </section>
+      </form>
     </div>
 
     <!-- Success Screen -->
@@ -632,16 +929,16 @@
           <span id="sum-doctor" class="summary-val"></span>
         </div>
         <div class="summary-row">
-          <span class="summary-key">العيادة/المركز</span>
-          <span id="sum-clinic" class="summary-val"></span>
+          <span class="summary-key">التخصص</span>
+          <span id="sum-specialty" class="summary-val"></span>
         </div>
         <div class="summary-row">
-          <span class="summary-key">الموبايل</span>
-          <span id="sum-phone" class="summary-val tabular-nums" dir="ltr"></span>
+          <span class="summary-key">المحافظة والمنطقة</span>
+          <span id="sum-location" class="summary-val"></span>
         </div>
         <div class="summary-row">
-          <span class="summary-key">التخصص والمنطقة</span>
-          <span id="sum-spec-area" class="summary-val"></span>
+          <span class="summary-key">سعر الكشف</span>
+          <span id="sum-fee" class="summary-val tabular-nums"></span>
         </div>
         <div class="summary-row">
           <span class="summary-key">الباقة</span>
@@ -662,6 +959,11 @@
       const SUPABASE_KEY = 'sb_publishable_tyYjOcfnXLFvc4c96KoTvw_ipNGgavy';
       const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+      const MAPS_REGEX = /^https?:[/][/](maps[.]app[.]goo[.]gl|goo[.]gl[/]maps|(www[.])?google[.]com([.]eg)?[/]maps|maps[.]google[.]com([.]eg)?)/i;
+      const PHONE_REGEX = /^01[0125][0-9]{8}$/;
+      const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const HTTP_REGEX = /^https?:\/\/.+/i;
+
       const PACKAGE_LABELS = {
         '5000': '10–15 حجز مؤكد = 5,000 ج.م',
         '9000': '20–30 حجز = 9,000 ج.م (الحد الأقصى للدكتور الواحد)',
@@ -673,20 +975,38 @@
         success: document.getElementById('agreement-success'),
         form: document.getElementById('agreement-form'),
         doctorName: document.getElementById('doctor-name'),
-        clinicName: document.getElementById('clinic-name'),
+        specialtySelect: document.getElementById('specialty-select'),
+        specialtyOtherWrap: document.getElementById('specialty-other-wrap'),
+        specialtyOther: document.getElementById('specialty-other'),
+        fee: document.getElementById('fee'),
         phone: document.getElementById('phone'),
-        specialty: document.getElementById('specialty'),
-        area: document.getElementById('area'),
+        email: document.getElementById('email'),
+        clinicName: document.getElementById('clinic-name'),
+        clinicWhatsapp: document.getElementById('clinic-whatsapp'),
+        workingHours: document.getElementById('working-hours'),
+        governorateSelect: document.getElementById('governorate-select'),
+        areaInput: document.getElementById('area-input'),
+        areasDatalist: document.getElementById('areas-datalist'),
+        addressStreet: document.getElementById('address-street'),
+        addressFloor: document.getElementById('address-floor'),
+        addressLandmark: document.getElementById('address-landmark'),
+        mapsUrl: document.getElementById('maps-url'),
+        facebookUrl: document.getElementById('facebook-url'),
+        instagramUrl: document.getElementById('instagram-url'),
+        websiteUrl: document.getElementById('website-url'),
+        otherLink: document.getElementById('other-link'),
         packageSelect: document.getElementById('package'),
         agreedCheckbox: document.getElementById('agreed-checkbox'),
-        formError: document.getElementById('form-error'),
         submitBtn: document.getElementById('submit-btn'),
+        globalError: document.getElementById('submit-global-error'),
         sumDoctor: document.getElementById('sum-doctor'),
-        sumClinic: document.getElementById('sum-clinic'),
-        sumPhone: document.getElementById('sum-phone'),
-        sumSpecArea: document.getElementById('sum-spec-area'),
+        sumSpecialty: document.getElementById('sum-specialty'),
+        sumLocation: document.getElementById('sum-location'),
+        sumFee: document.getElementById('sum-fee'),
         sumPackage: document.getElementById('sum-package')
       };
+
+      let submitting = false;
 
       function normalizeDigits(str) {
         const arabicNums = '٠١٢٣٤٥٦٧٨٩';
@@ -697,83 +1017,323 @@
           .replace(/[\s\-()]/g, '');
       }
 
-      function showError(msg) {
-        if (!msg) {
-          el.formError.textContent = '';
-          el.formError.classList.add('hidden');
-        } else {
-          el.formError.textContent = msg;
-          el.formError.classList.remove('hidden');
+      function syncSubmitState() {
+        el.submitBtn.disabled = submitting || !el.agreedCheckbox.checked;
+      }
+
+      el.agreedCheckbox.addEventListener('change', syncSubmitState);
+
+      function clearAllFieldErrors() {
+        document.querySelectorAll('.field-error').forEach(node => {
+          node.textContent = '';
+          node.classList.remove('visible');
+        });
+        document.querySelectorAll('.is-invalid').forEach(node => {
+          node.classList.remove('is-invalid');
+        });
+        el.globalError.textContent = '';
+        el.globalError.classList.add('hidden');
+      }
+
+      function setFieldError(fieldKey, inputEl, message) {
+        const errNode = document.getElementById('err-' + fieldKey);
+        if (errNode) {
+          errNode.textContent = message;
+          errNode.classList.add('visible');
+        }
+        if (inputEl) {
+          inputEl.classList.add('is-invalid');
         }
       }
 
+      function clearFieldError(fieldKey, inputEl) {
+        const errNode = document.getElementById('err-' + fieldKey);
+        if (errNode) {
+          errNode.textContent = '';
+          errNode.classList.remove('visible');
+        }
+        if (inputEl) {
+          inputEl.classList.remove('is-invalid');
+        }
+      }
+
+      // Live clear error on input/change
+      const fieldBindings = [
+        ['doctor_name', el.doctorName],
+        ['specialty', el.specialtySelect],
+        ['specialty_other', el.specialtyOther],
+        ['fee', el.fee],
+        ['phone', el.phone],
+        ['email', el.email],
+        ['clinic_whatsapp', el.clinicWhatsapp],
+        ['working_hours', el.workingHours],
+        ['governorate', el.governorateSelect],
+        ['area', el.areaInput],
+        ['address_street', el.addressStreet],
+        ['maps_url', el.mapsUrl],
+        ['facebook_url', el.facebookUrl],
+        ['instagram_url', el.instagramUrl],
+        ['website_url', el.websiteUrl],
+        ['other_link', el.otherLink],
+        ['package', el.packageSelect]
+      ];
+
+      fieldBindings.forEach(([key, ctrl]) => {
+        const evt = ctrl.tagName === 'SELECT' ? 'change' : 'input';
+        ctrl.addEventListener(evt, () => clearFieldError(key, ctrl));
+      });
+
+      document.querySelectorAll('input[name="gender"]').forEach(r => {
+        r.addEventListener('change', () => clearFieldError('gender', null));
+      });
+
+      // Specialty "تخصص آخر" toggle
+      el.specialtySelect.addEventListener('change', () => {
+        const isOther = el.specialtySelect.value === '__other__';
+        el.specialtyOtherWrap.classList.toggle('hidden', !isOther);
+        el.specialtyOther.required = isOther;
+        if (!isOther) {
+          el.specialtyOther.value = '';
+          clearFieldError('specialty_other', el.specialtyOther);
+        }
+      });
+
+      // Governorate -> load areas datalist
+      el.governorateSelect.addEventListener('change', async () => {
+        el.areasDatalist.innerHTML = '';
+        const govId = el.governorateSelect.value ? Number(el.governorateSelect.value) : null;
+        if (!govId) return;
+
+        const { data, error } = await sb
+          .from('areas')
+          .select('name_ar')
+          .eq('governorate_id', govId)
+          .order('name_ar');
+
+        if (error || !Array.isArray(data)) return;
+        data.forEach(row => {
+          const opt = document.createElement('option');
+          opt.value = row.name_ar;
+          el.areasDatalist.appendChild(opt);
+        });
+      });
+
       el.form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        showError('');
+        clearAllFieldErrors();
+
+        if (!el.agreedCheckbox.checked) {
+          syncSubmitState();
+          return;
+        }
+
+        let firstInvalidEl = null;
+        function flag(key, inputEl, msg, scrollTarget) {
+          setFieldError(key, inputEl, msg);
+          if (!firstInvalidEl) {
+            firstInvalidEl = scrollTarget || inputEl;
+          }
+        }
 
         const doctorName = el.doctorName.value.trim();
-        const clinicName = el.clinicName.value.trim();
+        if (doctorName.length < 2) {
+          flag('doctor_name', el.doctorName, 'من فضلك اكتب اسم الدكتور بالكامل.');
+        }
+
+        const genderChecked = document.querySelector('input[name="gender"]:checked');
+        const genderVal = genderChecked ? genderChecked.value : '';
+        if (!genderVal) {
+          flag('gender', null, 'اختار النوع (دكتور أو دكتورة).', document.querySelector('[data-field="gender"]'));
+        }
+
+        const specChoice = el.specialtySelect.value;
+        let specialtyText = '';
+        if (!specChoice) {
+          flag('specialty', el.specialtySelect, 'اختار التخصص.');
+        } else if (specChoice === '__other__') {
+          specialtyText = el.specialtyOther.value.trim();
+          if (specialtyText.length < 2) {
+            flag('specialty_other', el.specialtyOther, 'اكتب اسم التخصص.');
+          }
+        } else {
+          specialtyText = el.specialtySelect.options[el.specialtySelect.selectedIndex].textContent;
+        }
+
+        const feeRaw = el.fee.value.trim();
+        const feeNum = Number(feeRaw);
+        if (!feeRaw || Number.isNaN(feeNum) || feeNum < 50 || feeNum > 10000) {
+          flag('fee', el.fee, 'سعر الكشف لازم يكون رقم بين 50 و 10,000 جنيه.');
+        }
+
         const phone = normalizeDigits(el.phone.value);
         el.phone.value = phone;
-        const specialty = el.specialty.value.trim();
-        const area = el.area.value.trim();
-        const pkg = el.packageSelect.value;
-        const agreed = el.agreedCheckbox.checked;
+        if (!PHONE_REGEX.test(phone)) {
+          flag('phone', el.phone, 'رقم الموبايل لازم يبدأ بـ 010 أو 011 أو 012 أو 015 ويكون 11 رقم.');
+        }
 
-        if (!doctorName || doctorName.length < 2) {
-          showError('من فضلك اكتب اسم الدكتور.');
-          el.doctorName.focus();
+        const emailVal = el.email.value.trim();
+        if (emailVal && !EMAIL_REGEX.test(emailVal)) {
+          flag('email', el.email, 'صيغة البريد الإلكتروني غير صحيحة.');
+        }
+
+        const clinicName = el.clinicName.value.trim();
+
+        const clinicWhatsapp = normalizeDigits(el.clinicWhatsapp.value);
+        el.clinicWhatsapp.value = clinicWhatsapp;
+        if (!PHONE_REGEX.test(clinicWhatsapp)) {
+          flag('clinic_whatsapp', el.clinicWhatsapp, 'رقم واتساب العيادة لازم يبدأ بـ 010 أو 011 أو 012 أو 015 ويكون 11 رقم.');
+        }
+
+        const workingHours = el.workingHours.value.trim();
+        if (workingHours.length < 3) {
+          flag('working_hours', el.workingHours, 'اكتب مواعيد عمل العيادة.');
+        }
+
+        const govChoice = el.governorateSelect.value;
+        let governorateName = '';
+        if (!govChoice) {
+          flag('governorate', el.governorateSelect, 'اختار المحافظة.');
+        } else {
+          governorateName = el.governorateSelect.options[el.governorateSelect.selectedIndex].textContent;
+        }
+
+        const areaText = el.areaInput.value.trim();
+        if (areaText.length < 2) {
+          flag('area', el.areaInput, 'اكتب المنطقة أو الحي.');
+        }
+
+        const addressStreet = el.addressStreet.value.trim();
+        if (addressStreet.length < 3) {
+          flag('address_street', el.addressStreet, 'اكتب الشارع ورقم العقار.');
+        }
+
+        const addressFloor = el.addressFloor.value.trim();
+        const addressLandmark = el.addressLandmark.value.trim();
+
+        const mapsUrl = el.mapsUrl.value.trim();
+        if (!mapsUrl || !MAPS_REGEX.test(mapsUrl)) {
+          flag('maps_url', el.mapsUrl, 'لازم يكون رابط Google Maps لمكان العيادة');
+        }
+
+        const facebookUrl = el.facebookUrl.value.trim();
+        if (facebookUrl && !HTTP_REGEX.test(facebookUrl)) {
+          flag('facebook_url', el.facebookUrl, 'الرابط لازم يبدأ بـ http:// أو https://');
+        }
+
+        const instagramUrl = el.instagramUrl.value.trim();
+        if (instagramUrl && !HTTP_REGEX.test(instagramUrl)) {
+          flag('instagram_url', el.instagramUrl, 'الرابط لازم يبدأ بـ http:// أو https://');
+        }
+
+        const websiteUrl = el.websiteUrl.value.trim();
+        if (websiteUrl && !HTTP_REGEX.test(websiteUrl)) {
+          flag('website_url', el.websiteUrl, 'الرابط لازم يبدأ بـ http:// أو https://');
+        }
+
+        const otherLink = el.otherLink.value.trim();
+        if (otherLink && !HTTP_REGEX.test(otherLink)) {
+          flag('other_link', el.otherLink, 'الرابط لازم يبدأ بـ http:// أو https://');
+        }
+
+        const pkgVal = el.packageSelect.value;
+        if (!pkgVal) {
+          flag('package', el.packageSelect, 'اختار الباقة المطلوبة.');
+        }
+
+        if (firstInvalidEl) {
+          firstInvalidEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (typeof firstInvalidEl.focus === 'function') {
+            firstInvalidEl.focus({ preventScroll: true });
+          }
           return;
         }
 
-        if (!/^01[0-9]{9}$/.test(phone)) {
-          showError('رقم الموبايل لازم يكون رقم مصري صحيح يبدأ بـ 01 ومكون من 11 رقم.');
-          el.phone.focus();
-          return;
-        }
-
-        if (!pkg) {
-          showError('من فضلك اختار الباقة.');
-          el.packageSelect.focus();
-          return;
-        }
-
-        if (!agreed) {
-          showError('لازم توافق على الشروط الأول بتفعيل مربع "قرأت الشروط وأوافق عليها".');
-          el.agreedCheckbox.focus();
-          return;
-        }
-
-        el.submitBtn.disabled = true;
+        submitting = true;
         el.submitBtn.textContent = 'جاري تسجيل الموافقة...';
+        syncSubmitState();
 
         const { error } = await sb.from('agreements').insert({
           doctor_name: doctorName,
-          clinic_name: clinicName,
+          gender: genderVal,
+          specialty: specialtyText,
+          fee: Number(feeNum),
           phone: phone,
-          specialty: specialty,
-          area: area,
-          package: pkg
+          email: emailVal || null,
+          clinic_name: clinicName || null,
+          clinic_whatsapp: clinicWhatsapp,
+          working_hours: workingHours,
+          governorate: governorateName,
+          area: areaText,
+          address_street: addressStreet,
+          address_floor: addressFloor || null,
+          address_landmark: addressLandmark || null,
+          maps_url: mapsUrl,
+          facebook_url: facebookUrl || null,
+          instagram_url: instagramUrl || null,
+          website_url: websiteUrl || null,
+          other_link: otherLink || null,
+          package: pkgVal,
+          agreed: true,
+          terms_version: 'v2'
         });
 
-        el.submitBtn.disabled = false;
+        submitting = false;
         el.submitBtn.textContent = 'سجّل موافقتي';
+        syncSubmitState();
 
         if (error) {
-          showError('حصلت مشكلة أثناء تسجيل الموافقة، تأكد من الاتصال وجرب تاني.');
+          console.error('Agreement submit error:', error);
+          el.globalError.textContent = 'حصلت مشكلة، راجع البيانات وحاول تاني';
+          el.globalError.classList.remove('hidden');
+          el.globalError.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return;
         }
 
         el.sumDoctor.textContent = doctorName;
-        el.sumClinic.textContent = clinicName || '—';
-        el.sumPhone.textContent = phone;
-        el.sumSpecArea.textContent = (specialty || '—') + ' · ' + (area || '—');
-        el.sumPackage.textContent = PACKAGE_LABELS[pkg] || pkg;
+        el.sumSpecialty.textContent = specialtyText;
+        el.sumLocation.textContent = governorateName + ' — ' + areaText;
+        el.sumFee.textContent = feeNum.toLocaleString('ar-EG') + ' ج.م';
+        el.sumPackage.textContent = PACKAGE_LABELS[pkgVal] || pkgVal;
 
         el.flow.classList.add('hidden');
         el.success.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+
+      async function init() {
+        syncSubmitState();
+
+        const [specRes, govRes] = await Promise.all([
+          sb.from('specialties').select('id,name_ar').eq('active', true).order('name_ar'),
+          sb.from('governorates').select('id,name_ar').order('sort')
+        ]);
+
+        el.specialtySelect.innerHTML = '<option value="">اختر التخصص...</option>';
+        if (!specRes.error && Array.isArray(specRes.data)) {
+          specRes.data.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = String(s.id);
+            opt.textContent = s.name_ar;
+            el.specialtySelect.appendChild(opt);
+          });
+        }
+        const otherOpt = document.createElement('option');
+        otherOpt.value = '__other__';
+        otherOpt.textContent = 'تخصص آخر';
+        el.specialtySelect.appendChild(otherOpt);
+
+        el.governorateSelect.innerHTML = '<option value="">اختر المحافظة...</option>';
+        if (!govRes.error && Array.isArray(govRes.data)) {
+          govRes.data.forEach(g => {
+            const opt = document.createElement('option');
+            opt.value = String(g.id);
+            opt.textContent = g.name_ar;
+            el.governorateSelect.appendChild(opt);
+          });
+        }
+      }
+
+      init();
     })();
   </script>
 </body>

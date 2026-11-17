@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>لوحة الإدارة | احجزلي – E7gezly by AdStartup</title>
-  <meta name="description" content="لوحة إدارة الحجوزات والأطباء والتخصصات والتقرير الأسبوعي - احجزلي" />
+  <meta name="description" content="لوحة إدارة الحجوزات وطلبات الانضمام والأطباء والتخصصات والتقرير الأسبوعي - احجزلي" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -27,6 +27,9 @@
       --amber: #b45309;
       --amber-soft: #fffbeb;
       --amber-border: #fde68a;
+      --indigo: #4338ca;
+      --indigo-soft: #eef2ff;
+      --indigo-border: #c7d2fe;
       --radius-card: 16px;
       --radius-control: 10px;
       --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.08);
@@ -49,7 +52,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    button, input, select {
+    button, input, select, textarea {
       font-family: inherit;
     }
 
@@ -71,7 +74,7 @@
     }
 
     .topbar-inner {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 12px 16px;
       display: flex;
@@ -177,14 +180,14 @@
       background-color: #d1fae5;
     }
 
-    .btn-danger-outline {
-      background-color: var(--bg-surface);
-      border-color: var(--danger-border);
-      color: var(--danger);
+    .btn-indigo {
+      background-color: var(--indigo-soft);
+      border-color: var(--indigo-border);
+      color: var(--indigo);
     }
 
-    .btn-danger-outline:hover:not(:disabled) {
-      background-color: var(--danger-soft);
+    .btn-indigo:hover:not(:disabled) {
+      background-color: #e0e7ff;
     }
 
     .btn-sm {
@@ -200,13 +203,13 @@
       gap: 5px;
     }
 
-    .field label {
+    .field label, .field-label {
       font-size: 0.86rem;
       font-weight: 600;
       color: var(--text-primary);
     }
 
-    .input-ctrl, .select-ctrl {
+    .input-ctrl, .select-ctrl, .textarea-ctrl {
       width: 100%;
       min-height: 42px;
       padding: 8px 12px;
@@ -218,17 +221,63 @@
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .input-ctrl:focus, .select-ctrl:focus {
+    .textarea-ctrl {
+      min-height: 76px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    .input-ctrl:focus, .select-ctrl:focus, .textarea-ctrl:focus {
       outline: none;
       border-color: var(--teal);
       box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.14);
+    }
+
+    .select-ctrl:disabled {
+      background-color: var(--bg-subtle);
+      color: var(--text-muted);
+    }
+
+    /* Radio Pills */
+    .radio-pills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .radio-pill {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 6px 12px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .radio-pill input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .radio-pill:has(input:checked) {
+      background-color: var(--teal);
+      border-color: var(--teal);
+      color: #ffffff;
     }
 
     /* Main Container */
     .main-wrap {
       flex: 1;
       width: 100%;
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 20px 16px 48px;
     }
@@ -265,12 +314,6 @@
       gap: 14px;
     }
 
-    .stack-sm {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
     /* Alerts */
     .alert {
       padding: 12px 14px;
@@ -289,12 +332,6 @@
       background-color: var(--teal-soft);
       border: 1px solid var(--teal-border);
       color: var(--teal-hover);
-    }
-
-    .alert-warn {
-      background-color: var(--amber-soft);
-      border: 1px solid var(--amber-border);
-      color: var(--amber);
     }
 
     /* Tabs */
@@ -321,6 +358,10 @@
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       transition: background-color 0.15s ease, color 0.15s ease;
     }
 
@@ -332,6 +373,26 @@
     .tab-btn.active {
       background-color: var(--teal);
       color: #ffffff;
+    }
+
+    .tab-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      background-color: #ef4444;
+      color: #ffffff;
+    }
+
+    .tab-btn.active .tab-badge {
+      background-color: #ffffff;
+      color: var(--teal);
     }
 
     /* Section Toolbar */
@@ -356,20 +417,53 @@
       gap: 8px;
     }
 
-    /* Booking Cards Grid */
-    .bookings-grid {
+    /* Filter Chips */
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .filter-chip {
+      min-height: 36px;
+      padding: 6px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--teal);
+      color: var(--text-primary);
+    }
+
+    .filter-chip.active {
+      background-color: var(--teal);
+      border-color: var(--teal);
+      color: #ffffff;
+    }
+
+    /* Cards Grids */
+    .cards-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 14px;
     }
 
-    @media (min-width: 760px) {
-      .bookings-grid {
+    @media (min-width: 780px) {
+      .cards-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    .booking-card {
+    .item-card {
       background-color: var(--bg-surface);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-card);
@@ -380,7 +474,7 @@
       gap: 12px;
     }
 
-    .booking-top {
+    .card-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -396,13 +490,13 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .booking-id-meta {
-      font-size: 0.8rem;
+    .meta-sub {
+      font-size: 0.82rem;
       color: var(--text-muted);
       font-variant-numeric: tabular-nums;
     }
 
-    .booking-info-rows {
+    .info-rows {
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -418,7 +512,7 @@
 
     .info-label {
       color: var(--text-muted);
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       flex-shrink: 0;
     }
 
@@ -438,7 +532,7 @@
       text-decoration: underline;
     }
 
-    .booking-controls {
+    .card-controls {
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -446,36 +540,40 @@
       border-top: 1px solid var(--border-hairline);
     }
 
-    .booking-actions {
+    .actions-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
     }
 
-    /* Doctors Tab */
-    .doctors-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-
-    @media (min-width: 760px) {
-      .doctors-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .doctor-card {
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-card);
-      padding: 16px;
-      box-shadow: var(--shadow-card);
+    .actions-wrap {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
+    .social-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .social-link-btn {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--indigo);
+      background-color: var(--indigo-soft);
+      border: 1px solid var(--indigo-border);
+      padding: 4px 10px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .social-link-btn:hover {
+      background-color: #e0e7ff;
+    }
+
+    /* Doctors Form & Cards */
     .doctor-header {
       display: flex;
       align-items: flex-start;
@@ -505,7 +603,20 @@
       font-weight: 600;
     }
 
-    /* Doctor Form */
+    .maps-icon-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--teal);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .maps-icon-link:hover {
+      text-decoration: underline;
+    }
+
     .form-2col {
       display: grid;
       grid-template-columns: 1fr;
@@ -516,18 +627,27 @@
       .form-2col {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-    }
-
-    .form-3col {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    @media (min-width: 720px) {
-      .form-3col {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+      .field-full {
+        grid-column: 1 / -1;
       }
+    }
+
+    .inline-area-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .inline-new-area-box {
+      margin-top: 8px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-hairline);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
     .sub-section {
@@ -540,6 +660,16 @@
       font-size: 0.96rem;
       font-weight: 700;
       margin-bottom: 10px;
+    }
+
+    .working-hours-ref {
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background-color: var(--indigo-soft);
+      border: 1px solid var(--indigo-border);
+      color: #1e1b4b;
+      font-size: 0.88rem;
     }
 
     .hours-table {
@@ -599,14 +729,14 @@
       padding: 2px 4px;
     }
 
-    /* Two-column taxonomy lists */
+    /* Taxonomies */
     .taxonomy-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 18px;
     }
 
-    @media (min-width: 760px) {
+    @media (min-width: 780px) {
       .taxonomy-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -616,6 +746,18 @@
       display: flex;
       gap: 8px;
       margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .gov-group-heading {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--teal-hover);
+      background-color: var(--teal-soft);
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin-top: 12px;
+      margin-bottom: 4px;
     }
 
     .list-rows {
@@ -811,6 +953,10 @@
     <section id="dashboard-view" class="hidden">
       <nav class="tabs-bar" aria-label="أقسام الإدارة">
         <button type="button" class="tab-btn active" data-tab="bookings">الحجوزات</button>
+        <button type="button" class="tab-btn" data-tab="agreements">
+          <span>طلبات الانضمام</span>
+          <span id="agreements-new-badge" class="tab-badge hidden">0</span>
+        </button>
         <button type="button" class="tab-btn" data-tab="doctors">الدكاترة</button>
         <button type="button" class="tab-btn" data-tab="taxonomies">التخصصات والمناطق</button>
         <button type="button" class="tab-btn" data-tab="report">التقرير الأسبوعي</button>
@@ -827,10 +973,21 @@
             <button id="bookings-today-btn" type="button" class="btn btn-secondary btn-sm">النهارده</button>
           </div>
         </div>
-        <div id="bookings-list" class="bookings-grid"></div>
+        <div id="bookings-list" class="cards-grid"></div>
       </div>
 
-      <!-- Tab 2: Doctors -->
+      <!-- Tab 2: Join Requests (Agreements) -->
+      <div id="tab-agreements" class="hidden">
+        <div class="toolbar">
+          <h2 class="section-heading">طلبات الانضمام</h2>
+          <button id="refresh-agreements-btn" type="button" class="btn btn-secondary btn-sm">تحديث</button>
+        </div>
+
+        <div id="agreements-filter-chips" class="filter-chips"></div>
+        <div id="agreements-list" class="cards-grid"></div>
+      </div>
+
+      <!-- Tab 3: Doctors -->
       <div id="tab-doctors" class="hidden">
         <div class="toolbar">
           <h2 class="section-heading">الدكاترة</h2>
@@ -848,33 +1005,87 @@
             <input type="hidden" id="doc-id" />
             <div class="form-2col">
               <div class="field">
-                <label for="doc-name">اسم الدكتور</label>
+                <label for="doc-name">اسم الدكتور *</label>
                 <input id="doc-name" type="text" class="input-ctrl" required />
               </div>
+
               <div class="field">
-                <label for="doc-specialty">التخصص</label>
+                <span class="field-label">النوع *</span>
+                <div class="radio-pills">
+                  <label class="radio-pill">
+                    <input type="radio" name="doc-gender" value="male" checked />
+                    <span>دكتور</span>
+                  </label>
+                  <label class="radio-pill">
+                    <input type="radio" name="doc-gender" value="female" />
+                    <span>دكتورة</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="doc-specialty">التخصص *</label>
                 <select id="doc-specialty" class="select-ctrl" required></select>
               </div>
+
               <div class="field">
-                <label for="doc-area">المنطقة</label>
-                <select id="doc-area" class="select-ctrl" required></select>
-              </div>
-              <div class="field">
-                <label for="doc-fee">سعر الكشف (جنيه)</label>
+                <label for="doc-fee">سعر الكشف (جنيه) *</label>
                 <input id="doc-fee" type="number" min="0" step="1" class="input-ctrl tabular-nums" required />
               </div>
+
               <div class="field">
-                <label for="doc-clinic-name">اسم العيادة</label>
+                <label for="doc-governorate">المحافظة *</label>
+                <select id="doc-governorate" class="select-ctrl" required></select>
+              </div>
+
+              <div class="field">
+                <label for="doc-area">المنطقة *</label>
+                <div class="inline-area-row">
+                  <select id="doc-area" class="select-ctrl" required></select>
+                  <button id="toggle-inline-area-btn" type="button" class="btn btn-secondary btn-sm">+ منطقة جديدة</button>
+                </div>
+                <div id="inline-new-area-box" class="inline-new-area-box hidden">
+                  <input id="inline-new-area-input" type="text" class="input-ctrl" style="flex:1; min-width:140px;" placeholder="اسم المنطقة الجديدة" />
+                  <button id="inline-save-area-btn" type="button" class="btn btn-primary btn-sm">إضافة</button>
+                  <button id="inline-cancel-area-btn" type="button" class="btn btn-secondary btn-sm">إلغاء</button>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="doc-clinic-name">اسم العيادة *</label>
                 <input id="doc-clinic-name" type="text" class="input-ctrl" required />
               </div>
+
               <div class="field">
-                <label for="doc-clinic-address">عنوان العيادة</label>
-                <input id="doc-clinic-address" type="text" class="input-ctrl" required />
-              </div>
-              <div class="field">
-                <label for="doc-whatsapp">واتساب العيادة (بدون +)</label>
+                <label for="doc-whatsapp">واتساب العيادة (بدون +) *</label>
                 <input id="doc-whatsapp" type="text" dir="ltr" inputmode="numeric" class="input-ctrl tabular-nums" placeholder="201012345678" required />
               </div>
+
+              <div class="field field-full">
+                <label for="doc-address">العنوان *</label>
+                <textarea id="doc-address" class="textarea-ctrl" placeholder="الشارع، رقم العقار، الدور، علامة مميزة" required></textarea>
+              </div>
+
+              <div class="field field-full">
+                <label for="doc-maps-url">رابط Google Maps</label>
+                <input id="doc-maps-url" type="url" dir="ltr" class="input-ctrl" placeholder="https://maps.app.goo.gl/..." />
+              </div>
+
+              <div class="field">
+                <label for="doc-facebook">فيسبوك</label>
+                <input id="doc-facebook" type="url" dir="ltr" class="input-ctrl" placeholder="https://facebook.com/..." />
+              </div>
+
+              <div class="field">
+                <label for="doc-instagram">انستجرام</label>
+                <input id="doc-instagram" type="url" dir="ltr" class="input-ctrl" placeholder="https://instagram.com/..." />
+              </div>
+
+              <div class="field">
+                <label for="doc-website">الموقع الإلكتروني</label>
+                <input id="doc-website" type="url" dir="ltr" class="input-ctrl" placeholder="https://..." />
+              </div>
+
               <div class="form-2col">
                 <div class="field">
                   <label for="doc-slot-minutes">مدة الكشف (دقيقة)</label>
@@ -897,6 +1108,7 @@
             <!-- Working Hours -->
             <div class="sub-section">
               <h4 class="sub-title">مواعيد العمل الأسبوعية</h4>
+              <div id="agreement-hours-ref" class="working-hours-ref hidden"></div>
               <div id="doctor-hours-rows" class="hours-table"></div>
             </div>
 
@@ -919,10 +1131,10 @@
           </form>
         </div>
 
-        <div id="doctors-list" class="doctors-grid"></div>
+        <div id="doctors-list" class="cards-grid"></div>
       </div>
 
-      <!-- Tab 3: Specialties & Areas -->
+      <!-- Tab 4: Specialties & Areas -->
       <div id="tab-taxonomies" class="hidden">
         <div class="toolbar">
           <h2 class="section-heading">التخصصات والمناطق</h2>
@@ -932,24 +1144,25 @@
           <div class="card">
             <h3 class="sub-title" style="font-size: 1.05rem;">التخصصات</h3>
             <form id="add-specialty-form" class="add-row">
-              <input id="new-specialty-input" type="text" class="input-ctrl" placeholder="اسم التخصص (مثال: باطنة)" required />
+              <input id="new-specialty-input" type="text" class="input-ctrl" style="flex:1;" placeholder="اسم التخصص (مثال: باطنة)" required />
               <button type="submit" class="btn btn-primary">إضافة</button>
             </form>
             <div id="specialties-admin-list" class="list-rows"></div>
           </div>
 
           <div class="card">
-            <h3 class="sub-title" style="font-size: 1.05rem;">المناطق</h3>
+            <h3 class="sub-title" style="font-size: 1.05rem;">المناطق (مجمعة بالمحافظة)</h3>
             <form id="add-area-form" class="add-row">
-              <input id="new-area-input" type="text" class="input-ctrl" placeholder="اسم المنطقة (مثال: مدينة نصر)" required />
+              <select id="new-area-gov-select" class="select-ctrl" style="flex: 0 1 170px;" required></select>
+              <input id="new-area-input" type="text" class="input-ctrl" style="flex:1; min-width: 130px;" placeholder="اسم المنطقة" required />
               <button type="submit" class="btn btn-primary">إضافة</button>
             </form>
-            <div id="areas-admin-list" class="list-rows"></div>
+            <div id="areas-admin-list"></div>
           </div>
         </div>
       </div>
 
-      <!-- Tab 4: Weekly Report -->
+      <!-- Tab 5: Weekly Report -->
       <div id="tab-report" class="hidden">
         <div class="toolbar">
           <div>
@@ -994,6 +1207,8 @@
       const SUPABASE_KEY = 'sb_publishable_tyYjOcfnXLFvc4c96KoTvw_ipNGgavy';
       const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+      const MAPS_REGEX = /^https?:[/][/](maps[.]app[.]goo[.]gl|goo[.]gl[/]maps|(www[.])?google[.]com([.]eg)?[/]maps|maps[.]google[.]com([.]eg)?)/i;
+
       const WEEKDAYS = [
         { idx: 0, label: 'الأحد' },
         { idx: 1, label: 'الإثنين' },
@@ -1013,6 +1228,20 @@
         { value: 'cancelled', label: 'ملغي' }
       ];
 
+      const AGREEMENT_STATUSES = [
+        { value: 'new', label: 'جديد' },
+        { value: 'contacted', label: 'تم التواصل' },
+        { value: 'paid', label: 'دفع' },
+        { value: 'active', label: 'مُفعّل' },
+        { value: 'rejected', label: 'مرفوض' }
+      ];
+
+      const PACKAGE_LABELS = {
+        '5000': '5,000 ج.م (10–15 حجز)',
+        '9000': '9,000 ج.م (20–30 حجز)',
+        '17000': '17,000 ج.م (40–60 حجز)'
+      };
+
       const state = {
         session: null,
         isAdmin: false,
@@ -1020,11 +1249,15 @@
         activeTab: 'bookings',
         bookingsDate: getCairoTodayISO(),
         reportRefDate: getCairoTodayISO(),
+        agreementFilter: 'all',
         doctors: [],
         specialties: [],
+        governorates: [],
         areas: [],
         bookings: [],
+        agreements: [],
         editingDoctorDaysOff: [],
+        convertingAgreementId: null,
         toastTimer: null
       };
 
@@ -1049,7 +1282,9 @@
         loginFeedback: document.getElementById('login-feedback'),
 
         tabButtons: document.querySelectorAll('.tab-btn'),
+        agreementsNewBadge: document.getElementById('agreements-new-badge'),
         tabBookings: document.getElementById('tab-bookings'),
+        tabAgreements: document.getElementById('tab-agreements'),
         tabDoctors: document.getElementById('tab-doctors'),
         tabTaxonomies: document.getElementById('tab-taxonomies'),
         tabReport: document.getElementById('tab-report'),
@@ -1060,6 +1295,10 @@
         bookingsTodayBtn: document.getElementById('bookings-today-btn'),
         bookingsList: document.getElementById('bookings-list'),
 
+        refreshAgreementsBtn: document.getElementById('refresh-agreements-btn'),
+        agreementsFilterChips: document.getElementById('agreements-filter-chips'),
+        agreementsList: document.getElementById('agreements-list'),
+
         addDoctorBtn: document.getElementById('add-doctor-btn'),
         doctorFormPanel: document.getElementById('doctor-form-panel'),
         doctorFormTitle: document.getElementById('doctor-form-title'),
@@ -1069,14 +1308,25 @@
         docId: document.getElementById('doc-id'),
         docName: document.getElementById('doc-name'),
         docSpecialty: document.getElementById('doc-specialty'),
-        docArea: document.getElementById('doc-area'),
         docFee: document.getElementById('doc-fee'),
+        docGovernorate: document.getElementById('doc-governorate'),
+        docArea: document.getElementById('doc-area'),
+        toggleInlineAreaBtn: document.getElementById('toggle-inline-area-btn'),
+        inlineNewAreaBox: document.getElementById('inline-new-area-box'),
+        inlineNewAreaInput: document.getElementById('inline-new-area-input'),
+        inlineSaveAreaBtn: document.getElementById('inline-save-area-btn'),
+        inlineCancelAreaBtn: document.getElementById('inline-cancel-area-btn'),
         docClinicName: document.getElementById('doc-clinic-name'),
-        docClinicAddress: document.getElementById('doc-clinic-address'),
+        docAddress: document.getElementById('doc-address'),
         docWhatsapp: document.getElementById('doc-whatsapp'),
+        docMapsUrl: document.getElementById('doc-maps-url'),
+        docFacebook: document.getElementById('doc-facebook'),
+        docInstagram: document.getElementById('doc-instagram'),
+        docWebsite: document.getElementById('doc-website'),
         docSlotMinutes: document.getElementById('doc-slot-minutes'),
         docPriority: document.getElementById('doc-priority'),
         docActive: document.getElementById('doc-active'),
+        agreementHoursRef: document.getElementById('agreement-hours-ref'),
         doctorHoursRows: document.getElementById('doctor-hours-rows'),
         docOffDateInput: document.getElementById('doc-off-date-input'),
         addOffDayBtn: document.getElementById('add-off-day-btn'),
@@ -1089,6 +1339,7 @@
         newSpecialtyInput: document.getElementById('new-specialty-input'),
         specialtiesAdminList: document.getElementById('specialties-admin-list'),
         addAreaForm: document.getElementById('add-area-form'),
+        newAreaGovSelect: document.getElementById('new-area-gov-select'),
         newAreaInput: document.getElementById('new-area-input'),
         areasAdminList: document.getElementById('areas-admin-list'),
 
@@ -1122,7 +1373,7 @@
       function getSatToFriWeek(iso) {
         const [y, m, d] = iso.split('-').map(Number);
         const dt = new Date(Date.UTC(y, m - 1, d));
-        const dow = dt.getUTCDay(); // 0=Sun..6=Sat
+        const dow = dt.getUTCDay();
         const daysSinceSat = (dow + 1) % 7;
         const sat = new Date(dt.getTime() - daysSinceSat * 86400000);
         const fri = new Date(sat.getTime() + 6 * 86400000);
@@ -1151,6 +1402,19 @@
         });
       }
 
+      function formatDateTimeAr(isoTimestamp) {
+        if (!isoTimestamp) return '—';
+        const dt = new Date(isoTimestamp);
+        if (Number.isNaN(dt.getTime())) return isoTimestamp;
+        return dt.toLocaleString('ar-EG', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit'
+        });
+      }
+
       function normalizeDigits(str) {
         const ar = '٠١٢٣٤٥٦٧٨٩';
         const fa = '۰۱۲۳۴۵۶۷۸۹';
@@ -1158,6 +1422,18 @@
           .replace(/[٠-٩]/g, c => String(ar.indexOf(c)))
           .replace(/[۰-۹]/g, c => String(fa.indexOf(c)))
           .replace(/[\s\-+()]/g, '');
+      }
+
+      function toWhatsAppInternational(phone) {
+        const clean = normalizeDigits(phone);
+        if (!clean) return '';
+        return clean.startsWith('20') ? clean : '2' + clean;
+      }
+
+      function genderLabel(g) {
+        if (g === 'female') return 'دكتورة';
+        if (g === 'male') return 'دكتور';
+        return '—';
       }
 
       function escapeHtml(str) {
@@ -1175,7 +1451,7 @@
         if (state.toastTimer) clearTimeout(state.toastTimer);
         state.toastTimer = setTimeout(() => {
           el.toast.classList.add('hidden');
-        }, 2600);
+        }, 2800);
       }
 
       function showView(viewName) {
@@ -1232,6 +1508,7 @@
         el.sendOtpBtn.textContent = 'ابعت كود الدخول';
 
         if (error) {
+          console.error('OTP send error:', error);
           showLoginError('مقدرناش نبعت الكود: ' + error.message);
           return;
         }
@@ -1272,6 +1549,7 @@
         el.verifyOtpBtn.textContent = 'تأكيد ودخول';
 
         if (error || !data?.session) {
+          console.error('OTP verify error:', error);
           showLoginError('الكود غلط أو انتهت صلاحيته، جرب تاني.');
           return;
         }
@@ -1310,49 +1588,69 @@
         showView('dashboard');
         el.bookingsDateFilter.value = state.bookingsDate;
         el.reportWeekPicker.value = state.reportRefDate;
+        updateAgreementsBadge();
         await loadBookings();
+        renderAgreementsSection();
         renderDoctors();
         renderTaxonomies();
       }
 
       async function loadCoreAdminData() {
-        const [docRes, specRes, areaRes] = await Promise.all([
+        const [docRes, specRes, govRes, areaRes, agRes] = await Promise.all([
           sb.from('doctors').select('*').order('priority', { ascending: true }).order('id', { ascending: true }),
           sb.from('specialties').select('*').order('id', { ascending: true }),
-          sb.from('areas').select('*').order('id', { ascending: true })
+          sb.from('governorates').select('*').order('sort', { ascending: true }),
+          sb.from('areas').select('*').order('id', { ascending: true }),
+          sb.from('agreements').select('*').order('created_at', { ascending: false })
         ]);
 
-        // If doctors query fails OR returns empty due to RLS on admin-only table
         if (docRes.error || !docRes.data || docRes.data.length === 0) {
+          if (docRes.error) console.error('Core doctors load error:', docRes.error);
           return false;
         }
-        if (specRes.error || areaRes.error) {
+        if (specRes.error || areaRes.error || govRes.error) {
+          console.error('Core metadata load error:', specRes.error || areaRes.error || govRes.error);
+          return false;
+        }
+        if (agRes.error && isRlsOrAuthError(agRes.error)) {
+          console.error('Agreements RLS error:', agRes.error);
           return false;
         }
 
         state.doctors = docRes.data;
         state.specialties = specRes.data || [];
+        state.governorates = govRes.data || [];
         state.areas = areaRes.data || [];
+        state.agreements = agRes.data || [];
         return true;
       }
 
       // --- TABS ---
-      el.tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const tab = btn.dataset.tab;
-          state.activeTab = tab;
-          el.tabButtons.forEach(b => b.classList.toggle('active', b === btn));
-          el.tabBookings.classList.toggle('hidden', tab !== 'bookings');
-          el.tabDoctors.classList.toggle('hidden', tab !== 'doctors');
-          el.tabTaxonomies.classList.toggle('hidden', tab !== 'taxonomies');
-          el.tabReport.classList.toggle('hidden', tab !== 'report');
+      function switchTab(tab) {
+        state.activeTab = tab;
+        el.tabButtons.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+        el.tabBookings.classList.toggle('hidden', tab !== 'bookings');
+        el.tabAgreements.classList.toggle('hidden', tab !== 'agreements');
+        el.tabDoctors.classList.toggle('hidden', tab !== 'doctors');
+        el.tabTaxonomies.classList.toggle('hidden', tab !== 'taxonomies');
+        el.tabReport.classList.toggle('hidden', tab !== 'report');
 
-          if (tab === 'bookings') loadBookings();
-          if (tab === 'doctors') refreshDoctors();
-          if (tab === 'taxonomies') refreshTaxonomies();
-          if (tab === 'report') loadWeeklyReport();
-        });
+        if (tab === 'bookings') loadBookings();
+        if (tab === 'agreements') refreshAgreements();
+        if (tab === 'doctors') refreshDoctors();
+        if (tab === 'taxonomies') refreshTaxonomies();
+        if (tab === 'report') loadWeeklyReport();
+      }
+
+      el.tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
       });
+
+      function updateAgreementsBadge() {
+        const newCount = state.agreements.filter(a => (a.status || 'new') === 'new').length;
+        el.agreementsNewBadge.textContent = String(newCount);
+        el.agreementsNewBadge.classList.toggle('hidden', newCount === 0);
+      }
 
       // --- TAB 1: BOOKINGS ---
       el.bookingsDateFilter.addEventListener('change', () => {
@@ -1379,19 +1677,20 @@
       });
 
       async function loadBookings() {
-        el.bookingsList.innerHTML = '<div class="empty-state">جاري تحميل الحجوزات...</div>';
+        el.bookingsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">جاري تحميل الحجوزات...</div>';
         const { data, error } = await sb
           .from('bookings')
-          .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, status, notes, doctors(name, clinic_name, clinic_whatsapp)')
+          .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, status, notes, doctors(name, clinic_name, clinic_whatsapp, address, maps_url, areas(name_ar, governorates(name_ar)))')
           .eq('day', state.bookingsDate)
           .order('slot', { ascending: true });
 
         if (error) {
+          console.error('Bookings load error:', error);
           if (isRlsOrAuthError(error)) {
             triggerNotAdmin();
             return;
           }
-          el.bookingsList.innerHTML = '<div class="alert alert-error">حصلت مشكلة في تحميل الحجوزات.</div>';
+          el.bookingsList.innerHTML = '<div class="alert alert-error" style="grid-column:1 / -1;">حصلت مشكلة في تحميل الحجوزات.</div>';
           return;
         }
 
@@ -1418,19 +1717,21 @@
 
       function buildPatientWhatsAppUrl(booking) {
         const doc = booking.doctors || {};
-        const rawPhone = normalizeDigits(booking.patient_phone);
-        const waPhone = rawPhone.startsWith('20') ? rawPhone : '2' + rawPhone;
+        const waPhone = toWhatsAppInternational(booking.patient_phone);
         const timeText = formatTimeAr(booking.slot);
         const dayText = formatDateAr(booking.day);
+        const addressText = doc.address || '—';
+        const mapsText = doc.maps_url || '—';
         const text =
-          'أهلاً يا ' + booking.patient_name + '،\n' +
-          'تم تأكيد حجزك من احجزلي (رقم الحجز #' + booking.id + '):\n' +
+          'أهلًا ' + booking.patient_name + ' 👋\n' +
+          'تم تأكيد حجزك مع احجزلي ✅\n' +
+          'الميعاد: ' + dayText + ' الساعة ' + timeText + '\n' +
           'الدكتور: ' + (doc.name || '') + '\n' +
           'العيادة: ' + (doc.clinic_name || '') + '\n' +
-          'اليوم: ' + dayText + '\n' +
-          'الميعاد: ' + timeText + '\n' +
-          'قيمة الكشف: ' + booking.fee + ' ج.م\n' +
-          'نتمنى لك الشفاء العاجل.';
+          'العنوان: ' + addressText + '\n' +
+          'اللوكيشن: ' + mapsText + '\n' +
+          'سعر الكشف: ' + booking.fee + ' ج.م — يُدفع في العيادة\n' +
+          'لو حابب تلغي أو تغيّر الميعاد رد على الرسالة دي.';
         return 'https://wa.me/' + encodeURIComponent(waPhone) + '?text=' + encodeURIComponent(text);
       }
 
@@ -1444,33 +1745,38 @@
         el.bookingsList.innerHTML = '';
         state.bookings.forEach(booking => {
           const doc = booking.doctors || {};
+          const areaName = doc.areas?.name_ar || '';
+          const govName = doc.areas?.governorates?.name_ar || '';
+          const locationPath = [govName, areaName].filter(Boolean).join(' › ') || '—';
+
           const card = document.createElement('article');
-          card.className = 'booking-card';
+          card.className = 'item-card';
 
           const statusOptionsHtml = BOOKING_STATUSES.map(s =>
             '<option value="' + s.value + '"' + (booking.status === s.value ? ' selected' : '') + '>' + s.label + '</option>'
           ).join('');
 
           card.innerHTML =
-            '<div class="booking-top">' +
+            '<div class="card-top">' +
               '<div>' +
                 '<div class="booking-time">' + escapeHtml(formatTimeAr(booking.slot)) + '</div>' +
-                '<div class="booking-id-meta">حجز #' + escapeHtml(booking.id) + '</div>' +
+                '<div class="meta-sub">حجز #' + escapeHtml(booking.id) + '</div>' +
               '</div>' +
               '<div style="text-align:left; font-weight:700;" class="tabular-nums">' + escapeHtml(booking.fee) + ' ج.م</div>' +
             '</div>' +
-            '<div class="booking-info-rows">' +
+            '<div class="info-rows">' +
               '<div class="info-line"><span class="info-label">المريض</span><span class="info-val">' + escapeHtml(booking.patient_name) + '</span></div>' +
               '<div class="info-line"><span class="info-label">الموبايل</span><a class="phone-link tabular-nums" dir="ltr" href="tel:' + escapeHtml(booking.patient_phone) + '">' + escapeHtml(booking.patient_phone) + '</a></div>' +
               '<div class="info-line"><span class="info-label">الدكتور</span><span class="info-val">' + escapeHtml(doc.name || 'غير محدد') + '</span></div>' +
               '<div class="info-line"><span class="info-label">العيادة</span><span class="info-val">' + escapeHtml(doc.clinic_name || '—') + '</span></div>' +
+              '<div class="info-line"><span class="info-label">المكان</span><span class="info-val">' + escapeHtml(locationPath) + '</span></div>' +
             '</div>' +
-            '<div class="booking-controls">' +
+            '<div class="card-controls">' +
               '<div class="field">' +
                 '<label for="status-' + booking.id + '" style="font-size:0.8rem; color:var(--text-muted);">حالة الحجز</label>' +
                 '<select id="status-' + booking.id + '" class="select-ctrl">' + statusOptionsHtml + '</select>' +
               '</div>' +
-              '<div class="booking-actions">' +
+              '<div class="actions-2col">' +
                 '<a href="' + buildClinicWhatsAppUrl(booking) + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm send-clinic-btn">ابعت للعيادة 📤</a>' +
                 '<a href="' + buildPatientWhatsAppUrl(booking) + '" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">واتساب للمريض</a>' +
               '</div>' +
@@ -1478,8 +1784,7 @@
 
           const statusSelect = card.querySelector('#status-' + booking.id);
           statusSelect.addEventListener('change', async () => {
-            const newStatus = statusSelect.value;
-            await updateBookingStatus(booking.id, newStatus, statusSelect);
+            await updateBookingStatus(booking.id, statusSelect.value, statusSelect);
           });
 
           const sendClinicLink = card.querySelector('.send-clinic-btn');
@@ -1503,11 +1808,12 @@
         selectEl.disabled = false;
 
         if (error) {
+          console.error('Update booking status error:', error);
           if (isRlsOrAuthError(error)) {
             triggerNotAdmin();
             return;
           }
-          showToast('فشل تحديث الحالة');
+          showToast('فشل تحديث حالة الحجز');
           loadBookings();
           return;
         }
@@ -1517,7 +1823,275 @@
         showToast('تم تحديث حالة الحجز');
       }
 
-      // --- TAB 2: DOCTORS ---
+      // --- TAB 2: JOIN REQUESTS (AGREEMENTS) ---
+      el.refreshAgreementsBtn.addEventListener('click', refreshAgreements);
+
+      async function refreshAgreements() {
+        el.agreementsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">جاري تحميل طلبات الانضمام...</div>';
+        const { data, error } = await sb
+          .from('agreements')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Agreements load error:', error);
+          if (isRlsOrAuthError(error)) {
+            triggerNotAdmin();
+            return;
+          }
+          showToast('فشل تحميل طلبات الانضمام');
+          el.agreementsList.innerHTML = '<div class="alert alert-error" style="grid-column:1 / -1;">حصلت مشكلة في تحميل طلبات الانضمام.</div>';
+          return;
+        }
+
+        state.agreements = data || [];
+        updateAgreementsBadge();
+        renderAgreementsSection();
+      }
+
+      function renderAgreementsSection() {
+        // Filter chips
+        const counts = { all: state.agreements.length };
+        AGREEMENT_STATUSES.forEach(s => { counts[s.value] = 0; });
+        state.agreements.forEach(a => {
+          const st = a.status || 'new';
+          if (counts[st] !== undefined) counts[st] += 1;
+        });
+
+        const chips = [{ value: 'all', label: 'الكل' }, ...AGREEMENT_STATUSES];
+        el.agreementsFilterChips.innerHTML = '';
+        chips.forEach(ch => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'filter-chip' + (state.agreementFilter === ch.value ? ' active' : '');
+          btn.textContent = ch.label + ' (' + (counts[ch.value] || 0) + ')';
+          btn.addEventListener('click', () => {
+            state.agreementFilter = ch.value;
+            renderAgreementsSection();
+          });
+          el.agreementsFilterChips.appendChild(btn);
+        });
+
+        const filtered = state.agreementFilter === 'all'
+          ? state.agreements
+          : state.agreements.filter(a => (a.status || 'new') === state.agreementFilter);
+
+        if (!filtered.length) {
+          el.agreementsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">مفيش طلبات انضمام في التصنيف ده</div>';
+          return;
+        }
+
+        el.agreementsList.innerHTML = '';
+        filtered.forEach(ag => {
+          const st = ag.status || 'new';
+          const statusOpts = AGREEMENT_STATUSES.map(s =>
+            '<option value="' + s.value + '"' + (st === s.value ? ' selected' : '') + '>' + s.label + '</option>'
+          ).join('');
+
+          const addressParts = [ag.address_street, ag.address_floor, ag.address_landmark]
+            .map(s => (s || '').trim())
+            .filter(Boolean)
+            .join(' — ');
+
+          const socialLinks = [
+            { url: ag.facebook_url, label: 'فيسبوك' },
+            { url: ag.instagram_url, label: 'انستجرام' },
+            { url: ag.website_url, label: 'الموقع' },
+            { url: ag.other_link, label: 'رابط آخر' }
+          ].filter(item => Boolean((item.url || '').trim()));
+
+          const socialHtml = socialLinks.length
+            ? '<div class="social-links-row">' +
+                socialLinks.map(s =>
+                  '<a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener noreferrer" class="social-link-btn">' + s.label + '</a>'
+                ).join('') +
+              '</div>'
+            : '';
+
+          const pkgDisplay = PACKAGE_LABELS[String(ag.package || '')] || (ag.package ? ag.package + ' ج.م' : '—');
+          const waDoctorUrl = 'https://wa.me/' + encodeURIComponent(toWhatsAppInternational(ag.phone));
+
+          const card = document.createElement('article');
+          card.className = 'item-card';
+          card.innerHTML =
+            '<div class="card-top">' +
+              '<div>' +
+                '<div class="doctor-name">' + escapeHtml(ag.doctor_name) + '</div>' +
+                '<div class="meta-sub">' +
+                  escapeHtml(genderLabel(ag.gender)) + ' · ' +
+                  escapeHtml(ag.specialty || '—') + ' · ' +
+                  escapeHtml(formatDateTimeAr(ag.created_at)) +
+                '</div>' +
+              '</div>' +
+              '<div style="text-align:left; font-weight:700; color:var(--teal);" class="tabular-nums">' +
+                (ag.fee != null ? escapeHtml(ag.fee) + ' ج.م' : '—') +
+              '</div>' +
+            '</div>' +
+
+            '<div class="info-rows">' +
+              '<div class="info-line"><span class="info-label">العيادة</span><span class="info-val">' + escapeHtml(ag.clinic_name || '—') + '</span></div>' +
+              '<div class="info-line"><span class="info-label">المكان</span><span class="info-val">' + escapeHtml([ag.governorate, ag.area].filter(Boolean).join(' › ') || '—') + '</span></div>' +
+              '<div class="info-line"><span class="info-label">العنوان</span><span class="info-val">' + escapeHtml(addressParts || '—') + '</span></div>' +
+              '<div class="info-line"><span class="info-label">المواعيد</span><span class="info-val">' + escapeHtml(ag.working_hours || '—') + '</span></div>' +
+              '<div class="info-line">' +
+                '<span class="info-label">موبايل الدكتور</span>' +
+                '<span class="info-val" style="display:inline-flex; gap:10px; align-items:center;">' +
+                  '<a class="phone-link tabular-nums" dir="ltr" href="tel:' + escapeHtml(ag.phone) + '">' + escapeHtml(ag.phone) + '</a>' +
+                  '<a class="social-link-btn" href="' + waDoctorUrl + '" target="_blank" rel="noopener noreferrer">واتساب</a>' +
+                '</span>' +
+              '</div>' +
+              '<div class="info-line"><span class="info-label">واتساب العيادة</span><span class="info-val tabular-nums" dir="ltr">' + escapeHtml(ag.clinic_whatsapp || '—') + '</span></div>' +
+              (ag.email ? '<div class="info-line"><span class="info-label">الإيميل</span><span class="info-val" dir="ltr">' + escapeHtml(ag.email) + '</span></div>' : '') +
+              '<div class="info-line"><span class="info-label">الباقة</span><span class="info-val tabular-nums">' + escapeHtml(pkgDisplay) + '</span></div>' +
+            '</div>' +
+
+            socialHtml +
+
+            '<div class="card-controls">' +
+              '<div class="field">' +
+                '<label for="ag-status-' + ag.id + '" style="font-size:0.8rem; color:var(--text-muted);">حالة الطلب</label>' +
+                '<select id="ag-status-' + ag.id + '" class="select-ctrl">' + statusOpts + '</select>' +
+              '</div>' +
+              '<div class="actions-wrap">' +
+                (ag.maps_url
+                  ? '<a href="' + escapeHtml(ag.maps_url) + '" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="flex:1;">افتح اللوكيشن</a>'
+                  : '') +
+                '<button type="button" class="btn btn-indigo btn-sm convert-doc-btn" style="flex:1;">إضافة كدكتور</button>' +
+              '</div>' +
+            '</div>';
+
+          const statusSel = card.querySelector('#ag-status-' + ag.id);
+          statusSel.addEventListener('change', async () => {
+            await updateAgreementStatus(ag.id, statusSel.value, statusSel);
+          });
+
+          card.querySelector('.convert-doc-btn').addEventListener('click', () => {
+            convertAgreementToDoctor(ag);
+          });
+
+          el.agreementsList.appendChild(card);
+        });
+      }
+
+      async function updateAgreementStatus(agreementId, newStatus, selectEl) {
+        if (selectEl) selectEl.disabled = true;
+        const { error } = await sb
+          .from('agreements')
+          .update({ status: newStatus })
+          .eq('id', agreementId);
+        if (selectEl) selectEl.disabled = false;
+
+        if (error) {
+          console.error('Update agreement status error:', error);
+          if (isRlsOrAuthError(error)) {
+            triggerNotAdmin();
+            return false;
+          }
+          showToast('فشل تحديث حالة الطلب');
+          return false;
+        }
+
+        const item = state.agreements.find(a => a.id === agreementId);
+        if (item) item.status = newStatus;
+        updateAgreementsBadge();
+        showToast('تم تحديث حالة الطلب');
+        return true;
+      }
+
+      async function convertAgreementToDoctor(ag) {
+        // 1) Match or insert specialty
+        let specId = null;
+        const agSpecName = (ag.specialty || '').trim();
+        if (agSpecName) {
+          const matchedSpec = state.specialties.find(s => s.name_ar.trim().toLowerCase() === agSpecName.toLowerCase());
+          if (matchedSpec) {
+            specId = matchedSpec.id;
+          } else {
+            const { data: newSpec, error: specErr } = await sb
+              .from('specialties')
+              .insert({ name_ar: agSpecName, active: true })
+              .select()
+              .single();
+            if (specErr || !newSpec) {
+              console.error('Auto insert specialty error:', specErr);
+              showToast('مقدرناش نضيف التخصص تلقائيًا');
+            } else {
+              state.specialties.push(newSpec);
+              specId = newSpec.id;
+              showToast('تمت إضافة التخصص: ' + agSpecName);
+            }
+          }
+        }
+
+        // 2) Match governorate
+        let govId = null;
+        const agGovName = (ag.governorate || '').trim();
+        if (agGovName) {
+          const matchedGov = state.governorates.find(g => g.name_ar.trim().toLowerCase() === agGovName.toLowerCase());
+          if (matchedGov) govId = matchedGov.id;
+        }
+
+        // 3) Match or insert area inside governorate
+        let areaId = null;
+        const agAreaName = (ag.area || '').trim();
+        if (agAreaName && govId) {
+          const matchedArea = state.areas.find(a =>
+            a.governorate_id === govId && a.name_ar.trim().toLowerCase() === agAreaName.toLowerCase()
+          );
+          if (matchedArea) {
+            areaId = matchedArea.id;
+          } else {
+            const { data: newArea, error: areaErr } = await sb
+              .from('areas')
+              .insert({ name_ar: agAreaName, governorate_id: govId, active: true })
+              .select()
+              .single();
+            if (areaErr || !newArea) {
+              console.error('Auto insert area error:', areaErr);
+              showToast('مقدرناش نضيف المنطقة تلقائيًا');
+            } else {
+              state.areas.push(newArea);
+              areaId = newArea.id;
+              showToast('تمت إضافة المنطقة: ' + agAreaName);
+            }
+          }
+        }
+
+        // Switch to Doctors tab and open prefilled form
+        switchTab('doctors');
+
+        const combinedAddress = [ag.address_street, ag.address_floor, ag.address_landmark]
+          .map(s => (s || '').trim())
+          .filter(Boolean)
+          .join(' - ');
+
+        const waClean = normalizeDigits(ag.clinic_whatsapp || '');
+        const clinicWaIntl = waClean ? (waClean.startsWith('20') ? waClean : '2' + waClean) : '';
+
+        state.convertingAgreementId = ag.id;
+        openDoctorForm({
+          __fromAgreement: true,
+          name: ag.doctor_name || '',
+          gender: ag.gender || 'male',
+          specialty_id: specId,
+          governorate_id: govId,
+          area_id: areaId,
+          fee: ag.fee ?? '',
+          clinic_name: ag.clinic_name || '',
+          address: combinedAddress,
+          clinic_whatsapp: clinicWaIntl,
+          maps_url: ag.maps_url || '',
+          facebook_url: ag.facebook_url || '',
+          instagram_url: ag.instagram_url || '',
+          website_url: ag.website_url || '',
+          slot_minutes: 20,
+          priority: 1,
+          active: true,
+          working_hours_ref: ag.working_hours || ''
+        });
+      }
+
+      // --- TAB 3: DOCTORS ---
       async function refreshDoctors() {
         const { data, error } = await sb
           .from('doctors')
@@ -1526,6 +2100,7 @@
           .order('id', { ascending: true });
 
         if (error) {
+          console.error('Doctors load error:', error);
           if (isRlsOrAuthError(error)) {
             triggerNotAdmin();
             return;
@@ -1537,14 +2112,102 @@
         renderDoctors();
       }
 
-      function populateDoctorSelects() {
+      function populateDoctorStaticSelects() {
         el.docSpecialty.innerHTML = state.specialties
           .map(s => '<option value="' + s.id + '">' + escapeHtml(s.name_ar) + '</option>')
           .join('');
-        el.docArea.innerHTML = state.areas
-          .map(a => '<option value="' + a.id + '">' + escapeHtml(a.name_ar) + '</option>')
-          .join('');
+
+        el.docGovernorate.innerHTML = '<option value="">اختر المحافظة...</option>' +
+          state.governorates
+            .map(g => '<option value="' + g.id + '">' + escapeHtml(g.name_ar) + '</option>')
+            .join('');
       }
+
+      function populateDoctorAreasForGov(govId, selectedAreaId) {
+        el.docArea.innerHTML = '';
+        if (!govId) {
+          el.docArea.disabled = true;
+          el.docArea.innerHTML = '<option value="">اختر المحافظة الأول...</option>';
+          return;
+        }
+
+        const filtered = state.areas.filter(a => Number(a.governorate_id) === Number(govId));
+        if (!filtered.length) {
+          el.docArea.disabled = false;
+          el.docArea.innerHTML = '<option value="">مفيش مناطق — أضف منطقة جديدة</option>';
+          return;
+        }
+
+        el.docArea.disabled = false;
+        el.docArea.innerHTML = '<option value="">اختر المنطقة...</option>';
+        filtered.forEach(a => {
+          const opt = document.createElement('option');
+          opt.value = String(a.id);
+          opt.textContent = a.name_ar;
+          el.docArea.appendChild(opt);
+        });
+
+        if (selectedAreaId) {
+          el.docArea.value = String(selectedAreaId);
+        }
+      }
+
+      el.docGovernorate.addEventListener('change', () => {
+        const govId = el.docGovernorate.value ? Number(el.docGovernorate.value) : null;
+        populateDoctorAreasForGov(govId, null);
+      });
+
+      // Inline "+ منطقة جديدة" inside doctor form
+      el.toggleInlineAreaBtn.addEventListener('click', () => {
+        if (!el.docGovernorate.value) {
+          showToast('اختر المحافظة الأول');
+          el.docGovernorate.focus();
+          return;
+        }
+        el.inlineNewAreaBox.classList.toggle('hidden');
+        if (!el.inlineNewAreaBox.classList.contains('hidden')) {
+          el.inlineNewAreaInput.focus();
+        }
+      });
+
+      el.inlineCancelAreaBtn.addEventListener('click', () => {
+        el.inlineNewAreaInput.value = '';
+        el.inlineNewAreaBox.classList.add('hidden');
+      });
+
+      el.inlineSaveAreaBtn.addEventListener('click', async () => {
+        const govId = el.docGovernorate.value ? Number(el.docGovernorate.value) : null;
+        const name = el.inlineNewAreaInput.value.trim();
+        if (!govId) {
+          showToast('اختر المحافظة الأول');
+          return;
+        }
+        if (!name) {
+          showToast('اكتب اسم المنطقة الجديدة');
+          return;
+        }
+
+        el.inlineSaveAreaBtn.disabled = true;
+        const { data, error } = await sb
+          .from('areas')
+          .insert({ name_ar: name, governorate_id: govId, active: true })
+          .select()
+          .single();
+        el.inlineSaveAreaBtn.disabled = false;
+
+        if (error || !data) {
+          console.error('Inline add area error:', error);
+          if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
+          showToast('فشل إضافة المنطقة');
+          return;
+        }
+
+        state.areas.push(data);
+        populateDoctorAreasForGov(govId, data.id);
+        el.inlineNewAreaInput.value = '';
+        el.inlineNewAreaBox.classList.add('hidden');
+        showToast('تمت إضافة المنطقة واختيارها');
+      });
 
       function renderHoursInputs(hoursMap) {
         el.doctorHoursRows.innerHTML = '';
@@ -1589,6 +2252,7 @@
               if (doctorId && item.id) {
                 const { error } = await sb.from('doctor_days_off').delete().eq('id', item.id);
                 if (error) {
+                  console.error('Delete off day error:', error);
                   if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
                   showToast('فشل حذف يوم الإجازة');
                   return;
@@ -1617,6 +2281,7 @@
             .select()
             .single();
           if (error) {
+            console.error('Add off day error:', error);
             if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
             showToast('فشل إضافة يوم الإجازة');
             return;
@@ -1630,24 +2295,41 @@
         renderDaysOffList();
       });
 
+      function setDocGenderRadio(val) {
+        const g = val === 'female' ? 'female' : 'male';
+        const radio = document.querySelector('input[name="doc-gender"][value="' + g + '"]');
+        if (radio) radio.checked = true;
+      }
+
       function openDoctorForm(doctor) {
-        populateDoctorSelects();
+        populateDoctorStaticSelects();
         el.doctorFormError.classList.add('hidden');
         el.doctorFormError.textContent = '';
+        el.inlineNewAreaBox.classList.add('hidden');
+        el.inlineNewAreaInput.value = '';
 
         if (!doctor) {
+          state.convertingAgreementId = null;
           el.doctorFormTitle.textContent = 'إضافة دكتور جديد';
           el.docId.value = '';
           el.docName.value = '';
-          if (state.specialties[0]) el.docSpecialty.value = state.specialties[0].id;
-          if (state.areas[0]) el.docArea.value = state.areas[0].id;
+          setDocGenderRadio('male');
+          if (state.specialties[0]) el.docSpecialty.value = String(state.specialties[0].id);
           el.docFee.value = '';
+          el.docGovernorate.value = '';
+          populateDoctorAreasForGov(null, null);
           el.docClinicName.value = '';
-          el.docClinicAddress.value = '';
+          el.docAddress.value = '';
           el.docWhatsapp.value = '';
+          el.docMapsUrl.value = '';
+          el.docFacebook.value = '';
+          el.docInstagram.value = '';
+          el.docWebsite.value = '';
           el.docSlotMinutes.value = '20';
           el.docPriority.value = '1';
           el.docActive.checked = true;
+          el.agreementHoursRef.classList.add('hidden');
+          el.agreementHoursRef.textContent = '';
           state.editingDoctorDaysOff = [];
           renderHoursInputs({});
           renderDaysOffList();
@@ -1656,18 +2338,65 @@
           return;
         }
 
+        if (doctor.__fromAgreement) {
+          el.doctorFormTitle.textContent = 'إضافة دكتور من طلب الانضمام: ' + (doctor.name || '');
+          el.docId.value = '';
+          el.docName.value = doctor.name || '';
+          setDocGenderRadio(doctor.gender);
+          if (doctor.specialty_id) el.docSpecialty.value = String(doctor.specialty_id);
+          el.docFee.value = doctor.fee ?? '';
+          el.docGovernorate.value = doctor.governorate_id ? String(doctor.governorate_id) : '';
+          populateDoctorAreasForGov(doctor.governorate_id, doctor.area_id);
+          el.docClinicName.value = doctor.clinic_name || '';
+          el.docAddress.value = doctor.address || '';
+          el.docWhatsapp.value = doctor.clinic_whatsapp || '';
+          el.docMapsUrl.value = doctor.maps_url || '';
+          el.docFacebook.value = doctor.facebook_url || '';
+          el.docInstagram.value = doctor.instagram_url || '';
+          el.docWebsite.value = doctor.website_url || '';
+          el.docSlotMinutes.value = '20';
+          el.docPriority.value = '1';
+          el.docActive.checked = true;
+          if (doctor.working_hours_ref) {
+            el.agreementHoursRef.textContent = 'مواعيد العمل المكتوبة في طلب الانضمام: ' + doctor.working_hours_ref;
+            el.agreementHoursRef.classList.remove('hidden');
+          } else {
+            el.agreementHoursRef.classList.add('hidden');
+          }
+          state.editingDoctorDaysOff = [];
+          renderHoursInputs({});
+          renderDaysOffList();
+          el.doctorFormPanel.classList.remove('hidden');
+          el.doctorFormPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+
+        // Editing existing doctor
+        state.convertingAgreementId = null;
         el.doctorFormTitle.textContent = 'تعديل بيانات: ' + doctor.name;
         el.docId.value = doctor.id;
         el.docName.value = doctor.name || '';
-        el.docSpecialty.value = doctor.specialty_id;
-        el.docArea.value = doctor.area_id;
+        setDocGenderRadio(doctor.gender);
+        el.docSpecialty.value = String(doctor.specialty_id || '');
         el.docFee.value = doctor.fee ?? 0;
+
+        const docAreaObj = state.areas.find(a => a.id === doctor.area_id);
+        const govId = docAreaObj ? docAreaObj.governorate_id : null;
+        el.docGovernorate.value = govId ? String(govId) : '';
+        populateDoctorAreasForGov(govId, doctor.area_id);
+
         el.docClinicName.value = doctor.clinic_name || '';
-        el.docClinicAddress.value = doctor.clinic_address || '';
+        el.docAddress.value = doctor.address || '';
         el.docWhatsapp.value = doctor.clinic_whatsapp || '';
+        el.docMapsUrl.value = doctor.maps_url || '';
+        el.docFacebook.value = doctor.facebook_url || '';
+        el.docInstagram.value = doctor.instagram_url || '';
+        el.docWebsite.value = doctor.website_url || '';
         el.docSlotMinutes.value = doctor.slot_minutes ?? 20;
         el.docPriority.value = doctor.priority ?? 1;
         el.docActive.checked = Boolean(doctor.active);
+        el.agreementHoursRef.classList.add('hidden');
+        el.agreementHoursRef.textContent = '';
 
         el.doctorFormPanel.classList.remove('hidden');
         el.doctorFormPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1681,6 +2410,7 @@
         ]);
 
         if (hrsRes.error || offRes.error) {
+          console.error('Load doctor hours/off error:', hrsRes.error || offRes.error);
           if (isRlsOrAuthError(hrsRes.error) || isRlsOrAuthError(offRes.error)) {
             triggerNotAdmin();
             return;
@@ -1699,6 +2429,7 @@
       }
 
       function closeDoctorForm() {
+        state.convertingAgreementId = null;
         el.doctorFormPanel.classList.add('hidden');
       }
 
@@ -1715,6 +2446,19 @@
 
         if (!/^20[0-9]{10}$/.test(whatsappClean)) {
           el.doctorFormError.textContent = 'رقم واتساب العيادة لازم يكون بصيغة دولية مصرية بدون + (مثال: 201012345678).';
+          el.doctorFormError.classList.remove('hidden');
+          return;
+        }
+
+        if (!el.docArea.value) {
+          el.doctorFormError.textContent = 'اختر المحافظة والمنطقة.';
+          el.doctorFormError.classList.remove('hidden');
+          return;
+        }
+
+        const mapsUrl = el.docMapsUrl.value.trim();
+        if (mapsUrl && !MAPS_REGEX.test(mapsUrl)) {
+          el.doctorFormError.textContent = 'رابط Google Maps غير صحيح.';
           el.doctorFormError.classList.remove('hidden');
           return;
         }
@@ -1740,14 +2484,20 @@
           }
         }
 
+        const genderRadio = document.querySelector('input[name="doc-gender"]:checked');
         const payload = {
           name: el.docName.value.trim(),
+          gender: genderRadio ? genderRadio.value : 'male',
           specialty_id: Number(el.docSpecialty.value),
           area_id: Number(el.docArea.value),
           fee: Number(el.docFee.value),
           clinic_name: el.docClinicName.value.trim(),
-          clinic_address: el.docClinicAddress.value.trim(),
+          address: el.docAddress.value.trim(),
           clinic_whatsapp: whatsappClean,
+          maps_url: mapsUrl || null,
+          facebook_url: el.docFacebook.value.trim() || null,
+          instagram_url: el.docInstagram.value.trim() || null,
+          website_url: el.docWebsite.value.trim() || null,
           slot_minutes: Number(el.docSlotMinutes.value) || 20,
           priority: Number(el.docPriority.value) || 1,
           active: el.docActive.checked
@@ -1762,6 +2512,7 @@
         if (existingId) {
           const { error } = await sb.from('doctors').update(payload).eq('id', existingId);
           if (error) {
+            console.error('Update doctor error:', error);
             el.saveDoctorBtn.disabled = false;
             el.saveDoctorBtn.textContent = 'حفظ بيانات الدكتور';
             if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
@@ -1772,6 +2523,7 @@
         } else {
           const { data, error } = await sb.from('doctors').insert(payload).select().single();
           if (error || !data) {
+            console.error('Insert doctor error:', error);
             el.saveDoctorBtn.disabled = false;
             el.saveDoctorBtn.textContent = 'حفظ بيانات الدكتور';
             if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
@@ -1786,13 +2538,15 @@
               doctor_id: savedDoctorId,
               day: d.day
             }));
-            await sb.from('doctor_days_off').insert(offPayload);
+            const { error: offErr } = await sb.from('doctor_days_off').insert(offPayload);
+            if (offErr) console.error('Insert doctor days off error:', offErr);
           }
         }
 
         // Delete and re-insert doctor_hours
         const { error: delErr } = await sb.from('doctor_hours').delete().eq('doctor_id', savedDoctorId);
         if (delErr) {
+          console.error('Delete doctor hours error:', delErr);
           el.saveDoctorBtn.disabled = false;
           el.saveDoctorBtn.textContent = 'حفظ بيانات الدكتور';
           if (isRlsOrAuthError(delErr)) { triggerNotAdmin(); return; }
@@ -1810,12 +2564,19 @@
           }));
           const { error: insErr } = await sb.from('doctor_hours').insert(hrsPayload);
           if (insErr) {
+            console.error('Insert doctor hours error:', insErr);
             el.saveDoctorBtn.disabled = false;
             el.saveDoctorBtn.textContent = 'حفظ بيانات الدكتور';
             el.doctorFormError.textContent = 'فشل حفظ ساعات العمل: ' + insErr.message;
             el.doctorFormError.classList.remove('hidden');
             return;
           }
+        }
+
+        // If converted from an agreement, mark that agreement as 'active'
+        const agreementIdToActivate = state.convertingAgreementId;
+        if (agreementIdToActivate) {
+          await updateAgreementStatus(agreementIdToActivate, 'active', null);
         }
 
         el.saveDoctorBtn.disabled = false;
@@ -1827,7 +2588,8 @@
 
       function renderDoctors() {
         const specMap = new Map(state.specialties.map(s => [s.id, s.name_ar]));
-        const areaMap = new Map(state.areas.map(a => [a.id, a.name_ar]));
+        const areaMap = new Map(state.areas.map(a => [a.id, a]));
+        const govMap = new Map(state.governorates.map(g => [g.id, g.name_ar]));
 
         if (!state.doctors.length) {
           el.doctorsList.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">مفيش دكاترة مسجلين</div>';
@@ -1836,28 +2598,40 @@
 
         el.doctorsList.innerHTML = '';
         state.doctors.forEach(doc => {
+          const areaObj = areaMap.get(doc.area_id);
+          const govName = areaObj ? (govMap.get(areaObj.governorate_id) || '') : '';
+          const areaName = areaObj ? areaObj.name_ar : '—';
+          const locationText = [govName, areaName].filter(Boolean).join(' › ');
+
           const card = document.createElement('article');
-          card.className = 'doctor-card';
+          card.className = 'item-card';
           card.innerHTML =
             '<div class="doctor-header">' +
               '<div>' +
                 '<div class="doctor-name">' + escapeHtml(doc.name) + '</div>' +
                 '<div class="doctor-meta">' +
+                  escapeHtml(genderLabel(doc.gender)) + ' · ' +
                   escapeHtml(specMap.get(doc.specialty_id) || '—') + ' · ' +
-                  escapeHtml(areaMap.get(doc.area_id) || '—') +
+                  escapeHtml(locationText) +
                 '</div>' +
               '</div>' +
               '<span class="' + (doc.active ? 'status-text-active' : 'status-text-inactive') + '">' +
                 (doc.active ? 'مفعل' : 'متوقف') +
               '</span>' +
             '</div>' +
-            '<div class="booking-info-rows">' +
+            '<div class="info-rows">' +
               '<div class="info-line"><span class="info-label">العيادة</span><span class="info-val">' + escapeHtml(doc.clinic_name) + '</span></div>' +
-              '<div class="info-line"><span class="info-label">العنوان</span><span class="info-val">' + escapeHtml(doc.clinic_address) + '</span></div>' +
-              '<div class="info-line"><span class="info-label">الكشف / المدة</span><span class="info-val tabular-nums">' + escapeHtml(doc.fee) + ' ج.م · ' + escapeHtml(doc.slot_minutes) + ' د</span></div>' +
+              '<div class="info-line"><span class="info-label">العنوان</span><span class="info-val">' + escapeHtml(doc.address || '—') + '</span></div>' +
+              '<div class="info-line"><span class="info-label">سعر الكشف / المدة</span><span class="info-val tabular-nums">' + escapeHtml(doc.fee) + ' ج.م · ' + escapeHtml(doc.slot_minutes) + ' د</span></div>' +
               '<div class="info-line"><span class="info-label">واتساب / الأولوية</span><span class="info-val tabular-nums" dir="ltr">' + escapeHtml(doc.clinic_whatsapp) + ' · P' + escapeHtml(doc.priority) + '</span></div>' +
             '</div>' +
-            '<div style="padding-top: 8px; border-top: 1px solid var(--border-hairline); display:flex; justify-content:flex-end;">' +
+            '<div style="padding-top: 8px; border-top: 1px solid var(--border-hairline); display:flex; justify-content:space-between; align-items:center; gap:10px;">' +
+              (doc.maps_url
+                ? '<a href="' + escapeHtml(doc.maps_url) + '" target="_blank" rel="noopener noreferrer" class="maps-icon-link" title="فتح اللوكيشن على الخريطة">' +
+                    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+                    '<span>الخريطة</span>' +
+                  '</a>'
+                : '<span></span>') +
               '<button type="button" class="btn btn-secondary btn-sm edit-doc-btn">تعديل البيانات والمواعيد</button>' +
             '</div>';
 
@@ -1866,14 +2640,16 @@
         });
       }
 
-      // --- TAB 3: SPECIALTIES & AREAS ---
+      // --- TAB 4: SPECIALTIES & AREAS ---
       async function refreshTaxonomies() {
-        const [specRes, areaRes] = await Promise.all([
+        const [specRes, govRes, areaRes] = await Promise.all([
           sb.from('specialties').select('*').order('id', { ascending: true }),
+          sb.from('governorates').select('*').order('sort', { ascending: true }),
           sb.from('areas').select('*').order('id', { ascending: true })
         ]);
-        if (specRes.error || areaRes.error) {
-          if (isRlsOrAuthError(specRes.error) || isRlsOrAuthError(areaRes.error)) {
+        if (specRes.error || areaRes.error || govRes.error) {
+          console.error('Taxonomies load error:', specRes.error || areaRes.error || govRes.error);
+          if (isRlsOrAuthError(specRes.error) || isRlsOrAuthError(areaRes.error) || isRlsOrAuthError(govRes.error)) {
             triggerNotAdmin();
             return;
           }
@@ -1881,51 +2657,113 @@
           return;
         }
         state.specialties = specRes.data || [];
+        state.governorates = govRes.data || [];
         state.areas = areaRes.data || [];
         renderTaxonomies();
       }
 
       function renderTaxonomies() {
-        renderTaxonomyList(el.specialtiesAdminList, state.specialties, 'specialties');
-        renderTaxonomyList(el.areasAdminList, state.areas, 'areas');
+        renderSpecialtiesList();
+        populateAddAreaGovSelect();
+        renderAreasGroupedByGov();
       }
 
-      function renderTaxonomyList(container, items, tableName) {
-        if (!items.length) {
-          container.innerHTML = '<div style="padding:12px 0; color:var(--text-muted); font-size:0.88rem;">لا توجد عناصر</div>';
+      function populateAddAreaGovSelect() {
+        const prev = el.newAreaGovSelect.value;
+        el.newAreaGovSelect.innerHTML = '<option value="">اختر المحافظة...</option>' +
+          state.governorates
+            .map(g => '<option value="' + g.id + '">' + escapeHtml(g.name_ar) + '</option>')
+            .join('');
+        if (prev) el.newAreaGovSelect.value = prev;
+      }
+
+      function buildToggleRow(item, tableName) {
+        const row = document.createElement('div');
+        row.className = 'list-row';
+        row.innerHTML =
+          '<span style="font-weight:600;">' + escapeHtml(item.name_ar) + '</span>' +
+          '<label class="toggle-label">' +
+            '<input type="checkbox" class="toggle-checkbox"' + (item.active ? ' checked' : '') + ' />' +
+            '<span>' + (item.active ? 'مفعل' : 'متوقف') + '</span>' +
+          '</label>';
+
+        const cb = row.querySelector('.toggle-checkbox');
+        const txt = row.querySelector('label span');
+        cb.addEventListener('change', async () => {
+          const nextVal = cb.checked;
+          cb.disabled = true;
+          const { error } = await sb.from(tableName).update({ active: nextVal }).eq('id', item.id);
+          cb.disabled = false;
+          if (error) {
+            console.error('Toggle active error:', error);
+            cb.checked = !nextVal;
+            if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
+            showToast('فشل التحديث');
+            return;
+          }
+          item.active = nextVal;
+          txt.textContent = nextVal ? 'مفعل' : 'متوقف';
+          showToast('تم التحديث');
+        });
+        return row;
+      }
+
+      function renderSpecialtiesList() {
+        if (!state.specialties.length) {
+          el.specialtiesAdminList.innerHTML = '<div style="padding:12px 0; color:var(--text-muted); font-size:0.88rem;">لا توجد تخصصات</div>';
           return;
         }
-        container.innerHTML = '';
-        items.forEach(item => {
-          const row = document.createElement('div');
-          row.className = 'list-row';
-          row.innerHTML =
-            '<span style="font-weight:600;">' + escapeHtml(item.name_ar) + '</span>' +
-            '<label class="toggle-label">' +
-              '<input type="checkbox" class="toggle-checkbox"' + (item.active ? ' checked' : '') + ' />' +
-              '<span>' + (item.active ? 'مفعل' : 'متوقف') + '</span>' +
-            '</label>';
-
-          const cb = row.querySelector('.toggle-checkbox');
-          const txt = row.querySelector('label span');
-          cb.addEventListener('change', async () => {
-            const nextVal = cb.checked;
-            cb.disabled = true;
-            const { error } = await sb.from(tableName).update({ active: nextVal }).eq('id', item.id);
-            cb.disabled = false;
-            if (error) {
-              cb.checked = !nextVal;
-              if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
-              showToast('فشل التحديث');
-              return;
-            }
-            item.active = nextVal;
-            txt.textContent = nextVal ? 'مفعل' : 'متوقف';
-            showToast('تم التحديث');
-          });
-
-          container.appendChild(row);
+        el.specialtiesAdminList.innerHTML = '';
+        state.specialties.forEach(item => {
+          el.specialtiesAdminList.appendChild(buildToggleRow(item, 'specialties'));
         });
+      }
+
+      function renderAreasGroupedByGov() {
+        if (!state.areas.length) {
+          el.areasAdminList.innerHTML = '<div style="padding:12px 0; color:var(--text-muted); font-size:0.88rem;">لا توجد مناطق</div>';
+          return;
+        }
+
+        el.areasAdminList.innerHTML = '';
+        const areasByGov = new Map();
+        const ungrouped = [];
+
+        state.areas.forEach(a => {
+          if (a.governorate_id) {
+            if (!areasByGov.has(a.governorate_id)) areasByGov.set(a.governorate_id, []);
+            areasByGov.get(a.governorate_id).push(a);
+          } else {
+            ungrouped.push(a);
+          }
+        });
+
+        state.governorates.forEach(gov => {
+          const groupAreas = areasByGov.get(gov.id);
+          if (!groupAreas || !groupAreas.length) return;
+
+          const heading = document.createElement('div');
+          heading.className = 'gov-group-heading';
+          heading.textContent = gov.name_ar;
+          el.areasAdminList.appendChild(heading);
+
+          const rowsWrap = document.createElement('div');
+          rowsWrap.className = 'list-rows';
+          groupAreas.forEach(a => rowsWrap.appendChild(buildToggleRow(a, 'areas')));
+          el.areasAdminList.appendChild(rowsWrap);
+        });
+
+        if (ungrouped.length) {
+          const heading = document.createElement('div');
+          heading.className = 'gov-group-heading';
+          heading.textContent = 'مناطق أخرى';
+          el.areasAdminList.appendChild(heading);
+
+          const rowsWrap = document.createElement('div');
+          rowsWrap.className = 'list-rows';
+          ungrouped.forEach(a => rowsWrap.appendChild(buildToggleRow(a, 'areas')));
+          el.areasAdminList.appendChild(rowsWrap);
+        }
       }
 
       el.addSpecialtyForm.addEventListener('submit', async (e) => {
@@ -1934,6 +2772,7 @@
         if (!name) return;
         const { error } = await sb.from('specialties').insert({ name_ar: name, active: true });
         if (error) {
+          console.error('Insert specialty error:', error);
           if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
           showToast('فشل إضافة التخصص');
           return;
@@ -1945,10 +2784,16 @@
 
       el.addAreaForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const govId = el.newAreaGovSelect.value ? Number(el.newAreaGovSelect.value) : null;
         const name = el.newAreaInput.value.trim();
+        if (!govId) {
+          showToast('اختر المحافظة الأول');
+          return;
+        }
         if (!name) return;
-        const { error } = await sb.from('areas').insert({ name_ar: name, active: true });
+        const { error } = await sb.from('areas').insert({ name_ar: name, governorate_id: govId, active: true });
         if (error) {
+          console.error('Insert area error:', error);
           if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
           showToast('فشل إضافة المنطقة');
           return;
@@ -1958,7 +2803,7 @@
         refreshTaxonomies();
       });
 
-      // --- TAB 4: WEEKLY REPORT ---
+      // --- TAB 5: WEEKLY REPORT ---
       el.reportWeekPicker.addEventListener('change', () => {
         state.reportRefDate = el.reportWeekPicker.value || getCairoTodayISO();
         loadWeeklyReport();
@@ -1996,6 +2841,7 @@
           .eq('status', 'attended');
 
         if (error) {
+          console.error('Weekly report error:', error);
           if (isRlsOrAuthError(error)) {
             triggerNotAdmin();
             return;
