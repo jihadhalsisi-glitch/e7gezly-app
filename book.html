@@ -1808,11 +1808,13 @@
         window.dataLayer.push({
           event: 'booking_confirmed',
           booking_id: res.booking_id,
+          transaction_id: 'booking_' + res.booking_id,
           specialty: state.specialtyName,
           governorate: state.governorateName,
           area: state.areaName,
-          value: res.fee,
-          currency: 'EGP'
+          value: Number(res.fee),
+          currency: 'EGP',
+          user_data: { phone_number: '+20' + phone.slice(1) }
         });
 
         if (window.fbq) {
