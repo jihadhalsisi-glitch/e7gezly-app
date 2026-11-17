@@ -3,9 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M4L6Q78W');</script>
+  <!-- End Google Tag Manager -->
   <meta name="theme-color" content="#312e81" />
   <title>عقد اشتراك — احجزلي E7gezly by AdStartup</title>
   <meta name="description" content="عقد اشتراك العيادات والأطباء في خدمة احجزلي E7gezly by AdStartup" />
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2670836706701296');
+  fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -591,6 +608,12 @@
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M4L6Q78W" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <!-- Meta Pixel Code (noscript) -->
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2670836706701296&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code (noscript) -->
   <header class="topbar">
     <div class="topbar-inner">
       <a href="index.html" class="brand">
@@ -1007,6 +1030,20 @@
       };
 
       let submitting = false;
+      let doctorFormStartFired = false;
+
+      function getCookie(name) {
+        const escaped = name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1');
+        const match = document.cookie.match(new RegExp('(?:^|; )' + escaped + '=([^;]*)'));
+        return match ? decodeURIComponent(match[1]) : null;
+      }
+
+      function getFbcValue() {
+        const fbcCookie = getCookie('_fbc');
+        if (fbcCookie) return fbcCookie;
+        const fbclid = new URLSearchParams(window.location.search).get('fbclid');
+        return fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : null;
+      }
 
       function normalizeDigits(str) {
         const arabicNums = '٠١٢٣٤٥٦٧٨٩';
@@ -1021,7 +1058,13 @@
         el.submitBtn.disabled = submitting || !el.agreedCheckbox.checked;
       }
 
-      el.agreedCheckbox.addEventListener('change', syncSubmitState);
+      el.agreedCheckbox.addEventListener('change', () => {
+        if (el.agreedCheckbox.checked && !doctorFormStartFired) {
+          doctorFormStartFired = true;
+          if (window.fbq) fbq('trackCustom', 'DoctorFormStart');
+        }
+        syncSubmitState();
+      });
 
       function clearAllFieldErrors() {
         document.querySelectorAll('.field-error').forEach(node => {
@@ -1252,6 +1295,8 @@
         el.submitBtn.textContent = 'جاري تسجيل الموافقة...';
         syncSubmitState();
 
+        const eventId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2));
+
         const { error } = await sb.from('agreements').insert({
           doctor_name: doctorName,
           gender: genderVal,
@@ -1274,7 +1319,11 @@
           other_link: otherLink || null,
           package: pkgVal,
           agreed: true,
-          terms_version: 'v2'
+          terms_version: 'v2',
+          event_id: eventId,
+          fbp: getCookie('_fbp') || null,
+          fbc: getFbcValue(),
+          source_url: location.href
         });
 
         submitting = false;
@@ -1288,6 +1337,33 @@
           el.globalError.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return;
         }
+
+        if (window.fbq) {
+          fbq('track', 'SubmitApplication', {
+            value: Number(pkgVal),
+            currency: 'EGP',
+            content_category: specialtyText,
+            content_name: 'doctor_signup'
+          }, {
+            eventID: eventId
+          });
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'doctor_signup',
+          transaction_id: 'doctor_' + eventId,
+          value: Number(pkgVal),
+          currency: 'EGP',
+          specialty: specialtyText,
+          governorate: governorateName,
+          area: areaText,
+          package: pkgVal,
+          user_data: {
+            phone_number: '+20' + phone.slice(1),
+            email: emailVal || undefined
+          }
+        });
 
         el.sumDoctor.textContent = doctorName;
         el.sumSpecialty.textContent = specialtyText;
