@@ -40,6 +40,7 @@ export default defineConfig(() => {
           book: path.resolve(__dirname, 'book.html'),
           admin: path.resolve(__dirname, 'admin.html'),
           contract: path.resolve(__dirname, 'contract.html'),
+          labContract: path.resolve(__dirname, 'lab-contract.html'),
         },
       },
     },

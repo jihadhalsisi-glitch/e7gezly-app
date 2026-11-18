@@ -573,6 +573,36 @@
       background-color: #e0e7ff;
     }
 
+    .service-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .service-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 8px;
+      background-color: var(--teal-soft);
+      border: 1px solid var(--teal-border);
+      color: var(--teal-hover);
+    }
+
+    .service-badge.is-home {
+      background-color: var(--indigo-soft);
+      border-color: var(--indigo-border);
+      color: var(--indigo);
+    }
+
+    .notes-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
     /* Doctors Form & Cards */
     .doctor-header {
       display: flex;
@@ -957,6 +987,10 @@
           <span>طلبات الانضمام</span>
           <span id="agreements-new-badge" class="tab-badge hidden">0</span>
         </button>
+        <button type="button" class="tab-btn" data-tab="labs">
+          <span>طلبات المعامل</span>
+          <span id="labs-new-badge" class="tab-badge hidden">0</span>
+        </button>
         <button type="button" class="tab-btn" data-tab="doctors">الدكاترة</button>
         <button type="button" class="tab-btn" data-tab="taxonomies">التخصصات والمناطق</button>
         <button type="button" class="tab-btn" data-tab="report">التقرير الأسبوعي</button>
@@ -985,6 +1019,17 @@
 
         <div id="agreements-filter-chips" class="filter-chips"></div>
         <div id="agreements-list" class="cards-grid"></div>
+      </div>
+
+      <!-- Tab 2B: Lab Requests (lab_agreements) -->
+      <div id="tab-labs" class="hidden">
+        <div class="toolbar">
+          <h2 class="section-heading">طلبات المعامل</h2>
+          <button id="refresh-labs-btn" type="button" class="btn btn-secondary btn-sm">تحديث</button>
+        </div>
+
+        <div id="labs-filter-chips" class="filter-chips"></div>
+        <div id="labs-list" class="cards-grid"></div>
       </div>
 
       <!-- Tab 3: Doctors -->
@@ -1236,6 +1281,14 @@
         { value: 'rejected', label: 'مرفوض' }
       ];
 
+      const LAB_STATUSES = [
+        { value: 'new', label: 'جديد' },
+        { value: 'contacted', label: 'تم التواصل' },
+        { value: 'paid', label: 'تم الدفع' },
+        { value: 'active', label: 'مفعّل' },
+        { value: 'rejected', label: 'مرفوض' }
+      ];
+
       const PACKAGE_LABELS = {
         '5000': '5,000 ج.م (10–15 حجز)',
         '9000': '9,000 ج.م (20–30 حجز)',
@@ -1250,12 +1303,14 @@
         bookingsDate: getCairoTodayISO(),
         reportRefDate: getCairoTodayISO(),
         agreementFilter: 'all',
+        labFilter: 'all',
         doctors: [],
         specialties: [],
         governorates: [],
         areas: [],
         bookings: [],
         agreements: [],
+        labAgreements: [],
         editingDoctorDaysOff: [],
         convertingAgreementId: null,
         toastTimer: null
@@ -1283,8 +1338,10 @@
 
         tabButtons: document.querySelectorAll('.tab-btn'),
         agreementsNewBadge: document.getElementById('agreements-new-badge'),
+        labsNewBadge: document.getElementById('labs-new-badge'),
         tabBookings: document.getElementById('tab-bookings'),
         tabAgreements: document.getElementById('tab-agreements'),
+        tabLabs: document.getElementById('tab-labs'),
         tabDoctors: document.getElementById('tab-doctors'),
         tabTaxonomies: document.getElementById('tab-taxonomies'),
         tabReport: document.getElementById('tab-report'),
@@ -1298,6 +1355,10 @@
         refreshAgreementsBtn: document.getElementById('refresh-agreements-btn'),
         agreementsFilterChips: document.getElementById('agreements-filter-chips'),
         agreementsList: document.getElementById('agreements-list'),
+
+        refreshLabsBtn: document.getElementById('refresh-labs-btn'),
+        labsFilterChips: document.getElementById('labs-filter-chips'),
+        labsList: document.getElementById('labs-list'),
 
         addDoctorBtn: document.getElementById('add-doctor-btn'),
         doctorFormPanel: document.getElementById('doctor-form-panel'),
@@ -1407,6 +1468,7 @@
         const dt = new Date(isoTimestamp);
         if (Number.isNaN(dt.getTime())) return isoTimestamp;
         return dt.toLocaleString('ar-EG', {
+          timeZone: 'Africa/Cairo',
           year: 'numeric',
           month: 'short',
           day: 'numeric',
@@ -1589,19 +1651,22 @@
         el.bookingsDateFilter.value = state.bookingsDate;
         el.reportWeekPicker.value = state.reportRefDate;
         updateAgreementsBadge();
+        updateLabsBadge();
         await loadBookings();
         renderAgreementsSection();
+        renderLabsSection();
         renderDoctors();
         renderTaxonomies();
       }
 
       async function loadCoreAdminData() {
-        const [docRes, specRes, govRes, areaRes, agRes] = await Promise.all([
+        const [docRes, specRes, govRes, areaRes, agRes, labRes] = await Promise.all([
           sb.from('doctors').select('*').order('priority', { ascending: true }).order('id', { ascending: true }),
           sb.from('specialties').select('*').order('id', { ascending: true }),
           sb.from('governorates').select('*').order('sort', { ascending: true }),
           sb.from('areas').select('*').order('id', { ascending: true }),
-          sb.from('agreements').select('*').order('created_at', { ascending: false })
+          sb.from('agreements').select('*').order('created_at', { ascending: false }),
+          sb.from('lab_agreements').select('*').order('created_at', { ascending: false })
         ]);
 
         if (docRes.error || !docRes.data || docRes.data.length === 0) {
@@ -1616,12 +1681,17 @@
           console.error('Agreements RLS error:', agRes.error);
           return false;
         }
+        if (labRes.error && isRlsOrAuthError(labRes.error)) {
+          console.error('Lab agreements RLS error:', labRes.error);
+          return false;
+        }
 
         state.doctors = docRes.data;
         state.specialties = specRes.data || [];
         state.governorates = govRes.data || [];
         state.areas = areaRes.data || [];
         state.agreements = agRes.data || [];
+        state.labAgreements = labRes.data || [];
         return true;
       }
 
@@ -1631,12 +1701,14 @@
         el.tabButtons.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
         el.tabBookings.classList.toggle('hidden', tab !== 'bookings');
         el.tabAgreements.classList.toggle('hidden', tab !== 'agreements');
+        el.tabLabs.classList.toggle('hidden', tab !== 'labs');
         el.tabDoctors.classList.toggle('hidden', tab !== 'doctors');
         el.tabTaxonomies.classList.toggle('hidden', tab !== 'taxonomies');
         el.tabReport.classList.toggle('hidden', tab !== 'report');
 
         if (tab === 'bookings') loadBookings();
         if (tab === 'agreements') refreshAgreements();
+        if (tab === 'labs') refreshLabs();
         if (tab === 'doctors') refreshDoctors();
         if (tab === 'taxonomies') refreshTaxonomies();
         if (tab === 'report') loadWeeklyReport();
@@ -1650,6 +1722,12 @@
         const newCount = state.agreements.filter(a => (a.status || 'new') === 'new').length;
         el.agreementsNewBadge.textContent = String(newCount);
         el.agreementsNewBadge.classList.toggle('hidden', newCount === 0);
+      }
+
+      function updateLabsBadge() {
+        const newCount = state.labAgreements.filter(a => (a.status || 'new') === 'new').length;
+        el.labsNewBadge.textContent = String(newCount);
+        el.labsNewBadge.classList.toggle('hidden', newCount === 0);
       }
 
       // --- TAB 1: BOOKINGS ---
@@ -1995,6 +2073,237 @@
         if (item) item.status = newStatus;
         updateAgreementsBadge();
         showToast('تم تحديث حالة الطلب');
+        return true;
+      }
+
+      // --- TAB 2B: LAB REQUESTS (lab_agreements) ---
+      el.refreshLabsBtn.addEventListener('click', refreshLabs);
+
+      async function refreshLabs() {
+        el.labsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">جاري تحميل طلبات المعامل...</div>';
+        const { data, error } = await sb
+          .from('lab_agreements')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Lab agreements load error:', error);
+          if (isRlsOrAuthError(error)) {
+            triggerNotAdmin();
+            return;
+          }
+          showToast('فشل تحميل طلبات المعامل');
+          el.labsList.innerHTML = '<div class="alert alert-error" style="grid-column:1 / -1;">حصلت مشكلة في تحميل طلبات المعامل.</div>';
+          return;
+        }
+
+        state.labAgreements = data || [];
+        updateLabsBadge();
+        renderLabsSection();
+      }
+
+      function renderLabsSection() {
+        const counts = { all: state.labAgreements.length };
+        LAB_STATUSES.forEach(s => { counts[s.value] = 0; });
+        state.labAgreements.forEach(a => {
+          const st = a.status || 'new';
+          if (counts[st] !== undefined) counts[st] += 1;
+        });
+
+        const chips = [{ value: 'all', label: 'الكل' }, ...LAB_STATUSES];
+        el.labsFilterChips.innerHTML = '';
+        chips.forEach(ch => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'filter-chip' + (state.labFilter === ch.value ? ' active' : '');
+          btn.textContent = ch.label + ' (' + (counts[ch.value] || 0) + ')';
+          btn.addEventListener('click', () => {
+            state.labFilter = ch.value;
+            renderLabsSection();
+          });
+          el.labsFilterChips.appendChild(btn);
+        });
+
+        const filtered = state.labFilter === 'all'
+          ? state.labAgreements
+          : state.labAgreements.filter(a => (a.status || 'new') === state.labFilter);
+
+        if (!filtered.length) {
+          el.labsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">مفيش طلبات معامل في التصنيف ده</div>';
+          return;
+        }
+
+        el.labsList.innerHTML = '';
+        filtered.forEach(lab => {
+          const st = lab.status || 'new';
+          const statusOpts = LAB_STATUSES.map(s =>
+            '<option value="' + s.value + '"' + (st === s.value ? ' selected' : '') + '>' + s.label + '</option>'
+          ).join('');
+
+          const addressParts = [lab.address_street, lab.address_floor, lab.address_landmark]
+            .map(s => (s || '').trim())
+            .filter(Boolean)
+            .join(' — ');
+
+          const socialLinks = [
+            { url: lab.facebook_url, label: 'فيسبوك' },
+            { url: lab.instagram_url, label: 'انستجرام' },
+            { url: lab.website_url, label: 'الموقع' },
+            { url: lab.other_link, label: 'رابط آخر' }
+          ].filter(item => Boolean((item.url || '').trim()));
+
+          const socialHtml = socialLinks.length
+            ? '<div class="social-links-row">' +
+                socialLinks.map(s =>
+                  '<a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener noreferrer" class="social-link-btn">' + s.label + '</a>'
+                ).join('') +
+              '</div>'
+            : '';
+
+          const serviceBadges = [
+            lab.service_branch ? '<span class="service-badge">زيارة فرع</span>' : '',
+            lab.service_home ? '<span class="service-badge is-home">سحب منزلي</span>' : ''
+          ].filter(Boolean).join('');
+
+          const pkgDisplay = PACKAGE_LABELS[String(lab.package || '')] || (lab.package ? lab.package + ' ج.م' : '—');
+          const waPhoneClean = normalizeDigits(lab.phone || '').replace(/^2?0/, '');
+          const waContactUrl = 'https://wa.me/20' + encodeURIComponent(waPhoneClean);
+          const waBookingClean = normalizeDigits(lab.booking_whatsapp || '').replace(/^2?0/, '');
+          const waBookingUrl = waBookingClean ? 'https://wa.me/20' + encodeURIComponent(waBookingClean) : '';
+          const contactDisplay = [lab.contact_name, lab.contact_role].filter(Boolean).join(' — ') || '—';
+
+          const card = document.createElement('article');
+          card.className = 'item-card';
+          card.innerHTML =
+            '<div class="card-top">' +
+              '<div>' +
+                '<div class="doctor-name">' + escapeHtml(lab.lab_name) + '</div>' +
+                '<div class="meta-sub">' +
+                  escapeHtml(contactDisplay) + ' · ' +
+                  escapeHtml(formatDateTimeAr(lab.created_at)) +
+                '</div>' +
+              '</div>' +
+              '<div style="text-align:left; font-weight:700; color:var(--teal);" class="tabular-nums">' +
+                escapeHtml(lab.branches_count != null ? lab.branches_count + ' فرع' : '—') +
+              '</div>' +
+            '</div>' +
+
+            (serviceBadges ? '<div class="service-badges-row">' + serviceBadges + '</div>' : '') +
+
+            '<div class="info-rows">' +
+              '<div class="info-line">' +
+                '<span class="info-label">موبايل المسؤول</span>' +
+                '<span class="info-val" style="display:inline-flex; gap:10px; align-items:center;">' +
+                  '<a class="phone-link tabular-nums" dir="ltr" href="tel:' + escapeHtml(lab.phone || '') + '">' + escapeHtml(lab.phone || '—') + '</a>' +
+                  (waPhoneClean ? '<a class="social-link-btn" href="' + waContactUrl + '" target="_blank" rel="noopener noreferrer">واتساب</a>' : '') +
+                '</span>' +
+              '</div>' +
+              '<div class="info-line">' +
+                '<span class="info-label">واتساب الحجوزات</span>' +
+                '<span class="info-val" style="display:inline-flex; gap:10px; align-items:center;">' +
+                  '<span class="tabular-nums" dir="ltr">' + escapeHtml(lab.booking_whatsapp || '—') + '</span>' +
+                  (waBookingUrl ? '<a class="social-link-btn" href="' + waBookingUrl + '" target="_blank" rel="noopener noreferrer">واتساب</a>' : '') +
+                '</span>' +
+              '</div>' +
+              (lab.email ? '<div class="info-line"><span class="info-label">الإيميل</span><span class="info-val" dir="ltr">' + escapeHtml(lab.email) + '</span></div>' : '') +
+              '<div class="info-line"><span class="info-label">المكان</span><span class="info-val">' + escapeHtml([lab.governorate, lab.area].filter(Boolean).join(' — ') || '—') + '</span></div>' +
+              '<div class="info-line"><span class="info-label">العنوان</span><span class="info-val">' + escapeHtml(addressParts || '—') + '</span></div>' +
+              (lab.other_branches ? '<div class="info-line"><span class="info-label">فروع أخرى</span><span class="info-val">' + escapeHtml(lab.other_branches) + '</span></div>' : '') +
+              '<div class="info-line"><span class="info-label">المواعيد</span><span class="info-val">' + escapeHtml(lab.working_hours || '—') + '</span></div>' +
+              (lab.service_home ? '<div class="info-line"><span class="info-label">مناطق الزيارة المنزلية</span><span class="info-val">' + escapeHtml(lab.home_areas || '—') + '</span></div>' : '') +
+              (lab.service_home && lab.home_fee != null ? '<div class="info-line"><span class="info-label">رسوم الزيارة المنزلية</span><span class="info-val tabular-nums">' + escapeHtml(lab.home_fee) + ' ج.م</span></div>' : '') +
+              (lab.test_categories ? '<div class="info-line"><span class="info-label">التحاليل/الأقسام</span><span class="info-val">' + escapeHtml(lab.test_categories) + '</span></div>' : '') +
+              (lab.avg_invoice != null ? '<div class="info-line"><span class="info-label">متوسط الفاتورة</span><span class="info-val tabular-nums">' + escapeHtml(lab.avg_invoice) + ' ج.م</span></div>' : '') +
+              (lab.accreditation ? '<div class="info-line"><span class="info-label">الترخيص/الاعتماد</span><span class="info-val">' + escapeHtml(lab.accreditation) + '</span></div>' : '') +
+              '<div class="info-line"><span class="info-label">الباقة</span><span class="info-val tabular-nums">' + escapeHtml(pkgDisplay) + '</span></div>' +
+            '</div>' +
+
+            (lab.price_list_url || lab.maps_url || socialHtml
+              ? '<div class="social-links-row">' +
+                  (lab.maps_url ? '<a href="' + escapeHtml(lab.maps_url) + '" target="_blank" rel="noopener noreferrer" class="social-link-btn">Google Maps</a>' : '') +
+                  (lab.price_list_url ? '<a href="' + escapeHtml(lab.price_list_url) + '" target="_blank" rel="noopener noreferrer" class="social-link-btn">قائمة الأسعار</a>' : '') +
+                '</div>' + socialHtml
+              : '') +
+
+            '<div class="card-controls">' +
+              '<div class="field">' +
+                '<label for="lab-status-' + lab.id + '" style="font-size:0.8rem; color:var(--text-muted);">حالة الطلب</label>' +
+                '<select id="lab-status-' + lab.id + '" class="select-ctrl">' + statusOpts + '</select>' +
+              '</div>' +
+              '<div class="notes-box">' +
+                '<label for="lab-notes-' + lab.id + '" style="font-size:0.8rem; color:var(--text-muted);">ملاحظات</label>' +
+                '<textarea id="lab-notes-' + lab.id + '" class="textarea-ctrl" placeholder="أضف ملاحظات المتابعة...">' + escapeHtml(lab.notes || '') + '</textarea>' +
+                '<button type="button" class="btn btn-secondary btn-sm save-lab-notes-btn">حفظ الملاحظات</button>' +
+              '</div>' +
+            '</div>';
+
+          const statusSel = card.querySelector('#lab-status-' + lab.id);
+          statusSel.addEventListener('change', async () => {
+            await updateLabStatus(lab.id, statusSel.value, statusSel);
+          });
+
+          const notesInput = card.querySelector('#lab-notes-' + lab.id);
+          const saveNotesBtn = card.querySelector('.save-lab-notes-btn');
+          saveNotesBtn.addEventListener('click', async () => {
+            await updateLabNotes(lab.id, notesInput.value, saveNotesBtn);
+          });
+
+          el.labsList.appendChild(card);
+        });
+      }
+
+      async function updateLabStatus(labId, newStatus, selectEl) {
+        if (selectEl) selectEl.disabled = true;
+        const { error } = await sb
+          .from('lab_agreements')
+          .update({ status: newStatus })
+          .eq('id', labId);
+        if (selectEl) selectEl.disabled = false;
+
+        if (error) {
+          console.error('Update lab status error:', error);
+          if (isRlsOrAuthError(error)) {
+            triggerNotAdmin();
+            return false;
+          }
+          showToast('فشل تحديث حالة طلب المعمل');
+          return false;
+        }
+
+        const item = state.labAgreements.find(a => a.id === labId);
+        if (item) item.status = newStatus;
+        updateLabsBadge();
+        showToast('تم تحديث حالة طلب المعمل');
+        return true;
+      }
+
+      async function updateLabNotes(labId, notesText, btnEl) {
+        if (btnEl) {
+          btnEl.disabled = true;
+          btnEl.textContent = 'جاري الحفظ...';
+        }
+        const { error } = await sb
+          .from('lab_agreements')
+          .update({ notes: notesText.trim() || null })
+          .eq('id', labId);
+        if (btnEl) {
+          btnEl.disabled = false;
+          btnEl.textContent = 'حفظ الملاحظات';
+        }
+
+        if (error) {
+          console.error('Update lab notes error:', error);
+          if (isRlsOrAuthError(error)) {
+            triggerNotAdmin();
+            return false;
+          }
+          showToast('فشل حفظ الملاحظات');
+          return false;
+        }
+
+        const item = state.labAgreements.find(a => a.id === labId);
+        if (item) item.notes = notesText.trim() || null;
+        showToast('تم حفظ الملاحظات');
         return true;
       }
 
