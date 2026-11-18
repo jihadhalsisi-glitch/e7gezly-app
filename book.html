@@ -6,13 +6,16 @@
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M4L6Q78W');</script>
   <!-- End Google Tag Manager -->
-  <meta name="theme-color" content="#0d9488" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/favicon-32.png" />
+  <link rel="apple-touch-icon" href="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-icon-180.png" />
+  <meta name="theme-color" content="#3B2A9B" />
   <title>احجز كشفك | احجزلي – E7gezly by AdStartup</title>
   <meta name="description" content="اختار التخصص والمحافظة والمنطقة والميعاد المناسب ليك واحجز كشفك في أقل من دقيقة مع احجزلي." />
   <link rel="canonical" href="https://e7gezly-app.vip/book.html" />
   <meta property="og:url" content="https://e7gezly-app.vip/book.html" />
-  <meta property="og:title" content="احجز كشفك | احجزلي" />
-  <meta property="og:description" content="اختار التخصص والمنطقة واليوم والميعاد المناسب ليك واحجز في دقيقة." />
+  <meta property="og:title" content="احجز كشفك | احجزلي – E7gezly by AdStartup" />
+  <meta property="og:description" content="اختار التخصص والمحافظة والمنطقة والميعاد المناسب ليك واحجز كشفك في أقل من دقيقة مع احجزلي." />
+  <meta property="og:image" content="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-icon-180.png" />
   <meta property="og:type" content="website" />
   <!-- Meta Pixel Code -->
   <script>
@@ -33,17 +36,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-canvas: #f8fafc;
+      --brand: #3B2A9B;
+      --brand-dark: #2C1F7A;
+      --brand-50: #F2F0FB;
+      --brand-100: #E4E0F7;
+      --lime: #C6F25C;
+      --lime-dark: #AEDB3F;
+      --ink: #17133A;
+      --muted: #6B6890;
+      --bg-canvas: #F2F0FB;
       --bg-surface: #ffffff;
-      --bg-subtle: #f1f5f9;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
-      --border-hairline: #e2e8f0;
-      --teal: #0d9488;
-      --teal-hover: #0f766e;
-      --teal-soft: #f0fdfa;
-      --teal-border: #99f6e4;
+      --bg-subtle: #F2F0FB;
+      --text-primary: var(--ink);
+      --text-secondary: #433E66;
+      --text-muted: var(--muted);
+      --border-hairline: var(--brand-100);
       --danger: #dc2626;
       --danger-soft: #fef2f2;
       --danger-border: #fecaca;
@@ -52,7 +59,7 @@
       --amber-text: #92400e;
       --radius-card: 18px;
       --radius-control: 12px;
-      --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.08);
+      --shadow-card: 0 1px 3px rgba(23, 19, 58, 0.04), 0 8px 24px -12px rgba(59, 42, 155, 0.12);
     }
 
     * {
@@ -90,8 +97,9 @@
 
     /* Top Bar */
     .topbar {
-      background-color: var(--bg-surface);
-      border-bottom: 1px solid var(--border-hairline);
+      background-color: #ffffff;
+      border-bottom: 3px solid var(--lime);
+      box-shadow: inset 0 -1px 0 var(--brand-100);
       position: sticky;
       top: 0;
       z-index: 30;
@@ -112,31 +120,49 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      color: var(--text-primary);
+      color: var(--ink);
     }
 
-    .brand-mark {
-      width: 34px;
-      height: 34px;
+    .brand-logo {
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
-      background-color: var(--teal);
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
       flex-shrink: 0;
     }
 
+    @media (max-width: 640px) {
+      .brand-logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+      }
+    }
+
+    .brand-text-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
     .brand-title {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .brand-by {
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-weight: 600;
       white-space: nowrap;
     }
 
     .back-link {
       font-size: 0.88rem;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--ink);
       text-decoration: none;
       padding: 6px 10px;
       border-radius: 8px;
@@ -144,15 +170,15 @@
     }
 
     .back-link:hover {
-      color: var(--teal);
-      background-color: var(--teal-soft);
+      color: var(--brand);
+      background-color: var(--brand-50);
     }
 
     /* Hero Strip */
     .page-head {
-      background-color: var(--bg-surface);
-      border-bottom: 1px solid var(--border-hairline);
-      padding: 20px 16px;
+      background-color: var(--brand);
+      color: #ffffff;
+      padding: 24px 16px;
     }
 
     .page-head-inner {
@@ -164,15 +190,16 @@
       font-size: clamp(1.3rem, 3vw, 1.75rem);
       font-weight: 700;
       line-height: 1.35;
+      color: #ffffff;
     }
 
     .page-title span {
-      color: var(--teal);
+      color: var(--lime);
     }
 
     .page-sub {
       font-size: 0.92rem;
-      color: var(--text-secondary);
+      color: rgba(255, 255, 255, 0.85);
       margin-top: 4px;
     }
 
@@ -228,10 +255,9 @@
     .step-badge {
       width: 28px;
       height: 28px;
-      border-radius: 8px;
-      background-color: var(--teal-soft);
-      border: 1px solid var(--teal-border);
-      color: var(--teal);
+      border-radius: 50%;
+      background-color: var(--brand);
+      color: var(--lime);
       font-size: 0.85rem;
       font-weight: 700;
       display: inline-flex;
@@ -244,7 +270,7 @@
     .section-title {
       font-size: 1.02rem;
       font-weight: 700;
-      color: var(--text-primary);
+      color: var(--brand);
     }
 
     /* Selects & Inputs */
@@ -300,8 +326,8 @@
 
     .select-ctrl:focus, .input-ctrl:focus {
       outline: none;
-      border-color: var(--teal);
-      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(59, 42, 155, 0.15);
     }
 
     .select-ctrl:disabled, .input-ctrl:disabled {
@@ -313,9 +339,9 @@
     .fee-hint {
       font-size: 0.86rem;
       font-weight: 600;
-      color: var(--teal-hover);
-      background-color: var(--teal-soft);
-      border: 1px solid var(--teal-border);
+      color: var(--brand);
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
       padding: 8px 12px;
       border-radius: 10px;
       font-variant-numeric: tabular-nums;
@@ -357,13 +383,13 @@
     }
 
     .day-chip:hover:not(:disabled) {
-      border-color: var(--teal);
-      background-color: var(--teal-soft);
+      border-color: var(--brand);
+      background-color: var(--brand-50);
     }
 
     .day-chip.selected {
-      background-color: var(--teal);
-      border-color: var(--teal);
+      background-color: var(--brand);
+      border-color: var(--brand);
       color: #ffffff;
     }
 
@@ -424,13 +450,13 @@
     }
 
     .slot-chip:hover {
-      border-color: var(--teal);
-      background-color: var(--teal-soft);
+      border-color: var(--brand);
+      background-color: var(--brand-50);
     }
 
     .slot-chip.selected {
-      background-color: var(--teal);
-      border-color: var(--teal);
+      background-color: var(--brand);
+      border-color: var(--brand);
       color: #ffffff;
     }
 
@@ -458,8 +484,8 @@
       padding: 12px 22px;
       border: none;
       border-radius: var(--radius-control);
-      background-color: var(--teal);
-      color: #ffffff;
+      background-color: var(--lime);
+      color: var(--brand);
       font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
@@ -471,7 +497,7 @@
     }
 
     .btn-primary:hover:not(:disabled) {
-      background-color: var(--teal-hover);
+      background-color: var(--lime-dark);
     }
 
     .btn-primary:active:not(:disabled) {
@@ -479,17 +505,17 @@
     }
 
     .btn-primary:disabled {
-      opacity: 0.55;
+      opacity: 0.5;
       cursor: not-allowed;
     }
 
     .btn-secondary {
       min-height: 44px;
       padding: 10px 18px;
-      border: 1px solid var(--border-hairline);
+      border: 1px solid var(--brand);
       border-radius: var(--radius-control);
-      background-color: var(--bg-surface);
-      color: var(--text-primary);
+      background-color: var(--brand);
+      color: #ffffff;
       font-size: 0.92rem;
       font-weight: 600;
       cursor: pointer;
@@ -497,10 +523,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
     .btn-secondary:hover {
-      background-color: var(--bg-subtle);
+      background-color: var(--brand-dark);
+      border-color: var(--brand-dark);
     }
 
     /* Summary Sidebar (Desktop) */
@@ -613,18 +641,23 @@
       min-height: 44px;
       padding: 10px 18px;
       border: none;
-      border-radius: 10px;
-      background-color: var(--teal);
-      color: #ffffff;
+      border-radius: var(--radius-control);
+      background-color: var(--lime);
+      color: var(--brand);
       font-size: 0.92rem;
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
+      transition: background-color 0.15s ease;
+    }
+
+    .mobile-bar-btn:hover:not(:disabled) {
+      background-color: var(--lime-dark);
     }
 
     .mobile-bar-btn:disabled {
-      opacity: 0.55;
+      opacity: 0.5;
       cursor: not-allowed;
     }
 
@@ -686,7 +719,7 @@
       max-width: 620px;
       margin: 12px auto 0;
       background-color: var(--bg-surface);
-      border: 1px solid var(--teal-border);
+      border: 1px solid var(--brand-100);
       border-radius: var(--radius-card);
       padding: 28px 24px;
       box-shadow: var(--shadow-card);
@@ -694,11 +727,11 @@
     }
 
     .success-icon {
-      width: 56px;
-      height: 56px;
+      width: 60px;
+      height: 60px;
       border-radius: 16px;
-      background-color: var(--teal-soft);
-      color: var(--teal);
+      background-color: var(--brand);
+      color: var(--lime);
       margin: 0 auto 14px;
       display: flex;
       align-items: center;
@@ -708,6 +741,7 @@
     .success-heading {
       font-size: 1.22rem;
       font-weight: 700;
+      color: var(--brand);
       margin-bottom: 10px;
     }
 
@@ -716,9 +750,9 @@
       margin: 6px 0 18px;
       padding: 8px 18px;
       border-radius: 10px;
-      background-color: var(--teal-soft);
-      border: 1px solid var(--teal-border);
-      color: var(--teal-hover);
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      color: var(--brand);
       font-size: 1rem;
       font-weight: 700;
       font-variant-numeric: tabular-nums;
@@ -736,11 +770,11 @@
     }
 
     .fee-notice-box {
-      background-color: var(--teal-soft);
-      border: 1px solid var(--teal-border);
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
       border-radius: 12px;
       padding: 12px 14px;
-      color: var(--teal-hover);
+      color: var(--brand);
       font-weight: 700;
       font-size: 0.95rem;
       margin-bottom: 10px;
@@ -753,12 +787,55 @@
     }
 
     .footer {
-      border-top: 1px solid var(--border-hairline);
-      background-color: var(--bg-surface);
-      padding: 16px;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      text-align: center;
+      border-top: 3px solid var(--lime);
+      background-color: var(--brand);
+      padding: 24px 16px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-wordmark {
+      height: 72px;
+      width: auto;
+      display: block;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
     }
 
     /* Floating WhatsApp Button (above mobile sticky bar on mobile) */
@@ -832,12 +909,11 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a href="index.html" class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v14M5 12h14"/>
-          </svg>
-        </div>
-        <span class="brand-title">احجزلي</span>
+        <img src="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-icon-64.png" alt="احجزلي E7gezly" width="40" height="40" class="brand-logo" />
+        <span class="brand-text-wrap">
+          <span class="brand-title">احجزلي</span>
+          <span class="brand-by" dir="ltr">by AdStartup</span>
+        </span>
       </a>
       <a href="index.html" class="back-link">الصفحة الرئيسية</a>
     </div>
@@ -1071,7 +1147,17 @@
   </div>
 
   <footer class="footer">
-    <span>احجزلي — E7gezly by AdStartup</span>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-wordmark-white.png" alt="احجزلي E7gezly" class="footer-wordmark" />
+        <span class="footer-copy">© 2026 احجزلي E7gezly by AdStartup</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">الصفحة الرئيسية</a>
+        <a href="contract.html">انضم كطبيب</a>
+        <a href="lab-contract.html">للمعامل: سجّل معملك</a>
+      </div>
+    </div>
   </footer>
 
   <a id="wa-float-btn" class="wa-float" href="https://wa.me/201144988882" target="_blank" rel="noopener" aria-label="محتاج مساعدة؟ كلمنا واتساب" title="محتاج مساعدة؟ كلمنا واتساب">

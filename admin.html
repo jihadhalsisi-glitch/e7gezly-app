@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/favicon-32.png" />
+  <link rel="apple-touch-icon" href="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-icon-180.png" />
+  <meta name="theme-color" content="#3B2A9B" />
   <title>لوحة الإدارة | احجزلي – E7gezly by AdStartup</title>
   <meta name="description" content="لوحة إدارة الحجوزات وطلبات الانضمام والأطباء والتخصصات والتقرير الأسبوعي - احجزلي" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -10,29 +13,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-canvas: #f8fafc;
+      --brand: #3B2A9B;
+      --brand-dark: #2C1F7A;
+      --brand-50: #F2F0FB;
+      --brand-100: #E4E0F7;
+      --lime: #C6F25C;
+      --lime-dark: #AEDB3F;
+      --ink: #17133A;
+      --muted: #6B6890;
+      --bg-canvas: #F2F0FB;
       --bg-surface: #ffffff;
-      --bg-subtle: #f1f5f9;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
-      --border-hairline: #e2e8f0;
-      --teal: #0d9488;
-      --teal-hover: #0f766e;
-      --teal-soft: #f0fdfa;
-      --teal-border: #99f6e4;
+      --bg-subtle: #F2F0FB;
+      --text-primary: var(--ink);
+      --text-secondary: #433E66;
+      --text-muted: var(--muted);
+      --border-hairline: var(--brand-100);
       --danger: #dc2626;
       --danger-soft: #fef2f2;
       --danger-border: #fecaca;
       --amber: #b45309;
       --amber-soft: #fffbeb;
       --amber-border: #fde68a;
-      --indigo: #4338ca;
-      --indigo-soft: #eef2ff;
-      --indigo-border: #c7d2fe;
       --radius-card: 16px;
-      --radius-control: 10px;
-      --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.08);
+      --radius-control: 12px;
+      --shadow-card: 0 1px 3px rgba(23, 19, 58, 0.04), 0 8px 24px -12px rgba(59, 42, 155, 0.12);
     }
 
     * {
@@ -66,8 +70,9 @@
 
     /* Topbar */
     .topbar {
-      background-color: var(--bg-surface);
-      border-bottom: 1px solid var(--border-hairline);
+      background-color: #ffffff;
+      border-bottom: 3px solid var(--lime);
+      box-shadow: inset 0 -1px 0 var(--brand-100);
       position: sticky;
       top: 0;
       z-index: 30;
@@ -80,7 +85,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
@@ -89,24 +94,43 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      color: var(--text-primary);
+      color: var(--ink);
     }
 
-    .brand-mark {
-      width: 34px;
-      height: 34px;
+    .brand-logo {
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
-      background-color: var(--teal);
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
       flex-shrink: 0;
     }
 
+    @media (max-width: 640px) {
+      .brand-logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+      }
+    }
+
+    .brand-text-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
     .brand-title {
-      font-size: 1rem;
+      font-size: 1.08rem;
       font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-weight: 600;
       white-space: nowrap;
     }
 
@@ -132,7 +156,7 @@
     .btn {
       min-height: 42px;
       padding: 8px 16px;
-      border-radius: var(--radius-control);
+      border-radius: 12px;
       border: 1px solid transparent;
       font-size: 0.9rem;
       font-weight: 600;
@@ -143,51 +167,58 @@
       gap: 6px;
       text-decoration: none;
       white-space: nowrap;
-      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
     }
 
     .btn:disabled {
-      opacity: 0.55;
+      opacity: 0.5;
       cursor: not-allowed;
     }
 
     .btn-primary {
-      background-color: var(--teal);
-      color: #ffffff;
+      background-color: var(--lime);
+      border-color: var(--lime);
+      color: var(--brand);
+      font-weight: 700;
     }
 
     .btn-primary:hover:not(:disabled) {
-      background-color: var(--teal-hover);
+      background-color: var(--lime-dark);
+      border-color: var(--lime-dark);
     }
 
     .btn-secondary {
-      background-color: var(--bg-surface);
-      border-color: var(--border-hairline);
-      color: var(--text-primary);
+      background-color: var(--brand);
+      border-color: var(--brand);
+      color: #ffffff;
     }
 
     .btn-secondary:hover:not(:disabled) {
-      background-color: var(--bg-subtle);
+      background-color: var(--brand-dark);
+      border-color: var(--brand-dark);
     }
 
     .btn-whatsapp {
-      background-color: #ecfdf5;
-      border-color: #a7f3d0;
-      color: #047857;
+      background-color: var(--lime);
+      border-color: var(--lime);
+      color: var(--brand);
+      font-weight: 700;
     }
 
     .btn-whatsapp:hover:not(:disabled) {
-      background-color: #d1fae5;
+      background-color: var(--lime-dark);
+      border-color: var(--lime-dark);
     }
 
     .btn-indigo {
-      background-color: var(--indigo-soft);
-      border-color: var(--indigo-border);
-      color: var(--indigo);
+      background-color: var(--brand);
+      border-color: var(--brand);
+      color: #ffffff;
     }
 
     .btn-indigo:hover:not(:disabled) {
-      background-color: #e0e7ff;
+      background-color: var(--brand-dark);
+      border-color: var(--brand-dark);
     }
 
     .btn-sm {
@@ -229,8 +260,8 @@
 
     .input-ctrl:focus, .select-ctrl:focus, .textarea-ctrl:focus {
       outline: none;
-      border-color: var(--teal);
-      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.14);
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(59, 42, 155, 0.14);
     }
 
     .select-ctrl:disabled {
@@ -268,8 +299,8 @@
     }
 
     .radio-pill:has(input:checked) {
-      background-color: var(--teal);
-      border-color: var(--teal);
+      background-color: var(--brand);
+      border-color: var(--brand);
       color: #ffffff;
     }
 
@@ -296,16 +327,26 @@
       margin: 40px auto;
     }
 
+    .auth-wordmark {
+      height: 110px;
+      width: auto;
+      display: block;
+      margin: 0 auto 18px;
+    }
+
     .auth-title {
       font-size: 1.25rem;
       font-weight: 700;
+      color: var(--brand);
       margin-bottom: 6px;
+      text-align: center;
     }
 
     .auth-desc {
       font-size: 0.9rem;
       color: var(--text-secondary);
       margin-bottom: 18px;
+      text-align: center;
     }
 
     .stack-md {
@@ -329,9 +370,9 @@
     }
 
     .alert-info {
-      background-color: var(--teal-soft);
-      border: 1px solid var(--teal-border);
-      color: var(--teal-hover);
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      color: var(--brand);
     }
 
     /* Tabs */
@@ -366,12 +407,12 @@
     }
 
     .tab-btn:hover {
-      background-color: var(--bg-subtle);
-      color: var(--text-primary);
+      background-color: var(--brand-50);
+      color: var(--brand);
     }
 
     .tab-btn.active {
-      background-color: var(--teal);
+      background-color: var(--brand);
       color: #ffffff;
     }
 
@@ -391,8 +432,8 @@
     }
 
     .tab-btn.active .tab-badge {
-      background-color: #ffffff;
-      color: var(--teal);
+      background-color: var(--lime);
+      color: var(--brand);
     }
 
     /* Section Toolbar */
@@ -408,6 +449,7 @@
     .section-heading {
       font-size: 1.15rem;
       font-weight: 700;
+      color: var(--ink);
     }
 
     .toolbar-controls {
@@ -440,13 +482,13 @@
     }
 
     .filter-chip:hover {
-      border-color: var(--teal);
-      color: var(--text-primary);
+      border-color: var(--brand);
+      color: var(--brand);
     }
 
     .filter-chip.active {
-      background-color: var(--teal);
-      border-color: var(--teal);
+      background-color: var(--brand);
+      border-color: var(--brand);
       color: #ffffff;
     }
 
@@ -486,7 +528,7 @@
     .booking-time {
       font-size: 1.05rem;
       font-weight: 700;
-      color: var(--teal);
+      color: var(--brand);
       font-variant-numeric: tabular-nums;
     }
 
@@ -523,7 +565,7 @@
     }
 
     .phone-link {
-      color: var(--teal);
+      color: var(--brand);
       font-weight: 700;
       text-decoration: none;
     }
@@ -561,16 +603,16 @@
     .social-link-btn {
       font-size: 0.82rem;
       font-weight: 600;
-      color: var(--indigo);
-      background-color: var(--indigo-soft);
-      border: 1px solid var(--indigo-border);
+      color: var(--brand);
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
       padding: 4px 10px;
       border-radius: 8px;
       text-decoration: none;
     }
 
     .social-link-btn:hover {
-      background-color: #e0e7ff;
+      background-color: var(--brand-100);
     }
 
     .service-badges-row {
@@ -586,15 +628,15 @@
       font-weight: 700;
       padding: 3px 10px;
       border-radius: 8px;
-      background-color: var(--teal-soft);
-      border: 1px solid var(--teal-border);
-      color: var(--teal-hover);
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      color: var(--brand);
     }
 
     .service-badge.is-home {
-      background-color: var(--indigo-soft);
-      border-color: var(--indigo-border);
-      color: var(--indigo);
+      background-color: var(--lime);
+      border-color: var(--lime-dark);
+      color: var(--brand);
     }
 
     .notes-box {
@@ -622,7 +664,7 @@
     }
 
     .status-text-active {
-      color: #047857;
+      color: var(--brand);
       font-size: 0.82rem;
       font-weight: 700;
     }
@@ -637,7 +679,7 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      color: var(--teal);
+      color: var(--brand);
       text-decoration: none;
       font-size: 0.84rem;
       font-weight: 700;
@@ -696,9 +738,9 @@
       margin-bottom: 12px;
       padding: 10px 12px;
       border-radius: 10px;
-      background-color: var(--indigo-soft);
-      border: 1px solid var(--indigo-border);
-      color: #1e1b4b;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      color: var(--ink);
       font-size: 0.88rem;
     }
 
@@ -782,8 +824,9 @@
     .gov-group-heading {
       font-size: 0.88rem;
       font-weight: 700;
-      color: var(--teal-hover);
-      background-color: var(--teal-soft);
+      color: var(--brand);
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
       padding: 6px 10px;
       border-radius: 8px;
       margin-top: 12px;
@@ -821,7 +864,7 @@
     .toggle-checkbox {
       width: 18px;
       height: 18px;
-      accent-color: var(--teal);
+      accent-color: var(--brand);
       cursor: pointer;
     }
 
@@ -887,9 +930,9 @@
     }
 
     tfoot td {
-      background-color: var(--teal-soft);
+      background-color: var(--brand-50);
       font-weight: 700;
-      color: var(--teal-hover);
+      color: var(--brand);
       border-bottom: none;
     }
 
@@ -902,19 +945,72 @@
       border-radius: var(--radius-card);
     }
 
+    /* Footer */
+    .footer {
+      border-top: 3px solid var(--lime);
+      background-color: var(--brand);
+      padding: 24px 16px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-wordmark {
+      height: 72px;
+      width: auto;
+      display: block;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
     .toast {
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: var(--text-primary);
+      background-color: var(--ink);
       color: #ffffff;
       padding: 10px 18px;
       border-radius: 10px;
       font-size: 0.88rem;
       font-weight: 600;
       z-index: 60;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+      box-shadow: 0 8px 24px rgba(23, 19, 58, 0.25);
     }
   </style>
 </head>
@@ -922,12 +1018,12 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a href="index.html" class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v14M5 12h14"/>
-          </svg>
+        <img src="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-icon-64.png" alt="احجزلي E7gezly" width="40" height="40" class="brand-logo" />
+        <div class="brand-text-wrap">
+          <span class="brand-title">احجزلي</span>
+          <span class="brand-sub" dir="ltr">by AdStartup</span>
+          <span class="brand-sub">· لوحة الإدارة</span>
         </div>
-        <span class="brand-title">احجزلي — لوحة الإدارة</span>
       </a>
       <div id="topbar-user-actions" class="topbar-actions hidden">
         <span id="admin-email-display" class="user-email-text" dir="ltr"></span>
@@ -944,6 +1040,7 @@
 
     <!-- Login View -->
     <section id="login-view" class="auth-wrap card hidden">
+      <img src="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-wordmark-indigo.png" alt="احجزلي E7gezly" class="auth-wordmark" />
       <h1 class="auth-title">تسجيل دخول الإدارة</h1>
       <p class="auth-desc">ادخل بالبريد الإلكتروني وهيوصلك كود تحقق من 6 أرقام.</p>
 
@@ -1242,6 +1339,21 @@
       </div>
     </section>
   </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-wordmark-white.png" alt="احجزلي E7gezly" class="footer-wordmark" />
+        <span class="footer-copy">© 2026 احجزلي E7gezly by AdStartup</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">الصفحة الرئيسية</a>
+        <a href="book.html">احجز كشف</a>
+        <a href="contract.html">عقد الأطباء</a>
+        <a href="lab-contract.html">عقد المعامل</a>
+      </div>
+    </div>
+  </footer>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
@@ -2001,7 +2113,7 @@
                   escapeHtml(formatDateTimeAr(ag.created_at)) +
                 '</div>' +
               '</div>' +
-              '<div style="text-align:left; font-weight:700; color:var(--teal);" class="tabular-nums">' +
+              '<div style="text-align:left; font-weight:700; color:var(--brand);" class="tabular-nums">' +
                 (ag.fee != null ? escapeHtml(ag.fee) + ' ج.م' : '—') +
               '</div>' +
             '</div>' +
@@ -2184,7 +2296,7 @@
                   escapeHtml(formatDateTimeAr(lab.created_at)) +
                 '</div>' +
               '</div>' +
-              '<div style="text-align:left; font-weight:700; color:var(--teal);" class="tabular-nums">' +
+              '<div style="text-align:left; font-weight:700; color:var(--brand);" class="tabular-nums">' +
                 escapeHtml(lab.branches_count != null ? lab.branches_count + ' فرع' : '—') +
               '</div>' +
             '</div>' +
@@ -3212,7 +3324,7 @@
         el.reportKpis.innerHTML =
           '<div class="kpi-box"><div class="kpi-label">إجمالي الحجوزات اللي حضرت</div><div class="kpi-value">' + grandCount.toLocaleString('ar-EG') + '</div></div>' +
           '<div class="kpi-box"><div class="kpi-label">إجمالي قيمة الكشوفات</div><div class="kpi-value">' + grandFee.toLocaleString('ar-EG', { maximumFractionDigits: 2 }) + ' ج.م</div></div>' +
-          '<div class="kpi-box"><div class="kpi-label">إجمالي العمولة (10%)</div><div class="kpi-value" style="color:var(--teal);">' + grandCommission.toLocaleString('ar-EG', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ج.م</div></div>';
+          '<div class="kpi-box"><div class="kpi-label">إجمالي العمولة (10%)</div><div class="kpi-value" style="color:var(--brand);">' + grandCommission.toLocaleString('ar-EG', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ج.م</div></div>';
 
         el.reportTableFoot.innerHTML =
           '<tr>' +
