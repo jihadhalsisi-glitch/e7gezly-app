@@ -452,6 +452,19 @@
       line-height: 1.65;
     }
 
+    /* Offer Box */
+    .offer-box {
+      border: 2px solid var(--lime);
+      background-color: var(--lime-soft);
+      border-radius: var(--radius-control);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
     /* Agreement & Submit */
     .agree-box {
       padding: 14px 16px;
@@ -799,6 +812,12 @@
               <input id="email" type="email" dir="ltr" class="input-ctrl" placeholder="doctor@example.com" />
               <div class="field-error" id="err-email"></div>
             </div>
+
+            <div class="field" data-field="syndicate_number">
+              <label for="syndicate-number">رقم القيد بالنقابة <span class="req-star">*</span></label>
+              <input id="syndicate-number" type="text" class="input-ctrl tabular-nums" placeholder="مثال: 123456" required />
+              <div class="field-error" id="err-syndicate_number"></div>
+            </div>
           </div>
         </section>
 
@@ -923,8 +942,12 @@
             <h3 id="sec5-title" class="form-section-title">الباقة وتأكيد الموافقة</h3>
           </div>
 
+          <div class="offer-box">
+            🎁 إزاي بنبدأ: ١) تجربة مجانية 7 أيام (بحد أقصى 3 حجوزات مؤكدة) ← ٢) أول شهر بسعر رمزي 2,000 ج.م مقابل 3–5 حجوزات، وتدفعهم بعد ما أول حجز مؤكد يوصلك ← ٣) الباقة اللي هتختارها تحت. العمولة 10% على كل حجز مؤكد من أول حجز.
+          </div>
+
           <div class="field" data-field="package" style="margin-bottom: 16px;">
-            <label for="package">الباقة <span class="req-star">*</span></label>
+            <label for="package">الباقة بعد الشهر الأول <span class="req-star">*</span></label>
             <select id="package" class="select-ctrl" required>
               <option value="">اختر الباقة...</option>
               <option value="5000">10–15 حجز مؤكد = 5,000 ج.م</option>
@@ -960,6 +983,10 @@
         <div class="summary-row">
           <span class="summary-key">اسم الدكتور</span>
           <span id="sum-doctor" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">رقم القيد بالنقابة</span>
+          <span id="sum-syndicate" class="summary-val tabular-nums"></span>
         </div>
         <div class="summary-row">
           <span class="summary-key">التخصص</span>
@@ -1014,6 +1041,7 @@
         fee: document.getElementById('fee'),
         phone: document.getElementById('phone'),
         email: document.getElementById('email'),
+        syndicateNumber: document.getElementById('syndicate-number'),
         clinicName: document.getElementById('clinic-name'),
         clinicWhatsapp: document.getElementById('clinic-whatsapp'),
         workingHours: document.getElementById('working-hours'),
@@ -1033,6 +1061,7 @@
         submitBtn: document.getElementById('submit-btn'),
         globalError: document.getElementById('submit-global-error'),
         sumDoctor: document.getElementById('sum-doctor'),
+        sumSyndicate: document.getElementById('sum-syndicate'),
         sumSpecialty: document.getElementById('sum-specialty'),
         sumLocation: document.getElementById('sum-location'),
         sumFee: document.getElementById('sum-fee'),
@@ -1118,6 +1147,7 @@
         ['fee', el.fee],
         ['phone', el.phone],
         ['email', el.email],
+        ['syndicate_number', el.syndicateNumber],
         ['clinic_whatsapp', el.clinicWhatsapp],
         ['working_hours', el.workingHours],
         ['governorate', el.governorateSelect],
@@ -1229,6 +1259,11 @@
           flag('email', el.email, 'صيغة البريد الإلكتروني غير صحيحة.');
         }
 
+        const syndicateNumber = el.syndicateNumber.value.trim();
+        if (syndicateNumber.length < 3) {
+          flag('syndicate_number', el.syndicateNumber, 'اكتب رقم القيد بالنقابة (3 حروف أو أرقام على الأقل).');
+        }
+
         const clinicName = el.clinicName.value.trim();
 
         const clinicWhatsapp = normalizeDigits(el.clinicWhatsapp.value);
@@ -1314,6 +1349,7 @@
           fee: Number(feeNum),
           phone: phone,
           email: emailVal || null,
+          syndicate_number: syndicateNumber,
           clinic_name: clinicName || null,
           clinic_whatsapp: clinicWhatsapp,
           working_hours: workingHours,
@@ -1329,7 +1365,7 @@
           other_link: otherLink || null,
           package: pkgVal,
           agreed: true,
-          terms_version: 'v2',
+          terms_version: 'v2-2026-11-trial',
           event_id: eventId,
           fbp: getCookie('_fbp') || null,
           fbc: getFbcValue(),
@@ -1376,6 +1412,7 @@
         });
 
         el.sumDoctor.textContent = doctorName;
+        el.sumSyndicate.textContent = syndicateNumber;
         el.sumSpecialty.textContent = specialtyText;
         el.sumLocation.textContent = governorateName + ' — ' + areaText;
         el.sumFee.textContent = feeNum.toLocaleString('ar-EG') + ' ج.م';

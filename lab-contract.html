@@ -471,6 +471,19 @@
       line-height: 1.65;
     }
 
+    /* Offer Box */
+    .offer-box {
+      border: 2px solid var(--lime);
+      background-color: var(--lime-soft);
+      border-radius: var(--radius-control);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
     /* Agreement & Submit */
     .agree-box {
       padding: 14px 16px;
@@ -805,6 +818,12 @@
               <input id="branches-count" type="number" min="1" step="1" value="1" class="input-ctrl tabular-nums" required />
               <div class="field-error" id="err-branches_count"></div>
             </div>
+
+            <div class="field field-full" data-field="license_number">
+              <label for="license-number">رقم ترخيص المعمل (وزارة الصحة) <span class="req-star">*</span></label>
+              <input id="license-number" type="text" class="input-ctrl tabular-nums" placeholder="مثال: 2024/1234" required />
+              <div class="field-error" id="err-license_number"></div>
+            </div>
           </div>
         </section>
 
@@ -857,8 +876,8 @@
             </div>
 
             <div class="field" data-field="accreditation">
-              <label for="accreditation">الاعتمادات / رقم الترخيص (اختياري)</label>
-              <input id="accreditation" type="text" class="input-ctrl" placeholder="مثال: ترخيص وزارة الصحة رقم ..." />
+              <label for="accreditation">اعتمادات أخرى (اختياري)</label>
+              <input id="accreditation" type="text" class="input-ctrl" placeholder="مثال: ISO 15189" />
             </div>
 
             <div class="field field-full" data-field="price_list_url">
@@ -979,8 +998,12 @@
             <h3 id="sec5-title" class="form-section-title">الباقة وتأكيد الموافقة</h3>
           </div>
 
+          <div class="offer-box">
+            🎁 إزاي بنبدأ: ١) تجربة مجانية 7 أيام (بحد أقصى 3 حجوزات مؤكدة) ← ٢) أول شهر بسعر رمزي 2,000 ج.م مقابل 3–5 حجوزات، وتدفعهم بعد ما أول حجز مؤكد يوصلك ← ٣) الباقة اللي هتختارها تحت. العمولة 10% على كل حجز مؤكد من أول حجز.
+          </div>
+
           <div class="field" data-field="package" style="margin-bottom: 16px;">
-            <label for="package">الباقة <span class="req-star">*</span></label>
+            <label for="package">الباقة بعد الشهر الأول <span class="req-star">*</span></label>
             <select id="package" class="select-ctrl" required>
               <option value="">اختر الباقة...</option>
               <option value="5000">10–15 حجز مؤكد = 5,000 ج.م</option>
@@ -1016,6 +1039,10 @@
         <div class="summary-row">
           <span class="summary-key">اسم المعمل</span>
           <span id="sum-lab" class="summary-val"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">رقم الترخيص</span>
+          <span id="sum-license" class="summary-val tabular-nums"></span>
         </div>
         <div class="summary-row">
           <span class="summary-key">المحافظة والمنطقة</span>
@@ -1069,6 +1096,7 @@
         phone: document.getElementById('phone'),
         email: document.getElementById('email'),
         branchesCount: document.getElementById('branches-count'),
+        licenseNumber: document.getElementById('license-number'),
         serviceBranch: document.getElementById('service-branch'),
         serviceHome: document.getElementById('service-home'),
         homeServiceBox: document.getElementById('home-service-box'),
@@ -1097,6 +1125,7 @@
         submitBtn: document.getElementById('submit-btn'),
         globalError: document.getElementById('submit-global-error'),
         sumLab: document.getElementById('sum-lab'),
+        sumLicense: document.getElementById('sum-license'),
         sumLocation: document.getElementById('sum-location'),
         sumServices: document.getElementById('sum-services'),
         sumBranches: document.getElementById('sum-branches'),
@@ -1206,6 +1235,7 @@
         ['phone', el.phone],
         ['email', el.email],
         ['branches_count', el.branchesCount],
+        ['license_number', el.licenseNumber],
         ['home_areas', el.homeAreas],
         ['home_fee', el.homeFee],
         ['avg_invoice', el.avgInvoice],
@@ -1292,6 +1322,11 @@
         const branchesCountNum = parseInt(branchesCountRaw, 10);
         if (!branchesCountRaw || Number.isNaN(branchesCountNum) || branchesCountNum < 1) {
           flag('branches_count', el.branchesCount, 'عدد الفروع لازم يكون 1 أو أكتر.');
+        }
+
+        const licenseNumber = el.licenseNumber.value.trim();
+        if (licenseNumber.length < 3) {
+          flag('license_number', el.licenseNumber, 'اكتب رقم ترخيص المعمل (3 حروف أو أرقام على الأقل).');
         }
 
         const serviceBranch = Boolean(el.serviceBranch.checked);
@@ -1424,6 +1459,7 @@
           email: emailVal || null,
           booking_whatsapp: bookingWhatsapp,
           branches_count: branchesCountNum,
+          license_number: licenseNumber,
           governorate: governorateName,
           area: areaText,
           address_street: addressStreet,
@@ -1446,7 +1482,7 @@
           other_link: otherLink || null,
           package: pkgVal,
           agreed: true,
-          terms_version: 'lab-v1-2026-11',
+          terms_version: 'lab-v2-2026-11-trial',
           fbp: getCookie('_fbp') || null,
           fbc: getFbcValue(),
           source_url: location.href,
@@ -1500,6 +1536,7 @@
         ].filter(Boolean).join(' + ');
 
         el.sumLab.textContent = labName;
+        el.sumLicense.textContent = licenseNumber;
         el.sumLocation.textContent = governorateName + ' — ' + areaText;
         el.sumServices.textContent = servicesSummary;
         el.sumBranches.textContent = branchesCountNum.toLocaleString('ar-EG');

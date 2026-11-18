@@ -2007,6 +2007,7 @@
             '</div>' +
 
             '<div class="info-rows">' +
+              '<div class="info-line"><span class="info-label">رقم القيد بالنقابة</span><span class="info-val tabular-nums">' + escapeHtml(ag.syndicate_number || '—') + '</span></div>' +
               '<div class="info-line"><span class="info-label">العيادة</span><span class="info-val">' + escapeHtml(ag.clinic_name || '—') + '</span></div>' +
               '<div class="info-line"><span class="info-label">المكان</span><span class="info-val">' + escapeHtml([ag.governorate, ag.area].filter(Boolean).join(' › ') || '—') + '</span></div>' +
               '<div class="info-line"><span class="info-label">العنوان</span><span class="info-val">' + escapeHtml(addressParts || '—') + '</span></div>' +
@@ -2214,7 +2215,8 @@
               (lab.service_home && lab.home_fee != null ? '<div class="info-line"><span class="info-label">رسوم الزيارة المنزلية</span><span class="info-val tabular-nums">' + escapeHtml(lab.home_fee) + ' ج.م</span></div>' : '') +
               (lab.test_categories ? '<div class="info-line"><span class="info-label">التحاليل/الأقسام</span><span class="info-val">' + escapeHtml(lab.test_categories) + '</span></div>' : '') +
               (lab.avg_invoice != null ? '<div class="info-line"><span class="info-label">متوسط الفاتورة</span><span class="info-val tabular-nums">' + escapeHtml(lab.avg_invoice) + ' ج.م</span></div>' : '') +
-              (lab.accreditation ? '<div class="info-line"><span class="info-label">الترخيص/الاعتماد</span><span class="info-val">' + escapeHtml(lab.accreditation) + '</span></div>' : '') +
+              '<div class="info-line"><span class="info-label">رقم الترخيص</span><span class="info-val tabular-nums">' + escapeHtml(lab.license_number || '—') + '</span></div>' +
+              (lab.accreditation ? '<div class="info-line"><span class="info-label">اعتمادات أخرى</span><span class="info-val">' + escapeHtml(lab.accreditation) + '</span></div>' : '') +
               '<div class="info-line"><span class="info-label">الباقة</span><span class="info-val tabular-nums">' + escapeHtml(pkgDisplay) + '</span></div>' +
             '</div>' +
 
