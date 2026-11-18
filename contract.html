@@ -635,12 +635,16 @@
     .footer-brand {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 8px;
     }
 
     .footer-wordmark {
       height: 72px;
       width: auto;
+      max-width: none;
+      object-fit: contain;
+      flex-shrink: 0;
       display: block;
     }
 
@@ -1071,7 +1075,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-wordmark-white.png" alt="احجزلي E7gezly" class="footer-wordmark" />
+        <img src="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-wordmark-white.png" alt="احجزلي E7gezly" width="75" height="72" class="footer-wordmark" />
         <span class="footer-copy">© 2026 احجزلي E7gezly by AdStartup</span>
       </div>
       <div class="footer-links">
