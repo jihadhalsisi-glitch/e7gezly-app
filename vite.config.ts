@@ -41,6 +41,7 @@ export default defineConfig(() => {
           admin: path.resolve(__dirname, 'admin.html'),
           contract: path.resolve(__dirname, 'contract.html'),
           labContract: path.resolve(__dirname, 'lab-contract.html'),
+          rate: path.resolve(__dirname, 'rate.html'),
         },
       },
     },

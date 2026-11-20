@@ -1110,6 +1110,385 @@
       z-index: 60;
       box-shadow: 0 8px 24px rgba(23, 19, 58, 0.25);
     }
+
+    /* Doctor Photo Upload & Thumbnail */
+    .photo-upload-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 12px 14px;
+      border-radius: var(--radius-control);
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+    }
+
+    .photo-preview-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+      background-color: #ffffff;
+      border: 2px solid var(--brand-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand);
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .photo-preview-circle img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-upload-controls {
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .photo-upload-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-danger-outline {
+      background-color: #ffffff;
+      border-color: var(--danger-border);
+      color: var(--danger);
+    }
+
+    .btn-danger-outline:hover:not(:disabled) {
+      background-color: var(--danger-soft);
+      border-color: var(--danger);
+    }
+
+    .btn-outline-brand {
+      background-color: var(--brand-50);
+      border-color: var(--brand-100);
+      color: var(--brand);
+    }
+
+    .btn-outline-brand:hover:not(:disabled) {
+      background-color: var(--brand-100);
+      border-color: var(--brand);
+    }
+
+    .doctor-header-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .doctor-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .doctor-thumb img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .bio-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Booking Rating Link Row & Rated Badge */
+    .booking-top-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .rated-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 9px;
+      border-radius: 8px;
+      background-color: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      font-size: 0.76rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .rating-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rating-actions-row .rating-wa-btn {
+      flex: 1;
+    }
+
+    .copy-link-btn {
+      flex-shrink: 0;
+      padding: 6px 10px;
+      min-height: 36px;
+    }
+
+    /* Ratings Tab */
+    .ratings-summary-wrap {
+      margin-bottom: 20px;
+    }
+
+    .ratings-summary-table {
+      min-width: 820px;
+    }
+
+    .ratings-summary-table th,
+    .ratings-summary-table td {
+      padding: 10px 10px;
+      font-size: 0.84rem;
+      white-space: nowrap;
+    }
+
+    .ratings-summary-table tbody tr {
+      transition: background-color 0.12s ease;
+    }
+
+    .ratings-summary-table tbody tr:hover {
+      background-color: var(--brand-50);
+    }
+
+    .score-low {
+      color: var(--danger);
+      font-weight: 700;
+      background-color: var(--danger-soft);
+    }
+
+    .ratings-filters-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: 14px;
+    }
+
+    .ratings-filters-bar .select-ctrl {
+      width: auto;
+      min-width: 210px;
+      min-height: 38px;
+      padding: 6px 12px;
+    }
+
+    .rating-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-card);
+      padding: 16px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rating-card.is-hidden-rating {
+      background-color: #f6f5fa;
+      border-style: dashed;
+      border-color: #c7c3e2;
+      opacity: 0.72;
+    }
+
+    .hidden-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background-color: #e2e8f0;
+      color: #475569;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .rating-stars-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .admin-stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .admin-star-slot {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-star-slot svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .rating-overall-num {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--brand);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rating-overall-num.is-low {
+      color: var(--danger);
+    }
+
+    .mini-bars-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 14px;
+    }
+
+    @media (max-width: 480px) {
+      .mini-bars-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mini-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .mini-bar-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 0.77rem;
+    }
+
+    .mini-bar-label {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .mini-bar-val {
+      font-weight: 700;
+      color: var(--brand);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .mini-bar-val.is-low {
+      color: var(--danger);
+    }
+
+    .mini-bar-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background-color: var(--brand-50);
+      overflow: hidden;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background-color: var(--lime);
+      box-shadow: inset 0 0 0 1px rgba(59, 42, 155, 0.14);
+    }
+
+    .mini-bar-fill.is-low {
+      background-color: var(--danger);
+      box-shadow: none;
+    }
+
+    .rating-meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      padding-top: 8px;
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    .rating-meta-item strong {
+      color: var(--ink);
+    }
+
+    .rating-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .rating-tag-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 8px;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      color: var(--brand);
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+
+    .rating-comment-box {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+    }
+
+    .rating-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-hairline);
+    }
   </style>
 </head>
 <body>
@@ -1186,6 +1565,7 @@
           <span id="labs-new-badge" class="tab-badge hidden">0</span>
         </button>
         <button type="button" class="tab-btn" data-tab="doctors">الدكاترة</button>
+        <button type="button" class="tab-btn" data-tab="ratings">التقييمات</button>
         <button type="button" class="tab-btn" data-tab="taxonomies">التخصصات والمناطق</button>
         <button type="button" class="tab-btn" data-tab="report">التقرير الأسبوعي</button>
       </nav>
@@ -1243,6 +1623,22 @@
           <form id="doctor-form">
             <input type="hidden" id="doc-id" />
             <div class="form-2col">
+              <div class="field field-full">
+                <span class="field-label">صورة الدكتور</span>
+                <div class="photo-upload-box">
+                  <div id="doc-photo-preview" class="photo-preview-circle" aria-label="معاينة صورة الدكتور">د</div>
+                  <div class="photo-upload-controls">
+                    <div class="photo-upload-actions">
+                      <label for="doc-photo-input" class="btn btn-secondary btn-sm" style="cursor:pointer;">اختيار صورة</label>
+                      <input id="doc-photo-input" type="file" accept="image/jpeg,image/png,image/webp" class="hidden" />
+                      <button id="remove-doc-photo-btn" type="button" class="btn btn-danger-outline btn-sm hidden">حذف الصورة</button>
+                    </div>
+                    <span class="field-hint">JPG أو PNG أو WebP — بحد أقصى 2 ميجا</span>
+                    <div id="doc-photo-error" class="field-hint hidden" style="color:var(--danger); font-weight:600;"></div>
+                  </div>
+                </div>
+              </div>
+
               <div class="field">
                 <label for="doc-name">اسم الدكتور *</label>
                 <input id="doc-name" type="text" class="input-ctrl" required />
@@ -1259,6 +1655,25 @@
                     <input type="radio" name="doc-gender" value="female" />
                     <span>دكتورة</span>
                   </label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="doc-title">اللقب/الوصف</label>
+                <input id="doc-title" type="text" class="input-ctrl" placeholder="استشاري الأمراض الجلدية – دكتوراه جامعة القاهرة" />
+              </div>
+
+              <div class="field">
+                <label for="doc-years-experience">سنين الخبرة</label>
+                <input id="doc-years-experience" type="number" min="0" max="80" step="1" class="input-ctrl tabular-nums" placeholder="مثال: 12" />
+              </div>
+
+              <div class="field field-full">
+                <label for="doc-bio">نبذة قصيرة</label>
+                <textarea id="doc-bio" class="textarea-ctrl" maxlength="300" placeholder="نبذة مختصرة عن خبرة الدكتور ومجال اهتمامه (بحد أقصى 300 حرف)"></textarea>
+                <div class="bio-foot">
+                  <span>تظهر كنبذة تعريفية عن الدكتور</span>
+                  <span id="doc-bio-counter" class="tabular-nums">0 / 300</span>
                 </div>
               </div>
 
@@ -1434,6 +1849,56 @@
           </table>
         </div>
       </div>
+
+      <!-- Tab 6: Ratings -->
+      <div id="tab-ratings" class="hidden">
+        <div class="toolbar">
+          <h2 class="section-heading">التقييمات</h2>
+          <button id="refresh-ratings-btn" type="button" class="btn btn-secondary btn-sm">تحديث</button>
+        </div>
+
+        <div class="ratings-summary-wrap">
+          <div class="table-wrap">
+            <table class="ratings-summary-table">
+              <thead>
+                <tr>
+                  <th>الدكتور</th>
+                  <th class="num">العدد</th>
+                  <th class="num">المتوسط</th>
+                  <th class="num">الترشيح %</th>
+                  <th class="num">الشرح</th>
+                  <th class="num">الاستماع</th>
+                  <th class="num">وقت الكشف</th>
+                  <th class="num">الالتزام بالميعاد</th>
+                  <th class="num">العيادة</th>
+                  <th class="num">الفريق</th>
+                  <th class="num">السعر</th>
+                </tr>
+              </thead>
+              <tbody id="ratings-summary-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="ratings-filters-bar">
+          <div class="field" style="flex-direction: row; align-items: center; gap: 8px;">
+            <label for="ratings-doctor-filter" style="white-space: nowrap;">الدكتور:</label>
+            <select id="ratings-doctor-filter" class="select-ctrl">
+              <option value="all">كل الدكاترة</option>
+            </select>
+          </div>
+          <label class="toggle-label">
+            <input id="ratings-low-filter" type="checkbox" class="toggle-checkbox" />
+            <span>تقييمات أقل من 3 بس</span>
+          </label>
+          <label class="toggle-label">
+            <input id="ratings-comment-filter" type="checkbox" class="toggle-checkbox" />
+            <span>فيها تعليق بس</span>
+          </label>
+        </div>
+
+        <div id="ratings-list" class="cards-grid"></div>
+      </div>
     </section>
   </main>
 
@@ -1554,9 +2019,17 @@
         governorates: [],
         areas: [],
         bookings: [],
+        ratedBookingIds: new Set(),
         agreements: [],
         labAgreements: [],
+        ratings: [],
+        ratingsDoctorFilter: 'all',
+        ratingsLowOnly: false,
+        ratingsWithCommentOnly: false,
         editingDoctorDaysOff: [],
+        editingDoctorPhotoUrl: null,
+        pendingPhotoFile: null,
+        photoPreviewObjectUrl: null,
         convertingAgreementId: null,
         toastTimer: null
       };
@@ -1594,6 +2067,7 @@
         tabAgreements: document.getElementById('tab-agreements'),
         tabLabs: document.getElementById('tab-labs'),
         tabDoctors: document.getElementById('tab-doctors'),
+        tabRatings: document.getElementById('tab-ratings'),
         tabTaxonomies: document.getElementById('tab-taxonomies'),
         tabReport: document.getElementById('tab-report'),
 
@@ -1618,7 +2092,15 @@
         cancelDoctorBtnBottom: document.getElementById('cancel-doctor-btn-bottom'),
         doctorForm: document.getElementById('doctor-form'),
         docId: document.getElementById('doc-id'),
+        docPhotoPreview: document.getElementById('doc-photo-preview'),
+        docPhotoInput: document.getElementById('doc-photo-input'),
+        removeDocPhotoBtn: document.getElementById('remove-doc-photo-btn'),
+        docPhotoError: document.getElementById('doc-photo-error'),
         docName: document.getElementById('doc-name'),
+        docTitle: document.getElementById('doc-title'),
+        docYearsExperience: document.getElementById('doc-years-experience'),
+        docBio: document.getElementById('doc-bio'),
+        docBioCounter: document.getElementById('doc-bio-counter'),
         docSpecialty: document.getElementById('doc-specialty'),
         docFee: document.getElementById('doc-fee'),
         docGovernorate: document.getElementById('doc-governorate'),
@@ -1646,6 +2128,13 @@
         doctorFormError: document.getElementById('doctor-form-error'),
         saveDoctorBtn: document.getElementById('save-doctor-btn'),
         doctorsList: document.getElementById('doctors-list'),
+
+        refreshRatingsBtn: document.getElementById('refresh-ratings-btn'),
+        ratingsSummaryBody: document.getElementById('ratings-summary-body'),
+        ratingsDoctorFilter: document.getElementById('ratings-doctor-filter'),
+        ratingsLowFilter: document.getElementById('ratings-low-filter'),
+        ratingsCommentFilter: document.getElementById('ratings-comment-filter'),
+        ratingsList: document.getElementById('ratings-list'),
 
         addSpecialtyForm: document.getElementById('add-specialty-form'),
         newSpecialtyInput: document.getElementById('new-specialty-input'),
@@ -2034,6 +2523,7 @@
         el.tabAgreements.classList.toggle('hidden', tab !== 'agreements');
         el.tabLabs.classList.toggle('hidden', tab !== 'labs');
         el.tabDoctors.classList.toggle('hidden', tab !== 'doctors');
+        el.tabRatings.classList.toggle('hidden', tab !== 'ratings');
         el.tabTaxonomies.classList.toggle('hidden', tab !== 'taxonomies');
         el.tabReport.classList.toggle('hidden', tab !== 'report');
 
@@ -2041,6 +2531,7 @@
         if (tab === 'agreements') refreshAgreements();
         if (tab === 'labs') refreshLabs();
         if (tab === 'doctors') refreshDoctors();
+        if (tab === 'ratings') loadRatings();
         if (tab === 'taxonomies') refreshTaxonomies();
         if (tab === 'report') loadWeeklyReport();
       }
@@ -2089,7 +2580,7 @@
         el.bookingsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">جاري تحميل الحجوزات...</div>';
         const { data, error } = await sb
           .from('bookings')
-          .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, status, notes, doctors(name, clinic_name, clinic_whatsapp, address, maps_url, areas(name_ar, governorates(name_ar)))')
+          .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, status, notes, rating_token, doctors(name, clinic_name, clinic_whatsapp, address, maps_url, areas(name_ar, governorates(name_ar)))')
           .eq('day', state.bookingsDate)
           .order('slot', { ascending: true });
 
@@ -2104,6 +2595,23 @@
         }
 
         state.bookings = data || [];
+        state.ratedBookingIds = new Set();
+
+        const bookingIds = state.bookings.map(b => b.id).filter(id => id != null);
+        if (bookingIds.length) {
+          const { data: ratedRows, error: ratedErr } = await sb
+            .from('doctor_ratings')
+            .select('booking_id')
+            .in('booking_id', bookingIds);
+          if (!ratedErr && Array.isArray(ratedRows)) {
+            ratedRows.forEach(r => {
+              if (r.booking_id != null) state.ratedBookingIds.add(r.booking_id);
+            });
+          } else if (ratedErr) {
+            console.error('Load rated booking_ids error:', ratedErr);
+          }
+        }
+
         renderBookings();
       }
 
@@ -2144,6 +2652,54 @@
         return 'https://wa.me/' + encodeURIComponent(waPhone) + '?text=' + encodeURIComponent(text);
       }
 
+      function toPatientRatingWaPhone(phone) {
+        const clean = normalizeDigits(phone);
+        if (!clean) return '';
+        if (clean.startsWith('20')) return clean;
+        return '20' + clean.replace(/^0+/, '');
+      }
+
+      function buildRatingUrl(ratingToken) {
+        return 'https://e7gezly-app.vip/rate.html?t=' + encodeURIComponent(ratingToken || '');
+      }
+
+      function buildRatingWhatsAppUrl(booking) {
+        const doc = booking.doctors || {};
+        const waPhone = toPatientRatingWaPhone(booking.patient_phone);
+        const firstName = String(booking.patient_name || '').trim().split(/\s+/)[0] || '';
+        const doctorName = String(doc.name || '').trim().replace(/^د\.?\s*/, '');
+        const ratingLink = buildRatingUrl(booking.rating_token);
+        const text =
+          'أهلًا ' + firstName + ' 👋\n' +
+          'إن شاء الله الكشف مع د. ' + doctorName + ' كان كويس.\n' +
+          'ممكن دقيقة تقيّم الزيارة؟ رأيك بيساعد مرضى تانيين يختاروا صح 🙏\n' +
+          ratingLink + '\n' +
+          'احجزلي E7gezly';
+        return 'https://wa.me/' + encodeURIComponent(waPhone) + '?text=' + encodeURIComponent(text);
+      }
+
+      async function copyTextToClipboard(text) {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+            return true;
+          }
+        } catch (_) {}
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          return ok;
+        } catch (_) {
+          return false;
+        }
+      }
+
       function renderBookings() {
         if (!state.bookings.length) {
           el.bookingsList.innerHTML =
@@ -2157,6 +2713,8 @@
           const areaName = doc.areas?.name_ar || '';
           const govName = doc.areas?.governorates?.name_ar || '';
           const locationPath = [govName, areaName].filter(Boolean).join(' › ') || '—';
+          const isRated = state.ratedBookingIds.has(booking.id);
+          const hasRatingToken = Boolean(booking.rating_token);
 
           const card = document.createElement('article');
           card.className = 'item-card';
@@ -2165,13 +2723,26 @@
             '<option value="' + s.value + '"' + (booking.status === s.value ? ' selected' : '') + '>' + s.label + '</option>'
           ).join('');
 
+          const ratingActionsHtml = hasRatingToken
+            ? '<div class="rating-actions-row">' +
+                '<a href="' + buildRatingWhatsAppUrl(booking) + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline-brand btn-sm rating-wa-btn">⭐ لينك التقييم</a>' +
+                '<button type="button" class="btn btn-outline-brand btn-sm copy-link-btn" title="نسخ اللينك" aria-label="نسخ اللينك">' +
+                  '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>' +
+                  '<span>نسخ اللينك</span>' +
+                '</button>' +
+              '</div>'
+            : '';
+
           card.innerHTML =
             '<div class="card-top">' +
               '<div>' +
                 '<div class="booking-time">' + escapeHtml(formatTimeAr(booking.slot)) + '</div>' +
                 '<div class="meta-sub">حجز #' + escapeHtml(booking.id) + '</div>' +
               '</div>' +
-              '<div style="text-align:left; font-weight:700;" class="tabular-nums">' + escapeHtml(booking.fee) + ' ج.م</div>' +
+              '<div class="booking-top-right">' +
+                '<div style="text-align:left; font-weight:700;" class="tabular-nums">' + escapeHtml(booking.fee) + ' ج.م</div>' +
+                (isRated ? '<span class="rated-badge">✅ اتقيّم</span>' : '') +
+              '</div>' +
             '</div>' +
             '<div class="info-rows">' +
               '<div class="info-line"><span class="info-label">المريض</span><span class="info-val">' + escapeHtml(booking.patient_name) + '</span></div>' +
@@ -2189,6 +2760,7 @@
                 '<a href="' + buildClinicWhatsAppUrl(booking) + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm send-clinic-btn">ابعت للعيادة 📤</a>' +
                 '<a href="' + buildPatientWhatsAppUrl(booking) + '" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">واتساب للمريض</a>' +
               '</div>' +
+              ratingActionsHtml +
             '</div>';
 
           const statusSelect = card.querySelector('#status-' + booking.id);
@@ -2203,6 +2775,14 @@
               updateBookingStatus(booking.id, 'sent', statusSelect);
             }
           });
+
+          const copyBtn = card.querySelector('.copy-link-btn');
+          if (copyBtn) {
+            copyBtn.addEventListener('click', async () => {
+              const ok = await copyTextToClipboard(buildRatingUrl(booking.rating_token));
+              showToast(ok ? 'تم نسخ لينك التقييم ✅' : 'مقدرناش ننسخ اللينك');
+            });
+          }
 
           el.bookingsList.appendChild(card);
         });
@@ -2937,6 +3517,138 @@
         renderDaysOffList();
       });
 
+      const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+      const MAX_PHOTO_BYTES = 2 * 1024 * 1024;
+
+      function getDoctorPhotoExt(file) {
+        if (file.type === 'image/jpeg') return 'jpg';
+        if (file.type === 'image/png') return 'png';
+        if (file.type === 'image/webp') return 'webp';
+        const parts = String(file.name || '').split('.');
+        return parts.length > 1 ? parts.pop().toLowerCase() : 'jpg';
+      }
+
+      function isSafeHttpUrl(url) {
+        return typeof url === 'string' && /^https?:\/\//i.test(url.trim());
+      }
+
+      function getFirstLetter(name) {
+        const chars = Array.from(String(name || '').trim().replace(/^د\.?\s*/, ''));
+        return chars.length ? chars[0] : 'د';
+      }
+
+      function revokePhotoObjectUrl() {
+        if (state.photoPreviewObjectUrl) {
+          URL.revokeObjectURL(state.photoPreviewObjectUrl);
+          state.photoPreviewObjectUrl = null;
+        }
+      }
+
+      function showDocPhotoError(msg) {
+        if (!msg) {
+          el.docPhotoError.textContent = '';
+          el.docPhotoError.classList.add('hidden');
+        } else {
+          el.docPhotoError.textContent = msg;
+          el.docPhotoError.classList.remove('hidden');
+        }
+      }
+
+      function renderDocPhotoPreview() {
+        el.docPhotoPreview.textContent = '';
+        const src = state.photoPreviewObjectUrl || (isSafeHttpUrl(state.editingDoctorPhotoUrl) ? state.editingDoctorPhotoUrl.trim() : '');
+        if (src) {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = 'معاينة صورة الدكتور';
+          img.width = 80;
+          img.height = 80;
+          img.referrerPolicy = 'no-referrer';
+          img.addEventListener('error', () => {
+            el.docPhotoPreview.textContent = getFirstLetter(el.docName.value);
+          });
+          el.docPhotoPreview.appendChild(img);
+          el.removeDocPhotoBtn.classList.remove('hidden');
+        } else {
+          el.docPhotoPreview.textContent = getFirstLetter(el.docName.value);
+          el.removeDocPhotoBtn.classList.add('hidden');
+        }
+      }
+
+      function updateBioCounter() {
+        const len = (el.docBio.value || '').length;
+        el.docBioCounter.textContent = len + ' / 300';
+      }
+
+      el.docBio.addEventListener('input', updateBioCounter);
+      el.docName.addEventListener('input', () => {
+        if (!state.photoPreviewObjectUrl && !state.editingDoctorPhotoUrl) {
+          el.docPhotoPreview.textContent = getFirstLetter(el.docName.value);
+        }
+      });
+
+      el.docPhotoInput.addEventListener('change', () => {
+        showDocPhotoError('');
+        const file = el.docPhotoInput.files && el.docPhotoInput.files[0];
+        if (!file) return;
+
+        if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
+          showDocPhotoError('صيغة الصورة لازم تكون JPG أو PNG أو WebP.');
+          el.docPhotoInput.value = '';
+          return;
+        }
+        if (file.size > MAX_PHOTO_BYTES) {
+          showDocPhotoError('حجم الصورة لازم يكون 2 ميجا أو أقل.');
+          el.docPhotoInput.value = '';
+          return;
+        }
+
+        revokePhotoObjectUrl();
+        state.pendingPhotoFile = file;
+        state.photoPreviewObjectUrl = URL.createObjectURL(file);
+        renderDocPhotoPreview();
+      });
+
+      el.removeDocPhotoBtn.addEventListener('click', async () => {
+        showDocPhotoError('');
+        revokePhotoObjectUrl();
+        state.pendingPhotoFile = null;
+        el.docPhotoInput.value = '';
+
+        const existingId = el.docId.value ? Number(el.docId.value) : null;
+        if (existingId && state.editingDoctorPhotoUrl) {
+          el.removeDocPhotoBtn.disabled = true;
+          const { error } = await sb.from('doctors').update({ photo_url: null }).eq('id', existingId);
+          el.removeDocPhotoBtn.disabled = false;
+          if (error) {
+            console.error('Remove doctor photo error:', error);
+            if (isRlsOrAuthError(error)) { triggerNotAdmin(); return; }
+            showToast('فشل حذف الصورة');
+            return;
+          }
+          const targetDoc = state.doctors.find(d => d.id === existingId);
+          if (targetDoc) targetDoc.photo_url = null;
+          renderDoctors();
+          showToast('تم حذف الصورة');
+        }
+
+        state.editingDoctorPhotoUrl = null;
+        renderDocPhotoPreview();
+      });
+
+      async function uploadDoctorPhoto(doctorId, file) {
+        const ext = getDoctorPhotoExt(file);
+        const path = 'doc-' + doctorId + '-' + Date.now() + '.' + ext;
+        const { error: uploadError } = await sb.storage
+          .from('doctor-photos')
+          .upload(path, file, { upsert: true, contentType: file.type });
+        if (uploadError) {
+          return { publicUrl: null, error: uploadError };
+        }
+        const publicUrl = sb.storage.from('doctor-photos').getPublicUrl(path).data.publicUrl;
+        return { publicUrl, error: null };
+      }
+
       function setDocGenderRadio(val) {
         const g = val === 'female' ? 'female' : 'male';
         const radio = document.querySelector('input[name="doc-gender"][value="' + g + '"]');
@@ -2949,12 +3661,21 @@
         el.doctorFormError.textContent = '';
         el.inlineNewAreaBox.classList.add('hidden');
         el.inlineNewAreaInput.value = '';
+        revokePhotoObjectUrl();
+        state.pendingPhotoFile = null;
+        el.docPhotoInput.value = '';
+        showDocPhotoError('');
 
         if (!doctor) {
           state.convertingAgreementId = null;
+          state.editingDoctorPhotoUrl = null;
           el.doctorFormTitle.textContent = 'إضافة دكتور جديد';
           el.docId.value = '';
           el.docName.value = '';
+          el.docTitle.value = '';
+          el.docYearsExperience.value = '';
+          el.docBio.value = '';
+          updateBioCounter();
           setDocGenderRadio('male');
           if (state.specialties[0]) el.docSpecialty.value = String(state.specialties[0].id);
           el.docFee.value = '';
@@ -2973,6 +3694,7 @@
           el.agreementHoursRef.classList.add('hidden');
           el.agreementHoursRef.textContent = '';
           state.editingDoctorDaysOff = [];
+          renderDocPhotoPreview();
           renderHoursInputs({});
           renderDaysOffList();
           el.doctorFormPanel.classList.remove('hidden');
@@ -2981,9 +3703,14 @@
         }
 
         if (doctor.__fromAgreement) {
+          state.editingDoctorPhotoUrl = null;
           el.doctorFormTitle.textContent = 'إضافة دكتور من طلب الانضمام: ' + (doctor.name || '');
           el.docId.value = '';
           el.docName.value = doctor.name || '';
+          el.docTitle.value = doctor.title || '';
+          el.docYearsExperience.value = doctor.years_experience ?? '';
+          el.docBio.value = doctor.bio || '';
+          updateBioCounter();
           setDocGenderRadio(doctor.gender);
           if (doctor.specialty_id) el.docSpecialty.value = String(doctor.specialty_id);
           el.docFee.value = doctor.fee ?? '';
@@ -3006,6 +3733,7 @@
             el.agreementHoursRef.classList.add('hidden');
           }
           state.editingDoctorDaysOff = [];
+          renderDocPhotoPreview();
           renderHoursInputs({});
           renderDaysOffList();
           el.doctorFormPanel.classList.remove('hidden');
@@ -3015,9 +3743,14 @@
 
         // Editing existing doctor
         state.convertingAgreementId = null;
+        state.editingDoctorPhotoUrl = doctor.photo_url || null;
         el.doctorFormTitle.textContent = 'تعديل بيانات: ' + doctor.name;
         el.docId.value = doctor.id;
         el.docName.value = doctor.name || '';
+        el.docTitle.value = doctor.title || '';
+        el.docYearsExperience.value = doctor.years_experience ?? '';
+        el.docBio.value = doctor.bio || '';
+        updateBioCounter();
         setDocGenderRadio(doctor.gender);
         el.docSpecialty.value = String(doctor.specialty_id || '');
         el.docFee.value = doctor.fee ?? 0;
@@ -3040,6 +3773,7 @@
         el.agreementHoursRef.classList.add('hidden');
         el.agreementHoursRef.textContent = '';
 
+        renderDocPhotoPreview();
         el.doctorFormPanel.classList.remove('hidden');
         el.doctorFormPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
         loadDoctorScheduleAndDaysOff(doctor.id);
@@ -3072,6 +3806,11 @@
 
       function closeDoctorForm() {
         state.convertingAgreementId = null;
+        revokePhotoObjectUrl();
+        state.pendingPhotoFile = null;
+        state.editingDoctorPhotoUrl = null;
+        el.docPhotoInput.value = '';
+        showDocPhotoError('');
         el.doctorFormPanel.classList.add('hidden');
       }
 
@@ -3127,9 +3866,14 @@
         }
 
         const genderRadio = document.querySelector('input[name="doc-gender"]:checked');
+        const yearsExpRaw = el.docYearsExperience.value.trim();
+        const yearsExpVal = yearsExpRaw !== '' && !Number.isNaN(Number(yearsExpRaw)) ? Number(yearsExpRaw) : null;
         const payload = {
           name: el.docName.value.trim(),
           gender: genderRadio ? genderRadio.value : 'male',
+          title: el.docTitle.value.trim() || null,
+          years_experience: yearsExpVal,
+          bio: el.docBio.value.trim().slice(0, 300) || null,
           specialty_id: Number(el.docSpecialty.value),
           area_id: Number(el.docArea.value),
           fee: Number(el.docFee.value),
@@ -3150,8 +3894,24 @@
 
         const existingId = el.docId.value ? Number(el.docId.value) : null;
         let savedDoctorId = existingId;
+        let photoUploadWarning = false;
 
         if (existingId) {
+          if (state.pendingPhotoFile) {
+            const { publicUrl, error: upErr } = await uploadDoctorPhoto(existingId, state.pendingPhotoFile);
+            if (upErr || !publicUrl) {
+              console.error('Upload doctor photo error:', upErr);
+              el.saveDoctorBtn.disabled = false;
+              el.saveDoctorBtn.textContent = 'حفظ بيانات الدكتور';
+              el.doctorFormError.textContent = 'فشل رفع الصورة: ' + (upErr?.message || 'حصلت مشكلة');
+              el.doctorFormError.classList.remove('hidden');
+              return;
+            }
+            payload.photo_url = publicUrl;
+          } else {
+            payload.photo_url = state.editingDoctorPhotoUrl || null;
+          }
+
           const { error } = await sb.from('doctors').update(payload).eq('id', existingId);
           if (error) {
             console.error('Update doctor error:', error);
@@ -3163,6 +3923,7 @@
             return;
           }
         } else {
+          payload.photo_url = null;
           const { data, error } = await sb.from('doctors').insert(payload).select().single();
           if (error || !data) {
             console.error('Insert doctor error:', error);
@@ -3174,6 +3935,23 @@
             return;
           }
           savedDoctorId = data.id;
+
+          if (state.pendingPhotoFile) {
+            const { publicUrl, error: upErr } = await uploadDoctorPhoto(savedDoctorId, state.pendingPhotoFile);
+            if (upErr || !publicUrl) {
+              console.error('Post-insert upload doctor photo error:', upErr);
+              photoUploadWarning = true;
+            } else {
+              const { error: photoUpdErr } = await sb
+                .from('doctors')
+                .update({ photo_url: publicUrl })
+                .eq('id', savedDoctorId);
+              if (photoUpdErr) {
+                console.error('Update doctor photo_url error:', photoUpdErr);
+                photoUploadWarning = true;
+              }
+            }
+          }
 
           if (state.editingDoctorDaysOff.length) {
             const offPayload = state.editingDoctorDaysOff.map(d => ({
@@ -3224,7 +4002,7 @@
         el.saveDoctorBtn.disabled = false;
         el.saveDoctorBtn.textContent = 'حفظ بيانات الدكتور';
         closeDoctorForm();
-        showToast('تم حفظ بيانات الدكتور بنجاح');
+        showToast(photoUploadWarning ? 'تم حفظ الدكتور لكن فشل رفع الصورة — جرب ارفعها من التعديل' : 'تم حفظ بيانات الدكتور بنجاح');
         await refreshDoctors();
       });
 
@@ -3244,17 +4022,26 @@
           const govName = areaObj ? (govMap.get(areaObj.governorate_id) || '') : '';
           const areaName = areaObj ? areaObj.name_ar : '—';
           const locationText = [govName, areaName].filter(Boolean).join(' › ');
+          const hasPhoto = isSafeHttpUrl(doc.photo_url);
 
           const card = document.createElement('article');
           card.className = 'item-card';
           card.innerHTML =
             '<div class="doctor-header">' +
-              '<div>' +
-                '<div class="doctor-name">' + escapeHtml(doc.name) + '</div>' +
-                '<div class="doctor-meta">' +
-                  escapeHtml(genderLabel(doc.gender)) + ' · ' +
-                  escapeHtml(specMap.get(doc.specialty_id) || '—') + ' · ' +
-                  escapeHtml(locationText) +
+              '<div class="doctor-header-main">' +
+                '<div class="doctor-thumb">' +
+                  (hasPhoto
+                    ? '<img src="' + escapeHtml(doc.photo_url.trim()) + '" alt="' + escapeHtml(doc.name) + '" width="48" height="48" loading="lazy" referrerpolicy="no-referrer" />'
+                    : escapeHtml(getFirstLetter(doc.name))) +
+                '</div>' +
+                '<div style="min-width:0;">' +
+                  '<div class="doctor-name">' + escapeHtml(doc.name) + '</div>' +
+                  (doc.title ? '<div class="meta-sub">' + escapeHtml(doc.title) + '</div>' : '') +
+                  '<div class="doctor-meta">' +
+                    escapeHtml(genderLabel(doc.gender)) + ' · ' +
+                    escapeHtml(specMap.get(doc.specialty_id) || '—') + ' · ' +
+                    escapeHtml(locationText) +
+                  '</div>' +
                 '</div>' +
               '</div>' +
               '<span class="' + (doc.active ? 'status-text-active' : 'status-text-inactive') + '">' +
@@ -3276,6 +4063,14 @@
                 : '<span></span>') +
               '<button type="button" class="btn btn-secondary btn-sm edit-doc-btn">تعديل البيانات والمواعيد</button>' +
             '</div>';
+
+          const thumbImg = card.querySelector('.doctor-thumb img');
+          if (thumbImg) {
+            thumbImg.addEventListener('error', () => {
+              const wrap = thumbImg.parentElement;
+              if (wrap) wrap.textContent = getFirstLetter(doc.name);
+            });
+          }
 
           card.querySelector('.edit-doc-btn').addEventListener('click', () => openDoctorForm(doc));
           el.doctorsList.appendChild(card);
@@ -3552,6 +4347,552 @@
             '<td class="num">' + grandFee.toLocaleString('ar-EG', { maximumFractionDigits: 2 }) + '</td>' +
             '<td class="num">' + grandCommission.toLocaleString('ar-EG', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</td>' +
           '</tr>';
+      }
+
+      // --- TAB 6: RATINGS ---
+      const RATING_CRITERIA = [
+        { key: 'explain', alts: ['explain', 'score_explain', 'rating_explain'], label: 'الشرح' },
+        { key: 'listen', alts: ['listen', 'score_listen', 'rating_listen'], label: 'الاستماع' },
+        { key: 'time', alts: ['time', 'score_time', 'rating_time', 'visit_time'], label: 'وقت الكشف' },
+        { key: 'punctual', alts: ['punctual', 'score_punctual', 'rating_punctual'], label: 'الالتزام بالميعاد' },
+        { key: 'clinic', alts: ['clinic', 'score_clinic', 'rating_clinic', 'clinic_cleanliness'], label: 'العيادة' },
+        { key: 'staff', alts: ['staff', 'score_staff', 'rating_staff'], label: 'الفريق' },
+        { key: 'value', alts: ['value', 'score_value', 'rating_value', 'value_for_money'], label: 'السعر' }
+      ];
+
+      const WAIT_TIME_LABELS = {
+        lt15: 'أقل من ربع ساعة',
+        '15_30': 'ربع لنص ساعة',
+        '30_60': 'نص ساعة لساعة',
+        gt60: 'أكتر من ساعة'
+      };
+
+      const TESTS_NEEDED_LABELS = {
+        all: 'كلها ضرورية',
+        some: 'بعضها',
+        no: 'مش ضرورية',
+        none: 'ماطلبش'
+      };
+
+      let adminStarGradSeq = 0;
+
+      function getCriterionScore(row, crit) {
+        if (!row) return null;
+        for (let i = 0; i < crit.alts.length; i++) {
+          const v = row[crit.alts[i]];
+          if (v != null && v !== '' && !Number.isNaN(Number(v))) {
+            return Number(v);
+          }
+        }
+        return null;
+      }
+
+      function getRatingOverall(row) {
+        if (row && row.overall != null && row.overall !== '' && !Number.isNaN(Number(row.overall))) {
+          return Number(row.overall);
+        }
+        const vals = RATING_CRITERIA.map(c => getCriterionScore(row, c)).filter(v => v != null);
+        if (!vals.length) return 0;
+        return vals.reduce((a, b) => a + b, 0) / vals.length;
+      }
+
+      function createAdminStars(scoreVal) {
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+        const score = Math.max(0, Math.min(5, Number(scoreVal) || 0));
+        const wrap = document.createElement('span');
+        wrap.className = 'admin-stars';
+        wrap.setAttribute('aria-label', score.toFixed(1) + ' من 5');
+
+        for (let i = 1; i <= 5; i++) {
+          const fillRatio = Math.max(0, Math.min(1, score - (i - 1)));
+          const fillPct = Math.round(fillRatio * 100);
+          const gradId = 'adm-star-g-' + (++adminStarGradSeq);
+
+          const slot = document.createElement('span');
+          slot.className = 'admin-star-slot';
+
+          const svg = document.createElementNS(SVG_NS, 'svg');
+          svg.setAttribute('viewBox', '0 0 24 24');
+          svg.setAttribute('aria-hidden', 'true');
+
+          const defs = document.createElementNS(SVG_NS, 'defs');
+          const grad = document.createElementNS(SVG_NS, 'linearGradient');
+          grad.setAttribute('id', gradId);
+          grad.setAttribute('x1', '100%');
+          grad.setAttribute('y1', '0%');
+          grad.setAttribute('x2', '0%');
+          grad.setAttribute('y2', '0%');
+
+          const s1 = document.createElementNS(SVG_NS, 'stop');
+          s1.setAttribute('offset', fillPct + '%');
+          s1.setAttribute('stop-color', '#F59E0B');
+
+          const s2 = document.createElementNS(SVG_NS, 'stop');
+          s2.setAttribute('offset', fillPct + '%');
+          s2.setAttribute('stop-color', '#D5D0EE');
+
+          grad.appendChild(s1);
+          grad.appendChild(s2);
+          defs.appendChild(grad);
+          svg.appendChild(defs);
+
+          const path = document.createElementNS(SVG_NS, 'path');
+          path.setAttribute('fill', 'url(#' + gradId + ')');
+          path.setAttribute('d', 'M12 2.4l2.92 5.92 6.53.95-4.73 4.61 1.12 6.5L12 17.3l-5.84 3.08 1.12-6.5-4.73-4.61 6.53-.95L12 2.4z');
+          svg.appendChild(path);
+
+          slot.appendChild(svg);
+          wrap.appendChild(slot);
+        }
+        return wrap;
+      }
+
+      el.refreshRatingsBtn.addEventListener('click', loadRatings);
+      el.ratingsDoctorFilter.addEventListener('change', () => {
+        state.ratingsDoctorFilter = el.ratingsDoctorFilter.value || 'all';
+        renderRatingsCards();
+      });
+      el.ratingsLowFilter.addEventListener('change', () => {
+        state.ratingsLowOnly = el.ratingsLowFilter.checked;
+        renderRatingsCards();
+      });
+      el.ratingsCommentFilter.addEventListener('change', () => {
+        state.ratingsWithCommentOnly = el.ratingsCommentFilter.checked;
+        renderRatingsCards();
+      });
+
+      async function loadRatings() {
+        el.ratingsSummaryBody.innerHTML = '<tr><td colspan="11" style="text-align:center;">جاري التحميل...</td></tr>';
+        el.ratingsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">جاري تحميل التقييمات...</div>';
+
+        const { data, error } = await sb
+          .from('doctor_ratings')
+          .select('*, doctors(name), bookings(patient_name, patient_phone, day)')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Ratings load error:', error);
+          if (isRlsOrAuthError(error)) {
+            triggerNotAdmin();
+            return;
+          }
+          el.ratingsSummaryBody.innerHTML = '<tr><td colspan="11" style="text-align:center; color:var(--danger);">فشل تحميل التقييمات</td></tr>';
+          el.ratingsList.innerHTML = '<div class="alert alert-error" style="grid-column:1 / -1;">حصلت مشكلة في تحميل التقييمات.</div>';
+          return;
+        }
+
+        state.ratings = data || [];
+        populateRatingsDoctorFilter();
+        renderRatingsSummaryTable();
+        renderRatingsCards();
+      }
+
+      function populateRatingsDoctorFilter() {
+        const docMap = new Map();
+        state.doctors.forEach(d => {
+          docMap.set(String(d.id), d.name);
+        });
+        state.ratings.forEach(r => {
+          if (r.doctor_id != null && !docMap.has(String(r.doctor_id))) {
+            docMap.set(String(r.doctor_id), r.doctors?.name || ('دكتور #' + r.doctor_id));
+          }
+        });
+
+        const prev = state.ratingsDoctorFilter;
+        el.ratingsDoctorFilter.textContent = '';
+
+        const allOpt = document.createElement('option');
+        allOpt.value = 'all';
+        allOpt.textContent = 'كل الدكاترة';
+        el.ratingsDoctorFilter.appendChild(allOpt);
+
+        Array.from(docMap.entries())
+          .sort((a, b) => a[1].localeCompare(b[1], 'ar'))
+          .forEach(([id, name]) => {
+            const opt = document.createElement('option');
+            opt.value = id;
+            opt.textContent = name;
+            el.ratingsDoctorFilter.appendChild(opt);
+          });
+
+        if (prev !== 'all' && docMap.has(prev)) {
+          el.ratingsDoctorFilter.value = prev;
+        } else {
+          state.ratingsDoctorFilter = 'all';
+          el.ratingsDoctorFilter.value = 'all';
+        }
+      }
+
+      function renderRatingsSummaryTable() {
+        el.ratingsSummaryBody.textContent = '';
+        if (!state.ratings.length) {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.colSpan = 11;
+          td.style.textAlign = 'center';
+          td.style.color = 'var(--text-muted)';
+          td.textContent = 'مفيش تقييمات مسجلة لسه';
+          tr.appendChild(td);
+          el.ratingsSummaryBody.appendChild(tr);
+          return;
+        }
+
+        const groups = new Map();
+        state.ratings.forEach(r => {
+          const docId = r.doctor_id != null ? String(r.doctor_id) : 'unknown';
+          if (!groups.has(docId)) {
+            const critSums = {};
+            const critCounts = {};
+            RATING_CRITERIA.forEach(c => {
+              critSums[c.key] = 0;
+              critCounts[c.key] = 0;
+            });
+            groups.set(docId, {
+              doctorId: docId,
+              name: r.doctors?.name || ('دكتور #' + docId),
+              count: 0,
+              overallSum: 0,
+              recTrue: 0,
+              recTotal: 0,
+              critSums,
+              critCounts
+            });
+          }
+          const g = groups.get(docId);
+          g.count += 1;
+          g.overallSum += getRatingOverall(r);
+          if (typeof r.recommend === 'boolean') {
+            g.recTotal += 1;
+            if (r.recommend) g.recTrue += 1;
+          }
+          RATING_CRITERIA.forEach(c => {
+            const v = getCriterionScore(r, c);
+            if (v != null) {
+              g.critSums[c.key] += v;
+              g.critCounts[c.key] += 1;
+            }
+          });
+        });
+
+        const rows = Array.from(groups.values())
+          .map(g => {
+            const avgOverall = g.count ? g.overallSum / g.count : 0;
+            const recPct = g.recTotal ? Math.round((g.recTrue / g.recTotal) * 100) : null;
+            const critAvgs = {};
+            RATING_CRITERIA.forEach(c => {
+              critAvgs[c.key] = g.critCounts[c.key] ? g.critSums[c.key] / g.critCounts[c.key] : null;
+            });
+            return { ...g, avgOverall, recPct, critAvgs };
+          })
+          .sort((a, b) => b.avgOverall - a.avgOverall || b.count - a.count);
+
+        rows.forEach(row => {
+          const tr = document.createElement('tr');
+
+          const nameTd = document.createElement('td');
+          nameTd.style.fontWeight = '700';
+          nameTd.textContent = row.name;
+          tr.appendChild(nameTd);
+
+          const countTd = document.createElement('td');
+          countTd.className = 'num';
+          countTd.textContent = String(row.count);
+          tr.appendChild(countTd);
+
+          const avgTd = document.createElement('td');
+          avgTd.className = row.avgOverall < 3 ? 'num score-low' : 'num';
+          avgTd.style.fontWeight = '700';
+          avgTd.textContent = row.avgOverall.toFixed(1);
+          tr.appendChild(avgTd);
+
+          const recTd = document.createElement('td');
+          recTd.className = 'num';
+          recTd.textContent = row.recPct != null ? row.recPct + '%' : '—';
+          tr.appendChild(recTd);
+
+          RATING_CRITERIA.forEach(c => {
+            const td = document.createElement('td');
+            const val = row.critAvgs[c.key];
+            if (val != null) {
+              td.className = val < 3 ? 'num score-low' : 'num';
+              td.textContent = val.toFixed(1);
+            } else {
+              td.className = 'num';
+              td.textContent = '—';
+            }
+            tr.appendChild(td);
+          });
+
+          el.ratingsSummaryBody.appendChild(tr);
+        });
+      }
+
+      async function toggleRatingHidden(rating, btnEl) {
+        const nextHidden = !Boolean(rating.is_hidden);
+        btnEl.disabled = true;
+        const { error } = await sb
+          .from('doctor_ratings')
+          .update({ is_hidden: nextHidden })
+          .eq('id', rating.id);
+        btnEl.disabled = false;
+
+        if (error) {
+          console.error('Toggle rating is_hidden error:', error);
+          if (isRlsOrAuthError(error)) {
+            triggerNotAdmin();
+            return;
+          }
+          showToast('فشل تحديث حالة التقييم');
+          return;
+        }
+
+        rating.is_hidden = nextHidden;
+        showToast(nextHidden ? 'تم إخفاء التقييم من الموقع' : 'تم إظهار التقييم على الموقع');
+        renderRatingsCards();
+      }
+
+      function renderRatingsCards() {
+        el.ratingsList.textContent = '';
+
+        const filtered = state.ratings.filter(r => {
+          if (state.ratingsDoctorFilter !== 'all' && String(r.doctor_id) !== state.ratingsDoctorFilter) {
+            return false;
+          }
+          if (state.ratingsLowOnly && !(getRatingOverall(r) < 3)) {
+            return false;
+          }
+          if (state.ratingsWithCommentOnly && !(r.comment && String(r.comment).trim())) {
+            return false;
+          }
+          return true;
+        });
+
+        if (!filtered.length) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-state';
+          empty.style.gridColumn = '1 / -1';
+          empty.textContent = 'مفيش تقييمات مطابقة للفلاتر المختارة';
+          el.ratingsList.appendChild(empty);
+          return;
+        }
+
+        filtered.forEach(r => {
+          const overall = getRatingOverall(r);
+          const isHidden = Boolean(r.is_hidden);
+          const docName = r.doctors?.name || ('دكتور #' + (r.doctor_id ?? ''));
+          const bookingInfo = r.bookings || {};
+          const patientName = bookingInfo.patient_name || '—';
+          const patientPhone = bookingInfo.patient_phone || '';
+          const visitDay = bookingInfo.day ? formatDateAr(bookingInfo.day) : '—';
+          const displayName = (r.display_name && String(r.display_name).trim())
+            ? String(r.display_name).trim()
+            : 'مريض من احجزلي';
+
+          const card = document.createElement('article');
+          card.className = isHidden ? 'rating-card is-hidden-rating' : 'rating-card';
+
+          // Top header
+          const top = document.createElement('div');
+          top.className = 'card-top';
+
+          const leftCol = document.createElement('div');
+          const docHeading = document.createElement('div');
+          docHeading.className = 'doctor-name';
+          docHeading.textContent = 'د. ' + docName.replace(/^د\.?\s*/, '');
+          leftCol.appendChild(docHeading);
+
+          const subMeta = document.createElement('div');
+          subMeta.className = 'meta-sub';
+          subMeta.textContent = 'تاريخ الزيارة: ' + visitDay;
+          leftCol.appendChild(subMeta);
+
+          const rightCol = document.createElement('div');
+          rightCol.className = 'booking-top-right';
+
+          const starsRow = document.createElement('div');
+          starsRow.className = 'rating-stars-row';
+          starsRow.appendChild(createAdminStars(overall));
+
+          const numEl = document.createElement('span');
+          numEl.className = overall < 3 ? 'rating-overall-num is-low' : 'rating-overall-num';
+          numEl.textContent = overall.toFixed(1);
+          starsRow.appendChild(numEl);
+          rightCol.appendChild(starsRow);
+
+          if (isHidden) {
+            const hidBadge = document.createElement('span');
+            hidBadge.className = 'hidden-badge';
+            hidBadge.textContent = 'مخفي';
+            rightCol.appendChild(hidBadge);
+          }
+
+          top.appendChild(leftCol);
+          top.appendChild(rightCol);
+          card.appendChild(top);
+
+          // Patient info (admin only) + display_name
+          const infoRows = document.createElement('div');
+          infoRows.className = 'info-rows';
+
+          const pLine = document.createElement('div');
+          pLine.className = 'info-line';
+          const pLbl = document.createElement('span');
+          pLbl.className = 'info-label';
+          pLbl.textContent = 'المريض (للأدمن فقط)';
+          const pVal = document.createElement('span');
+          pVal.className = 'info-val';
+          pVal.style.display = 'inline-flex';
+          pVal.style.alignItems = 'center';
+          pVal.style.gap = '8px';
+          pVal.style.flexWrap = 'wrap';
+          const pNameSpan = document.createElement('span');
+          pNameSpan.textContent = patientName;
+          pVal.appendChild(pNameSpan);
+          if (patientPhone) {
+            const pPhoneLink = document.createElement('a');
+            pPhoneLink.className = 'phone-link tabular-nums';
+            pPhoneLink.dir = 'ltr';
+            pPhoneLink.href = 'tel:' + normalizeDigits(patientPhone);
+            pPhoneLink.textContent = patientPhone;
+            pVal.appendChild(pPhoneLink);
+          }
+          pLine.appendChild(pLbl);
+          pLine.appendChild(pVal);
+          infoRows.appendChild(pLine);
+
+          const dnLine = document.createElement('div');
+          dnLine.className = 'info-line';
+          const dnLbl = document.createElement('span');
+          dnLbl.className = 'info-label';
+          dnLbl.textContent = 'الاسم المعروض';
+          const dnVal = document.createElement('span');
+          dnVal.className = 'info-val';
+          dnVal.textContent = displayName;
+          dnLine.appendChild(dnLbl);
+          dnLine.appendChild(dnVal);
+          infoRows.appendChild(dnLine);
+
+          card.appendChild(infoRows);
+
+          // 7 Mini Bars
+          const barsGrid = document.createElement('div');
+          barsGrid.className = 'mini-bars-grid';
+          RATING_CRITERIA.forEach(c => {
+            const val = getCriterionScore(r, c);
+            const item = document.createElement('div');
+            item.className = 'mini-bar-item';
+
+            const head = document.createElement('div');
+            head.className = 'mini-bar-head';
+
+            const lbl = document.createElement('span');
+            lbl.className = 'mini-bar-label';
+            lbl.textContent = c.label;
+
+            const valSpan = document.createElement('span');
+            const isLow = val != null && val < 3;
+            valSpan.className = isLow ? 'mini-bar-val is-low' : 'mini-bar-val';
+            valSpan.textContent = val != null ? String(val) : '—';
+
+            head.appendChild(lbl);
+            head.appendChild(valSpan);
+            item.appendChild(head);
+
+            const track = document.createElement('div');
+            track.className = 'mini-bar-track';
+            const fill = document.createElement('div');
+            fill.className = isLow ? 'mini-bar-fill is-low' : 'mini-bar-fill';
+            const pct = val != null ? Math.max(0, Math.min(100, (val / 5) * 100)) : 0;
+            fill.style.width = pct.toFixed(1) + '%';
+            track.appendChild(fill);
+            item.appendChild(track);
+
+            barsGrid.appendChild(item);
+          });
+          card.appendChild(barsGrid);
+
+          // Wait time, Tests needed, Recommend
+          const metaStrip = document.createElement('div');
+          metaStrip.className = 'rating-meta-strip';
+
+          const waitCode = r.wait_time ?? r.wait;
+          const waitLabel = WAIT_TIME_LABELS[waitCode] || (waitCode ? String(waitCode) : '—');
+          const waitItem = document.createElement('span');
+          waitItem.className = 'rating-meta-item';
+          const waitStrong = document.createElement('strong');
+          waitStrong.textContent = 'الانتظار: ';
+          waitItem.appendChild(waitStrong);
+          waitItem.appendChild(document.createTextNode(waitLabel));
+          metaStrip.appendChild(waitItem);
+
+          const testsCode = r.tests_needed ?? r.tests;
+          if (testsCode) {
+            const testsLabel = TESTS_NEEDED_LABELS[testsCode] || String(testsCode);
+            const testsItem = document.createElement('span');
+            testsItem.className = 'rating-meta-item';
+            const testsStrong = document.createElement('strong');
+            testsStrong.textContent = 'التحاليل/الأشعة: ';
+            testsItem.appendChild(testsStrong);
+            testsItem.appendChild(document.createTextNode(testsLabel));
+            metaStrip.appendChild(testsItem);
+          }
+
+          if (typeof r.recommend === 'boolean') {
+            const recItem = document.createElement('span');
+            recItem.className = 'rating-meta-item';
+            recItem.style.fontWeight = '700';
+            recItem.style.color = r.recommend ? 'var(--brand)' : 'var(--danger)';
+            recItem.textContent = r.recommend ? '👍 بيرشحه' : '👎 مش بيرشحه';
+            metaStrip.appendChild(recItem);
+          }
+
+          card.appendChild(metaStrip);
+
+          // Tags
+          const tagsArr = Array.isArray(r.tags) ? r.tags : [];
+          if (tagsArr.length) {
+            const tagsRow = document.createElement('div');
+            tagsRow.className = 'rating-tags-row';
+            tagsArr.forEach(t => {
+              const txt = typeof t === 'string' ? t.trim() : '';
+              if (!txt) return;
+              const chip = document.createElement('span');
+              chip.className = 'rating-tag-chip';
+              chip.textContent = txt;
+              tagsRow.appendChild(chip);
+            });
+            if (tagsRow.childNodes.length) {
+              card.appendChild(tagsRow);
+            }
+          }
+
+          // Comment
+          if (r.comment && String(r.comment).trim()) {
+            const commentBox = document.createElement('div');
+            commentBox.className = 'rating-comment-box';
+            commentBox.textContent = String(r.comment).trim();
+            card.appendChild(commentBox);
+          }
+
+          // Footer: created_at + hide/show toggle
+          const foot = document.createElement('div');
+          foot.className = 'rating-card-foot';
+
+          const createdSpan = document.createElement('span');
+          createdSpan.className = 'meta-sub';
+          createdSpan.textContent = formatDateTimeAr(r.created_at);
+          foot.appendChild(createdSpan);
+
+          const toggleBtn = document.createElement('button');
+          toggleBtn.type = 'button';
+          toggleBtn.className = isHidden ? 'btn btn-primary btn-sm' : 'btn btn-danger-outline btn-sm';
+          toggleBtn.textContent = isHidden ? 'إظهار' : 'إخفاء من الموقع';
+          toggleBtn.addEventListener('click', () => toggleRatingHidden(r, toggleBtn));
+          foot.appendChild(toggleBtn);
+
+          card.appendChild(foot);
+          el.ratingsList.appendChild(card);
+        });
       }
 
       // --- BOOTSTRAP ---

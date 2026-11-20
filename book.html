@@ -901,6 +901,530 @@
         display: none;
       }
     }
+
+    /* Area Doctors Trust Section */
+    .area-doctors-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 4px 0;
+    }
+
+    .area-doctors-head {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0 2px;
+    }
+
+    .area-doctors-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1.35;
+      text-wrap: balance;
+    }
+
+    .area-doctors-sub {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .area-doctors-track {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 2px 10px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--brand-100) transparent;
+      align-items: stretch;
+    }
+
+    .area-doctors-track[data-count="1"] .doc-card,
+    .area-doctors-track[data-count="1"] .doc-skeleton-card {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .doc-card,
+    .doc-skeleton-card {
+      flex: 0 0 85%;
+      max-width: 320px;
+      scroll-snap-align: start;
+      background-color: #ffffff;
+      border: 1px solid var(--brand-100);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(23, 19, 58, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      container-type: inline-size;
+    }
+
+    @media (min-width: 640px) {
+      .area-doctors-track {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding: 0;
+        align-items: start;
+      }
+
+      .area-doctors-track[data-count="1"] {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .doc-card,
+      .doc-skeleton-card {
+        flex: none;
+        max-width: none;
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .area-doctors-track[data-count="3"] {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .doc-card-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    @container (max-width: 245px) {
+      .doc-card-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+
+    .doc-avatar-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .doc-avatar-img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .doc-avatar-initial {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1;
+      user-select: none;
+    }
+
+    .doc-identity {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .doc-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1.35;
+      overflow-wrap: break-word;
+    }
+
+    .doc-title {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.45;
+      overflow-wrap: break-word;
+    }
+
+    .doc-meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .doc-meta-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 8px;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      color: var(--ink);
+      font-size: 0.76rem;
+      font-weight: 600;
+      line-height: 1.35;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .doc-rating-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--brand-100);
+    }
+
+    .doc-rating-summary {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 8px;
+    }
+
+    .doc-rating-avg {
+      font-size: 1.42rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .doc-stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .doc-star-slot {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .doc-star-slot.is-sm {
+      width: 13px;
+      height: 13px;
+    }
+
+    .doc-star-slot svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .doc-rating-count {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .doc-recommend-line {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--brand);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .doc-criteria {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .doc-crit-row {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .doc-crit-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.76rem;
+      line-height: 1.3;
+    }
+
+    .doc-crit-label {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .doc-crit-val {
+      color: var(--brand);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .doc-crit-track {
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background-color: var(--brand-50);
+      overflow: hidden;
+    }
+
+    .doc-crit-fill {
+      height: 100%;
+      border-radius: 999px;
+      background-color: var(--lime);
+      box-shadow: inset 0 0 0 1px rgba(59, 42, 155, 0.14);
+    }
+
+    .doc-crit-toggle {
+      display: none;
+      align-self: flex-start;
+      min-height: 36px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--brand-100);
+      background-color: var(--brand-50);
+      color: var(--brand);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .doc-crit-toggle:hover {
+      border-color: var(--brand);
+    }
+
+    .doc-crit-toggle:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 639px) {
+      .doc-criteria:not(.is-expanded) .doc-crit-extra {
+        display: none;
+      }
+
+      .doc-crit-toggle {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+      }
+    }
+
+    .doc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .doc-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 8px;
+      background-color: var(--brand-50);
+      color: var(--brand);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .doc-new-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      padding-top: 10px;
+      border-top: 1px solid var(--brand-100);
+    }
+
+    .doc-new-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      color: var(--brand);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .doc-google-line {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .doc-reviews-wrap {
+      padding-top: 8px;
+      border-top: 1px solid var(--brand-100);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .doc-reviews-toggle {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--brand-100);
+      background-color: var(--brand-50);
+      color: var(--brand);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .doc-reviews-toggle:hover {
+      border-color: var(--brand);
+    }
+
+    .doc-reviews-toggle:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    .doc-reviews-chevron {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.18s ease;
+    }
+
+    .doc-reviews-toggle[aria-expanded="true"] .doc-reviews-chevron {
+      transform: rotate(180deg);
+    }
+
+    .doc-reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .doc-review-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-top: 10px;
+      border-top: 1px solid var(--brand-100);
+    }
+
+    .doc-review-item:first-child {
+      padding-top: 2px;
+      border-top: none;
+    }
+
+    .doc-review-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .doc-review-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .doc-review-date {
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .doc-review-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .doc-review-rec {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--brand);
+    }
+
+    .doc-review-comment {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      overflow-wrap: break-word;
+    }
+
+    .area-doctors-footnote {
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding: 0 2px;
+    }
+
+    .doc-skel-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .doc-skel-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .doc-skel-lines {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .doc-skel-line {
+      height: 12px;
+      border-radius: 6px;
+    }
+
+    .doc-skel-bar {
+      height: 28px;
+      border-radius: 10px;
+    }
+
+    .doc-skel-shimmer {
+      background: linear-gradient(90deg, #F2F0FB 25%, #E4E0F7 50%, #F2F0FB 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite linear;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .doc-skel-shimmer { animation: none; }
+      .doc-reviews-chevron { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -991,6 +1515,16 @@
               <div id="fee-range-hint" class="fee-hint hidden" style="margin-top: 10px;"></div>
             </div>
           </div>
+        </section>
+
+        <!-- Area Doctors Trust Section -->
+        <section id="area-doctors-section" class="area-doctors-section hidden" aria-labelledby="area-doctors-title">
+          <div class="area-doctors-head">
+            <h2 id="area-doctors-title" class="area-doctors-title"></h2>
+            <p class="area-doctors-sub">بنحجزلك تلقائيًا أقرب ميعاد متاح عند واحد من الدكاترة دول — كلهم متراجعين ومتأكدين من بياناتهم ✓</p>
+          </div>
+          <div id="area-doctors-list" class="area-doctors-track"></div>
+          <p id="area-doctors-footnote" class="area-doctors-footnote hidden">التقييمات من مرضى حجزوا فعلًا من خلال احجزلي وكشفوا</p>
         </section>
 
         <!-- Day Selection: 5 -->
@@ -1227,6 +1761,7 @@
         slot: null,
         slotLabel: '',
         slotsRequestId: 0,
+        doctorsRequestId: 0,
         submitting: false
       };
 
@@ -1243,6 +1778,10 @@
         selGender: document.getElementById('sel-gender'),
         selPrice: document.getElementById('sel-price'),
         feeRangeHint: document.getElementById('fee-range-hint'),
+        areaDoctorsSection: document.getElementById('area-doctors-section'),
+        areaDoctorsTitle: document.getElementById('area-doctors-title'),
+        areaDoctorsList: document.getElementById('area-doctors-list'),
+        areaDoctorsFootnote: document.getElementById('area-doctors-footnote'),
         daysContainer: document.getElementById('days-container'),
         slotsContainer: document.getElementById('slots-container'),
         slotAlert: document.getElementById('slot-alert'),
@@ -1719,6 +2258,529 @@
         el.slotsContainer.appendChild(wrapper);
       }
 
+      // Area Doctors Trust Section
+      const CRITERIA_META = [
+        { key: 'explain', label: 'الشرح والتوضيح' },
+        { key: 'listen', label: 'الاستماع والاهتمام' },
+        { key: 'time', label: 'وقت الكشف' },
+        { key: 'punctual', label: 'الالتزام بالميعاد' },
+        { key: 'clinic', label: 'نظافة العيادة' },
+        { key: 'staff', label: 'فريق العيادة' },
+        { key: 'value', label: 'السعر مقابل الخدمة' }
+      ];
+      let starGradCounter = 0;
+
+      function createStarsElement(rating, isSmall) {
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+        const score = Math.max(0, Math.min(5, Number(rating) || 0));
+        const wrap = document.createElement('span');
+        wrap.className = 'doc-stars';
+        wrap.setAttribute('aria-label', score.toFixed(1) + ' من 5');
+
+        for (let i = 1; i <= 5; i++) {
+          const fillRatio = Math.max(0, Math.min(1, score - (i - 1)));
+          const fillPct = Math.round(fillRatio * 100);
+          const gradId = 'doc-star-g-' + (++starGradCounter);
+
+          const slot = document.createElement('span');
+          slot.className = isSmall ? 'doc-star-slot is-sm' : 'doc-star-slot';
+
+          const svg = document.createElementNS(SVG_NS, 'svg');
+          svg.setAttribute('viewBox', '0 0 24 24');
+          svg.setAttribute('aria-hidden', 'true');
+
+          const defs = document.createElementNS(SVG_NS, 'defs');
+          const grad = document.createElementNS(SVG_NS, 'linearGradient');
+          grad.setAttribute('id', gradId);
+          grad.setAttribute('x1', '100%');
+          grad.setAttribute('y1', '0%');
+          grad.setAttribute('x2', '0%');
+          grad.setAttribute('y2', '0%');
+
+          const stop1 = document.createElementNS(SVG_NS, 'stop');
+          stop1.setAttribute('offset', fillPct + '%');
+          stop1.setAttribute('stop-color', '#F59E0B');
+
+          const stop2 = document.createElementNS(SVG_NS, 'stop');
+          stop2.setAttribute('offset', fillPct + '%');
+          stop2.setAttribute('stop-color', '#D5D0EE');
+
+          grad.appendChild(stop1);
+          grad.appendChild(stop2);
+          defs.appendChild(grad);
+          svg.appendChild(defs);
+
+          const path = document.createElementNS(SVG_NS, 'path');
+          path.setAttribute('fill', 'url(#' + gradId + ')');
+          path.setAttribute('d', 'M12 2.4l2.92 5.92 6.53.95-4.73 4.61 1.12 6.5L12 17.3l-5.84 3.08 1.12-6.5-4.73-4.61 6.53-.95L12 2.4z');
+          svg.appendChild(path);
+
+          slot.appendChild(svg);
+          wrap.appendChild(slot);
+        }
+        return wrap;
+      }
+
+      function createChevronSvg() {
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(SVG_NS, 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2.4');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('class', 'doc-reviews-chevron');
+
+        const poly = document.createElementNS(SVG_NS, 'polyline');
+        poly.setAttribute('points', '6 9 12 15 18 9');
+        svg.appendChild(poly);
+        return svg;
+      }
+
+      function formatReviewDate(rawDate) {
+        if (!rawDate) return '';
+        const str = String(rawDate).trim();
+        if (!str) return '';
+        if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+          const dt = new Date(str + 'T00:00:00Z');
+          if (!Number.isNaN(dt.getTime())) {
+            return dt.toLocaleDateString('ar-EG', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+              timeZone: 'UTC'
+            });
+          }
+        } else if (/^\d{4}-\d{2}-\d{2}[T ]/.test(str)) {
+          const dt = new Date(str);
+          if (!Number.isNaN(dt.getTime())) {
+            return dt.toLocaleDateString('ar-EG', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+              timeZone: 'Africa/Cairo'
+            });
+          }
+        }
+        return str;
+      }
+
+      function isSafePhotoUrl(url) {
+        if (typeof url !== 'string') return false;
+        const trimmed = url.trim();
+        return /^https?:\/\//i.test(trimmed);
+      }
+
+      function createAvatarFallback(name) {
+        const span = document.createElement('span');
+        span.className = 'doc-avatar-initial';
+        const trimmed = String(name || '').trim();
+        const chars = Array.from(trimmed);
+        span.textContent = chars.length ? chars[0] : 'د';
+        span.setAttribute('aria-hidden', 'true');
+        return span;
+      }
+
+      function buildDoctorCard(doc) {
+        const card = document.createElement('article');
+        card.className = 'doc-card';
+
+        const rawName = String(doc && doc.name != null ? doc.name : '').trim();
+        const fullDocName = 'د. ' + rawName;
+
+        // Header: Avatar + Name + Title + Chips
+        const head = document.createElement('div');
+        head.className = 'doc-card-head';
+
+        const avatarWrap = document.createElement('div');
+        avatarWrap.className = 'doc-avatar-wrap';
+        if (doc && isSafePhotoUrl(doc.photo_url)) {
+          const img = document.createElement('img');
+          img.className = 'doc-avatar-img';
+          img.src = doc.photo_url.trim();
+          img.alt = fullDocName;
+          img.width = 72;
+          img.height = 72;
+          img.loading = 'lazy';
+          img.referrerPolicy = 'no-referrer';
+          img.addEventListener('error', () => {
+            avatarWrap.textContent = '';
+            avatarWrap.appendChild(createAvatarFallback(rawName));
+          });
+          avatarWrap.appendChild(img);
+        } else {
+          avatarWrap.appendChild(createAvatarFallback(rawName));
+        }
+        head.appendChild(avatarWrap);
+
+        const identity = document.createElement('div');
+        identity.className = 'doc-identity';
+
+        const nameEl = document.createElement('h3');
+        nameEl.className = 'doc-name';
+        nameEl.textContent = fullDocName;
+        identity.appendChild(nameEl);
+
+        if (doc && doc.title && String(doc.title).trim()) {
+          const titleEl = document.createElement('p');
+          titleEl.className = 'doc-title';
+          titleEl.textContent = String(doc.title).trim();
+          identity.appendChild(titleEl);
+        }
+
+        const chipsWrap = document.createElement('div');
+        chipsWrap.className = 'doc-meta-chips';
+
+        const years = doc && doc.years_experience != null ? Number(doc.years_experience) : NaN;
+        if (!Number.isNaN(years) && years > 0) {
+          const expChip = document.createElement('span');
+          expChip.className = 'doc-meta-chip';
+          expChip.textContent = 'خبرة ' + years + ' سنة';
+          chipsWrap.appendChild(expChip);
+        }
+
+        const fee = doc && doc.fee != null && doc.fee !== '' ? Number(doc.fee) : NaN;
+        if (!Number.isNaN(fee)) {
+          const feeChip = document.createElement('span');
+          feeChip.className = 'doc-meta-chip';
+          feeChip.textContent = 'الكشف ' + fee + ' ج.م';
+          chipsWrap.appendChild(feeChip);
+        }
+
+        if (chipsWrap.childNodes.length) {
+          identity.appendChild(chipsWrap);
+        }
+
+        head.appendChild(identity);
+        card.appendChild(head);
+
+        // Rating section OR New badge
+        const ratingCount = doc && doc.rating_count != null ? Number(doc.rating_count) : 0;
+
+        if (ratingCount > 0) {
+          const ratingBlock = document.createElement('div');
+          ratingBlock.className = 'doc-rating-block';
+
+          const ratingAvg = doc && doc.rating_avg != null ? Number(doc.rating_avg) : 0;
+          const summaryRow = document.createElement('div');
+          summaryRow.className = 'doc-rating-summary';
+
+          const avgEl = document.createElement('span');
+          avgEl.className = 'doc-rating-avg';
+          avgEl.textContent = ratingAvg.toFixed(1);
+          summaryRow.appendChild(avgEl);
+
+          summaryRow.appendChild(createStarsElement(ratingAvg, false));
+
+          const countEl = document.createElement('span');
+          countEl.className = 'doc-rating-count';
+          countEl.textContent = '(' + ratingCount + ' تقييم)';
+          summaryRow.appendChild(countEl);
+
+          ratingBlock.appendChild(summaryRow);
+
+          if (doc && doc.recommend_pct != null && !Number.isNaN(Number(doc.recommend_pct))) {
+            const recLine = document.createElement('div');
+            recLine.className = 'doc-recommend-line';
+            recLine.textContent = Math.round(Number(doc.recommend_pct)) + '% بيرشحوه 👍';
+            ratingBlock.appendChild(recLine);
+          }
+
+          // 7 Criteria bars
+          let criteriaObj = doc ? doc.criteria : null;
+          if (typeof criteriaObj === 'string') {
+            try {
+              criteriaObj = JSON.parse(criteriaObj);
+            } catch (_) {
+              criteriaObj = null;
+            }
+          }
+
+          if (criteriaObj && typeof criteriaObj === 'object') {
+            const criteriaList = document.createElement('div');
+            criteriaList.className = 'doc-criteria';
+            let renderedCount = 0;
+
+            CRITERIA_META.forEach(item => {
+              const rawVal = criteriaObj[item.key];
+              if (rawVal == null || rawVal === '' || Number.isNaN(Number(rawVal))) return;
+              const numVal = Math.max(0, Math.min(5, Number(rawVal)));
+
+              const row = document.createElement('div');
+              row.className = renderedCount >= 3 ? 'doc-crit-row doc-crit-extra' : 'doc-crit-row';
+
+              const rowHead = document.createElement('div');
+              rowHead.className = 'doc-crit-head';
+
+              const lbl = document.createElement('span');
+              lbl.className = 'doc-crit-label';
+              lbl.textContent = item.label;
+
+              const valSpan = document.createElement('span');
+              valSpan.className = 'doc-crit-val';
+              valSpan.textContent = numVal.toFixed(1);
+
+              rowHead.appendChild(lbl);
+              rowHead.appendChild(valSpan);
+              row.appendChild(rowHead);
+
+              const track = document.createElement('div');
+              track.className = 'doc-crit-track';
+              const fill = document.createElement('div');
+              fill.className = 'doc-crit-fill';
+              fill.style.width = ((numVal / 5) * 100).toFixed(1) + '%';
+              track.appendChild(fill);
+              row.appendChild(track);
+
+              criteriaList.appendChild(row);
+              renderedCount++;
+            });
+
+            if (renderedCount > 3) {
+              const moreBtn = document.createElement('button');
+              moreBtn.type = 'button';
+              moreBtn.className = 'doc-crit-toggle';
+              moreBtn.setAttribute('aria-expanded', 'false');
+              moreBtn.textContent = '+ باقي التفاصيل';
+              moreBtn.addEventListener('click', () => {
+                const expanded = criteriaList.classList.toggle('is-expanded');
+                moreBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                moreBtn.textContent = expanded ? 'إخفاء التفاصيل' : '+ باقي التفاصيل';
+              });
+              criteriaList.appendChild(moreBtn);
+            }
+
+            if (renderedCount > 0) {
+              ratingBlock.appendChild(criteriaList);
+            }
+          }
+
+          // Top tags
+          const tagsArr = Array.isArray(doc && doc.top_tags) ? doc.top_tags : [];
+          if (tagsArr.length) {
+            const tagsWrap = document.createElement('div');
+            tagsWrap.className = 'doc-tags';
+            tagsArr.forEach(tagItem => {
+              const tagText = typeof tagItem === 'string'
+                ? tagItem.trim()
+                : (tagItem && (tagItem.tag || tagItem.label || tagItem.name)
+                  ? String(tagItem.tag || tagItem.label || tagItem.name).trim()
+                  : '');
+              if (!tagText) return;
+              const tagEl = document.createElement('span');
+              tagEl.className = 'doc-tag';
+              tagEl.textContent = tagText;
+              tagsWrap.appendChild(tagEl);
+            });
+            if (tagsWrap.childNodes.length) {
+              ratingBlock.appendChild(tagsWrap);
+            }
+          }
+
+          card.appendChild(ratingBlock);
+
+          // Expandable Reviews
+          const reviewsArr = Array.isArray(doc && doc.reviews) ? doc.reviews : [];
+          if (reviewsArr.length) {
+            const reviewsWrap = document.createElement('div');
+            reviewsWrap.className = 'doc-reviews-wrap';
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.type = 'button';
+            toggleBtn.className = 'doc-reviews-toggle';
+            toggleBtn.setAttribute('aria-expanded', 'false');
+
+            const toggleLabel = document.createElement('span');
+            toggleLabel.textContent = 'شوف آراء المرضى (' + reviewsArr.length + ')';
+            toggleBtn.appendChild(toggleLabel);
+            toggleBtn.appendChild(createChevronSvg());
+
+            const reviewsList = document.createElement('div');
+            reviewsList.className = 'doc-reviews-list hidden';
+
+            reviewsArr.forEach(rev => {
+              if (!rev || typeof rev !== 'object') return;
+              const item = document.createElement('div');
+              item.className = 'doc-review-item';
+
+              const top = document.createElement('div');
+              top.className = 'doc-review-top';
+
+              const revName = document.createElement('span');
+              revName.className = 'doc-review-name';
+              const rName = rev.name != null && String(rev.name).trim()
+                ? String(rev.name).trim()
+                : 'مريض من احجزلي';
+              revName.textContent = rName;
+              top.appendChild(revName);
+
+              const formattedDate = formatReviewDate(rev.date);
+              if (formattedDate) {
+                const revDate = document.createElement('span');
+                revDate.className = 'doc-review-date';
+                revDate.textContent = formattedDate;
+                top.appendChild(revDate);
+              }
+              item.appendChild(top);
+
+              const metaRow = document.createElement('div');
+              metaRow.className = 'doc-review-meta';
+              if (rev.overall != null && !Number.isNaN(Number(rev.overall))) {
+                metaRow.appendChild(createStarsElement(Number(rev.overall), true));
+              }
+              if (rev.recommend === true) {
+                const recBadge = document.createElement('span');
+                recBadge.className = 'doc-review-rec';
+                recBadge.textContent = '👍 بيرشحه';
+                metaRow.appendChild(recBadge);
+              }
+              if (metaRow.childNodes.length) {
+                item.appendChild(metaRow);
+              }
+
+              if (rev.comment != null && String(rev.comment).trim()) {
+                const commentEl = document.createElement('p');
+                commentEl.className = 'doc-review-comment';
+                commentEl.textContent = String(rev.comment).trim();
+                item.appendChild(commentEl);
+              }
+
+              reviewsList.appendChild(item);
+            });
+
+            if (reviewsList.childNodes.length) {
+              toggleBtn.addEventListener('click', () => {
+                const isOpen = !reviewsList.classList.toggle('hidden');
+                toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                toggleLabel.textContent = isOpen
+                  ? 'إخفاء آراء المرضى (' + reviewsList.childNodes.length + ')'
+                  : 'شوف آراء المرضى (' + reviewsList.childNodes.length + ')';
+              });
+              reviewsWrap.appendChild(toggleBtn);
+              reviewsWrap.appendChild(reviewsList);
+              card.appendChild(reviewsWrap);
+            }
+          }
+        } else {
+          const newWrap = document.createElement('div');
+          newWrap.className = 'doc-new-wrap';
+
+          const badge = document.createElement('span');
+          badge.className = 'doc-new-badge';
+          badge.textContent = 'جديد على احجزلي ✨';
+          newWrap.appendChild(badge);
+
+          if (doc && doc.google_rating != null && doc.google_rating !== '') {
+            const gRatingNum = Number(doc.google_rating);
+            const gRatingStr = Number.isNaN(gRatingNum)
+              ? String(doc.google_rating).trim()
+              : String(gRatingNum);
+            let googleText = '⭐ ' + gRatingStr + ' على جوجل';
+            if (doc.google_reviews != null && doc.google_reviews !== '') {
+              googleText += ' (' + doc.google_reviews + ' تقييم)';
+            }
+            const gLine = document.createElement('div');
+            gLine.className = 'doc-google-line';
+            gLine.textContent = googleText;
+            newWrap.appendChild(gLine);
+          }
+
+          card.appendChild(newWrap);
+        }
+
+        return card;
+      }
+
+      function renderDoctorsSkeleton() {
+        el.areaDoctorsList.textContent = '';
+        el.areaDoctorsList.setAttribute('data-count', '2');
+        for (let i = 0; i < 2; i++) {
+          const skel = document.createElement('div');
+          skel.className = 'doc-skeleton-card';
+          skel.setAttribute('aria-hidden', 'true');
+
+          const row = document.createElement('div');
+          row.className = 'doc-skel-row';
+
+          const circle = document.createElement('div');
+          circle.className = 'doc-skel-circle doc-skel-shimmer';
+
+          const lines = document.createElement('div');
+          lines.className = 'doc-skel-lines';
+
+          const l1 = document.createElement('div');
+          l1.className = 'doc-skel-line doc-skel-shimmer';
+          l1.style.width = '72%';
+
+          const l2 = document.createElement('div');
+          l2.className = 'doc-skel-line doc-skel-shimmer';
+          l2.style.width = '52%';
+
+          lines.appendChild(l1);
+          lines.appendChild(l2);
+          row.appendChild(circle);
+          row.appendChild(lines);
+
+          const bar = document.createElement('div');
+          bar.className = 'doc-skel-bar doc-skel-shimmer';
+
+          skel.appendChild(row);
+          skel.appendChild(bar);
+          el.areaDoctorsList.appendChild(skel);
+        }
+      }
+
+      function hideAreaDoctors() {
+        state.doctorsRequestId++;
+        el.areaDoctorsSection.classList.add('hidden');
+        el.areaDoctorsList.textContent = '';
+        el.areaDoctorsFootnote.classList.add('hidden');
+      }
+
+      async function fetchAreaDoctors() {
+        if (!state.specialtyId || !state.governorateId || !state.areaId) {
+          hideAreaDoctors();
+          return;
+        }
+
+        const reqId = ++state.doctorsRequestId;
+        el.areaDoctorsTitle.textContent = 'دكاترة ' + state.specialtyName + ' في ' + state.areaName;
+        el.areaDoctorsFootnote.classList.add('hidden');
+        renderDoctorsSkeleton();
+        el.areaDoctorsSection.classList.remove('hidden');
+
+        const { p_fee_min, p_fee_max } = getPriceBounds();
+        const { data, error } = await sb.rpc('get_area_doctors', {
+          p_specialty: state.specialtyId,
+          p_area: state.areaId,
+          p_gender: state.gender || null,
+          p_fee_min,
+          p_fee_max
+        });
+
+        if (reqId !== state.doctorsRequestId) return;
+
+        if (error || !Array.isArray(data) || !data.length) {
+          el.areaDoctorsSection.classList.add('hidden');
+          el.areaDoctorsList.textContent = '';
+          el.areaDoctorsFootnote.classList.add('hidden');
+          return;
+        }
+
+        const frag = document.createDocumentFragment();
+        data.forEach(doc => {
+          frag.appendChild(buildDoctorCard(doc));
+        });
+
+        el.areaDoctorsList.textContent = '';
+        el.areaDoctorsList.setAttribute('data-count', String(Math.min(data.length, 3)));
+        el.areaDoctorsList.appendChild(frag);
+        el.areaDoctorsFootnote.classList.remove('hidden');
+        el.areaDoctorsSection.classList.remove('hidden');
+      }
+
       // Cascade reset helpers
       function resetFromGovernorate() {
         state.governorateId = null;
@@ -1759,6 +2821,7 @@
         state.specialtyId = val;
         state.specialtyName = val ? el.selSpecialty.options[el.selSpecialty.selectedIndex].textContent : '';
         resetFromGovernorate();
+        hideAreaDoctors();
         populateGovernorates();
         populateAreas();
         updateFiltersAvailabilityAndHint();
@@ -1772,6 +2835,7 @@
         state.governorateId = val;
         state.governorateName = val ? el.selGovernorate.options[el.selGovernorate.selectedIndex].textContent : '';
         resetFromArea();
+        hideAreaDoctors();
         populateAreas();
         updateFiltersAvailabilityAndHint();
         renderDays();
@@ -1785,6 +2849,7 @@
         state.areaName = val ? el.selArea.options[el.selArea.selectedIndex].textContent : '';
         resetFromFilters();
         updateFiltersAvailabilityAndHint();
+        fetchAreaDoctors();
         renderDays();
         el.slotsContainer.innerHTML = '<div class="state-box state-muted">اختار اليوم علشان تشوف المواعيد المتاحة</div>';
         updateUIState();
@@ -1795,6 +2860,7 @@
         resetFromSlot();
         updateFiltersAvailabilityAndHint();
         updateUIState();
+        fetchAreaDoctors();
         if (state.day) fetchSlots();
       });
 
@@ -1803,6 +2869,7 @@
         resetFromSlot();
         updateFiltersAvailabilityAndHint();
         updateUIState();
+        fetchAreaDoctors();
         if (state.day) fetchSlots();
       });
 
@@ -1936,6 +3003,7 @@
         state.specialtyName = '';
         el.selSpecialty.value = '';
         resetFromGovernorate();
+        hideAreaDoctors();
         populateGovernorates();
         populateAreas();
         updateFiltersAvailabilityAndHint();
@@ -2005,6 +3073,7 @@
             }
           }
           updateFiltersAvailabilityAndHint();
+          fetchAreaDoctors();
         }
       }
 
