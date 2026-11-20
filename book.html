@@ -337,20 +337,64 @@
     }
 
     .fee-hint {
-      font-size: 0.86rem;
-      font-weight: 600;
+      font-size: 0.88rem;
+      font-weight: 700;
       color: var(--brand);
       background-color: var(--brand-50);
       border: 1px solid var(--brand-100);
-      padding: 8px 12px;
-      border-radius: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
       font-variant-numeric: tabular-nums;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .fee-hint-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .fee-hint-note {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
     }
 
     .fee-hint.is-warn {
       background-color: var(--amber-bg);
       border-color: var(--amber-border);
       color: var(--amber-text);
+    }
+
+    .price-spinner {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid var(--brand-100);
+      border-top-color: var(--brand);
+      display: inline-block;
+      flex-shrink: 0;
+      animation: price-spin 0.7s linear infinite;
+    }
+
+    @keyframes price-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .final-price-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 9px;
+      border-radius: 8px;
+      background-color: var(--lime);
+      color: var(--brand);
+      font-size: 0.76rem;
+      font-weight: 700;
+      line-height: 1.4;
+      white-space: nowrap;
     }
 
     /* Horizontally Scrollable Days */
@@ -778,6 +822,20 @@
       font-weight: 700;
       font-size: 0.95rem;
       margin-bottom: 10px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .reassigned-note {
+      background-color: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      border-radius: 12px;
+      padding: 11px 14px;
+      color: var(--amber-text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.55;
+      margin-bottom: 10px;
+      text-align: right;
     }
 
     .followup-note {
@@ -1421,9 +1479,103 @@
       animation: shimmer 1.2s infinite linear;
     }
 
+    /* Assigned Doctor Preview Card */
+    .assigned-doctor-card {
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .assigned-doc-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .assigned-doc-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+      background-color: #ffffff;
+      border: 1px solid var(--brand-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .assigned-doc-avatar img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .assigned-doc-info {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .assigned-doc-heading {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1.35;
+      overflow-wrap: break-word;
+    }
+
+    .assigned-doc-title {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+      overflow-wrap: break-word;
+    }
+
+    .assigned-doc-rating {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .assigned-doc-rating-avg {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--brand);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .assigned-doc-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--brand-100);
+    }
+
+    .assigned-doc-price {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--brand);
+      font-variant-numeric: tabular-nums;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .doc-skel-shimmer { animation: none; }
       .doc-reviews-chevron { transition: none; }
+      .price-spinner { animation: none; }
     }
   </style>
 </head>
@@ -1557,6 +1709,8 @@
             <h2 id="patient-step-title" class="section-title">بياناتك لتأكيد الحجز</h2>
           </div>
 
+          <div id="assigned-doctor-card" class="assigned-doctor-card hidden" aria-live="polite"></div>
+
           <form id="booking-form" novalidate>
             <div class="patient-grid">
               <div class="field">
@@ -1625,6 +1779,14 @@
             <span class="summary-key">الميعاد</span>
             <span id="sum-slot" class="summary-val is-empty">لسه ما اخترتش</span>
           </div>
+          <div id="sum-doctor-row" class="summary-row hidden">
+            <span class="summary-key">الدكتور</span>
+            <span id="sum-doctor" class="summary-val"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">السعر</span>
+            <span id="sum-price" class="summary-val is-empty tabular-nums">لسه ما اخترتش</span>
+          </div>
         </div>
         <p class="summary-note">
           مفيش أي دفع مقدم — الكشف بيتدفع في العيادة مباشرة بعد تأكيد الحجز.
@@ -1663,8 +1825,13 @@
           <span class="summary-key">الميعاد</span>
           <span id="success-slot" class="summary-val"></span>
         </div>
+        <div class="summary-row">
+          <span class="summary-key">الدكتور</span>
+          <span id="success-doctor" class="summary-val"></span>
+        </div>
       </div>
 
+      <div id="success-reassigned-note" class="reassigned-note hidden"></div>
       <div id="success-fee-box" class="fee-notice-box"></div>
       <p class="followup-note">هنكلمك أو نبعتلك واتساب لتأكيد الميعاد واسم الدكتور وعنوان العيادة</p>
 
@@ -1760,6 +1927,14 @@
         dayLabel: '',
         slot: null,
         slotLabel: '',
+        areaDoctors: [],
+        areaDoctorsLoading: false,
+        areaDoctorsEmpty: false,
+        feeRange: null,
+        assignedDoctorId: null,
+        assignedDoctor: null,
+        previewLoading: false,
+        previewRequestId: 0,
         slotsRequestId: 0,
         doctorsRequestId: 0,
         submitting: false
@@ -1785,6 +1960,7 @@
         daysContainer: document.getElementById('days-container'),
         slotsContainer: document.getElementById('slots-container'),
         slotAlert: document.getElementById('slot-alert'),
+        assignedDoctorCard: document.getElementById('assigned-doctor-card'),
         patientName: document.getElementById('patient-name'),
         patientPhone: document.getElementById('patient-phone'),
         bookingForm: document.getElementById('booking-form'),
@@ -1798,12 +1974,17 @@
         sumArea: document.getElementById('sum-area'),
         sumDay: document.getElementById('sum-day'),
         sumSlot: document.getElementById('sum-slot'),
+        sumDoctorRow: document.getElementById('sum-doctor-row'),
+        sumDoctor: document.getElementById('sum-doctor'),
+        sumPrice: document.getElementById('sum-price'),
         successBookingId: document.getElementById('success-booking-id'),
         successSpecialty: document.getElementById('success-specialty'),
         successGovernorate: document.getElementById('success-governorate'),
         successArea: document.getElementById('success-area'),
         successDay: document.getElementById('success-day'),
         successSlot: document.getElementById('success-slot'),
+        successDoctor: document.getElementById('success-doctor'),
+        successReassignedNote: document.getElementById('success-reassigned-note'),
         successFeeBox: document.getElementById('success-fee-box'),
         newBookingBtn: document.getElementById('new-booking-btn')
       };
@@ -1904,12 +2085,225 @@
         }
       }
 
+      function formatFee(val) {
+        const num = Number(val);
+        if (Number.isNaN(num)) return '0';
+        return num.toLocaleString('en-US');
+      }
+
+      function renderPriceBox() {
+        const box = el.feeRangeHint;
+        box.textContent = '';
+        box.classList.remove('is-warn');
+
+        if (!state.specialtyId || !state.governorateId || !state.areaId) {
+          box.classList.add('hidden');
+          return;
+        }
+
+        if (state.previewLoading) {
+          box.classList.remove('hidden');
+          const row = document.createElement('div');
+          row.className = 'fee-hint-row';
+          const spinner = document.createElement('span');
+          spinner.className = 'price-spinner';
+          spinner.setAttribute('aria-hidden', 'true');
+          const txt = document.createElement('span');
+          txt.textContent = 'جاري تحديد سعر الكشف النهائي...';
+          row.appendChild(spinner);
+          row.appendChild(txt);
+          box.appendChild(row);
+          return;
+        }
+
+        if (state.assignedDoctor && state.assignedDoctor.fee != null && !Number.isNaN(Number(state.assignedDoctor.fee))) {
+          box.classList.remove('hidden');
+          const row = document.createElement('div');
+          row.className = 'fee-hint-row';
+          const txt = document.createElement('span');
+          txt.textContent = 'سعر الكشف: ' + formatFee(state.assignedDoctor.fee) + ' ج.م';
+          const badge = document.createElement('span');
+          badge.className = 'final-price-badge';
+          badge.textContent = 'نهائي';
+          row.appendChild(txt);
+          row.appendChild(badge);
+          box.appendChild(row);
+          return;
+        }
+
+        if (state.areaDoctorsLoading) {
+          box.classList.remove('hidden');
+          const row = document.createElement('div');
+          row.className = 'fee-hint-row';
+          const spinner = document.createElement('span');
+          spinner.className = 'price-spinner';
+          spinner.setAttribute('aria-hidden', 'true');
+          const txt = document.createElement('span');
+          txt.textContent = 'جاري تحميل أسعار الكشف...';
+          row.appendChild(spinner);
+          row.appendChild(txt);
+          box.appendChild(row);
+          return;
+        }
+
+        if (state.areaDoctorsEmpty) {
+          box.classList.remove('hidden');
+          box.classList.add('is-warn');
+          box.textContent = 'مفيش دكاترة بالمواصفات دي — جرب تغير الفلاتر';
+          return;
+        }
+
+        if (state.feeRange) {
+          box.classList.remove('hidden');
+          const mainLine = document.createElement('div');
+          mainLine.className = 'fee-hint-row';
+          if (state.feeRange.min === state.feeRange.max) {
+            mainLine.textContent = 'سعر الكشف: ' + formatFee(state.feeRange.min) + ' ج.م';
+            box.appendChild(mainLine);
+          } else {
+            mainLine.textContent = 'سعر الكشف: من ' + formatFee(state.feeRange.min) + ' لـ ' + formatFee(state.feeRange.max) + ' ج.م';
+            const note = document.createElement('div');
+            note.className = 'fee-hint-note';
+            note.textContent = 'السعر النهائي بيظهر أول ما تختار الميعاد';
+            box.appendChild(mainLine);
+            box.appendChild(note);
+          }
+          return;
+        }
+
+        box.classList.add('hidden');
+      }
+
+      function renderAssignedDoctorCard() {
+        const container = el.assignedDoctorCard;
+        container.textContent = '';
+
+        const doc = state.assignedDoctor;
+        if (!doc) {
+          container.classList.add('hidden');
+          return;
+        }
+
+        const rawName = String(doc.name || '').trim();
+        const fullDocName = 'د. ' + rawName;
+
+        const top = document.createElement('div');
+        top.className = 'assigned-doc-top';
+
+        const avatarWrap = document.createElement('div');
+        avatarWrap.className = 'assigned-doc-avatar';
+        if (isSafePhotoUrl(doc.photo_url)) {
+          const img = document.createElement('img');
+          img.src = doc.photo_url.trim();
+          img.alt = fullDocName;
+          img.width = 64;
+          img.height = 64;
+          img.loading = 'lazy';
+          img.referrerPolicy = 'no-referrer';
+          img.addEventListener('error', () => {
+            avatarWrap.textContent = '';
+            avatarWrap.appendChild(createAvatarFallback(rawName));
+          });
+          avatarWrap.appendChild(img);
+        } else {
+          avatarWrap.appendChild(createAvatarFallback(rawName));
+        }
+        top.appendChild(avatarWrap);
+
+        const info = document.createElement('div');
+        info.className = 'assigned-doc-info';
+
+        const heading = document.createElement('div');
+        heading.className = 'assigned-doc-heading';
+        heading.textContent = 'هتكشف مع ' + fullDocName;
+        info.appendChild(heading);
+
+        if (doc.title && String(doc.title).trim()) {
+          const titleEl = document.createElement('div');
+          titleEl.className = 'assigned-doc-title';
+          titleEl.textContent = String(doc.title).trim();
+          info.appendChild(titleEl);
+        }
+
+        const ratingRow = document.createElement('div');
+        ratingRow.className = 'assigned-doc-rating';
+        const ratingCount = doc.rating_count != null ? Number(doc.rating_count) : 0;
+        if (ratingCount > 0) {
+          const ratingAvg = doc.rating_avg != null ? Number(doc.rating_avg) : 0;
+          const avgEl = document.createElement('span');
+          avgEl.className = 'assigned-doc-rating-avg';
+          avgEl.textContent = ratingAvg.toFixed(1);
+          ratingRow.appendChild(avgEl);
+          ratingRow.appendChild(createStarsElement(ratingAvg, false));
+          const countEl = document.createElement('span');
+          countEl.className = 'doc-rating-count';
+          countEl.textContent = '(' + ratingCount + ' تقييم)';
+          ratingRow.appendChild(countEl);
+        } else {
+          const newBadge = document.createElement('span');
+          newBadge.className = 'doc-new-badge';
+          newBadge.textContent = 'جديد على احجزلي ✨';
+          ratingRow.appendChild(newBadge);
+        }
+        info.appendChild(ratingRow);
+
+        top.appendChild(info);
+        container.appendChild(top);
+
+        const priceRow = document.createElement('div');
+        priceRow.className = 'assigned-doc-price-row';
+
+        const priceText = document.createElement('span');
+        priceText.className = 'assigned-doc-price';
+        priceText.textContent = 'سعر الكشف: ' + formatFee(doc.fee) + ' ج.م';
+
+        const badge = document.createElement('span');
+        badge.className = 'final-price-badge';
+        badge.textContent = 'نهائي';
+
+        priceRow.appendChild(priceText);
+        priceRow.appendChild(badge);
+        container.appendChild(priceRow);
+
+        container.classList.remove('hidden');
+      }
+
+      function clearAssignedDoctor() {
+        state.previewRequestId++;
+        state.previewLoading = false;
+        state.assignedDoctorId = null;
+        state.assignedDoctor = null;
+        renderAssignedDoctorCard();
+        renderPriceBox();
+      }
+
       function updateUIState() {
         setSummaryField(el.sumSpecialty, state.specialtyName);
         setSummaryField(el.sumGovernorate, state.governorateName);
         setSummaryField(el.sumArea, state.areaName);
         setSummaryField(el.sumDay, state.dayLabel);
         setSummaryField(el.sumSlot, state.slotLabel);
+
+        if (state.assignedDoctor && state.assignedDoctor.name) {
+          el.sumDoctor.textContent = 'د. ' + String(state.assignedDoctor.name).trim();
+          el.sumDoctorRow.classList.remove('hidden');
+        } else {
+          el.sumDoctor.textContent = '';
+          el.sumDoctorRow.classList.add('hidden');
+        }
+
+        if (state.assignedDoctor && state.assignedDoctor.fee != null && !Number.isNaN(Number(state.assignedDoctor.fee))) {
+          setSummaryField(el.sumPrice, formatFee(state.assignedDoctor.fee) + ' ج.م');
+        } else if (state.previewLoading) {
+          setSummaryField(el.sumPrice, 'جاري التحديد...');
+        } else if (state.feeRange) {
+          const rangeText = state.feeRange.min === state.feeRange.max
+            ? formatFee(state.feeRange.min) + ' ج.م'
+            : 'من ' + formatFee(state.feeRange.min) + ' لـ ' + formatFee(state.feeRange.max) + ' ج.م';
+          setSummaryField(el.sumPrice, rangeText);
+        } else {
+          setSummaryField(el.sumPrice, '');
+        }
 
         if (state.slotLabel && state.dayLabel) {
           el.mobileBarVal.textContent = state.dayLabel + ' · ' + state.slotLabel;
@@ -1919,7 +2313,15 @@
           el.mobileBarVal.textContent = 'لسه ما اخترتش ميعاد';
         }
 
-        const ready = Boolean(state.specialtyId && state.governorateId && state.areaId && state.day && state.slot);
+        const ready = Boolean(
+          state.specialtyId &&
+          state.governorateId &&
+          state.areaId &&
+          state.day &&
+          state.slot &&
+          !state.previewLoading &&
+          state.assignedDoctorId != null
+        );
         el.patientName.disabled = !ready || state.submitting;
         el.patientPhone.disabled = !ready || state.submitting;
         el.submitBtn.disabled = !ready || state.submitting;
@@ -2081,30 +2483,7 @@
           }
         }
 
-        // Compute fee hint from currently matching rows
-        const matchingRows = baseRows.filter(r => {
-          if (state.gender && r.gender !== state.gender) return false;
-          if (state.price) {
-            const rule = PRICE_RANGES[state.price];
-            if (rule && !rule.match(Number(r.fee))) return false;
-          }
-          return true;
-        });
-
-        el.feeRangeHint.classList.remove('hidden', 'is-warn');
-        if (!matchingRows.length) {
-          el.feeRangeHint.textContent = 'مفيش دكاترة بالمواصفات دي — جرب تغير الفلاتر';
-          el.feeRangeHint.classList.add('is-warn');
-        } else {
-          const fees = matchingRows.map(r => Number(r.fee)).filter(n => !Number.isNaN(n));
-          const minFee = Math.min(...fees);
-          const maxFee = Math.max(...fees);
-          if (minFee === maxFee) {
-            el.feeRangeHint.textContent = 'سعر الكشف: ' + minFee.toLocaleString('ar-EG') + ' ج.م';
-          } else {
-            el.feeRangeHint.textContent = 'الكشف من ' + minFee.toLocaleString('ar-EG') + ' لـ ' + maxFee.toLocaleString('ar-EG') + ' ج.م';
-          }
-        }
+        renderPriceBox();
       }
 
       function renderDays() {
@@ -2133,10 +2512,7 @@
           btn.addEventListener('click', () => {
             state.day = dayObj.iso;
             state.dayLabel = dayObj.fullLabel;
-            state.slot = null;
-            state.slotLabel = '';
-            showSlotAlert('');
-            showFormError('');
+            resetFromSlot();
             renderDays();
             updateUIState();
             fetchSlots();
@@ -2245,7 +2621,7 @@
               showFormError('');
               wrapper.querySelectorAll('.slot-chip').forEach(c => c.classList.remove('selected'));
               btn.classList.add('selected');
-              updateUIState();
+              previewSlot(slotVal);
             });
             grid.appendChild(btn);
           });
@@ -2256,6 +2632,94 @@
 
         el.slotsContainer.innerHTML = '';
         el.slotsContainer.appendChild(wrapper);
+      }
+
+      async function previewSlot(slotVal) {
+        if (!state.specialtyId || !state.areaId || !state.day || !slotVal) return;
+
+        const reqId = ++state.previewRequestId;
+        state.previewLoading = true;
+        state.assignedDoctorId = null;
+        state.assignedDoctor = null;
+        renderAssignedDoctorCard();
+        renderPriceBox();
+        updateUIState();
+
+        const { p_fee_min, p_fee_max } = getPriceBounds();
+        const { data, error } = await sb.rpc('preview_slot', {
+          p_specialty: state.specialtyId,
+          p_area: state.areaId,
+          p_day: state.day,
+          p_slot: slotVal,
+          p_gender: state.gender || null,
+          p_fee_min,
+          p_fee_max
+        });
+
+        if (reqId !== state.previewRequestId) return;
+
+        state.previewLoading = false;
+
+        if (error) {
+          state.slot = null;
+          state.slotLabel = '';
+          el.slotsContainer.querySelectorAll('.slot-chip').forEach(c => c.classList.remove('selected'));
+          renderPriceBox();
+          updateUIState();
+          showSlotAlert('حصلت مشكلة في الاتصال، اختار الميعاد تاني لو سمحت.');
+          return;
+        }
+
+        const res = Array.isArray(data) ? data[0] : data;
+        if (!res || !res.ok) {
+          state.slot = null;
+          state.slotLabel = '';
+          state.assignedDoctorId = null;
+          state.assignedDoctor = null;
+          el.slotsContainer.querySelectorAll('.slot-chip').forEach(c => c.classList.remove('selected'));
+          renderAssignedDoctorCard();
+          renderPriceBox();
+          updateUIState();
+          showSlotAlert('الميعاد ده اتحجز دلوقتي، اختار ميعاد تاني');
+          fetchSlots();
+          return;
+        }
+
+        const fallbackDoc = state.areaDoctors.find(d =>
+          d != null && (String(d.id ?? d.doctor_id ?? '') === String(res.doctor_id ?? ''))
+        ) || null;
+
+        const docName = String(
+          res.doctor_name ?? res.name ?? (fallbackDoc && (fallbackDoc.name ?? fallbackDoc.doctor_name)) ?? ''
+        ).trim();
+        const docTitle = String(
+          res.title ?? res.doctor_title ?? (fallbackDoc && fallbackDoc.title) ?? ''
+        ).trim();
+        const docPhoto = res.photo_url ?? res.doctor_photo_url ?? (fallbackDoc && fallbackDoc.photo_url) ?? null;
+        const docRatingAvg = res.rating_avg != null
+          ? Number(res.rating_avg)
+          : (fallbackDoc && fallbackDoc.rating_avg != null ? Number(fallbackDoc.rating_avg) : 0);
+        const docRatingCount = res.rating_count != null
+          ? Number(res.rating_count)
+          : (fallbackDoc && fallbackDoc.rating_count != null ? Number(fallbackDoc.rating_count) : 0);
+        const docFee = res.fee != null
+          ? Number(res.fee)
+          : (fallbackDoc && fallbackDoc.fee != null ? Number(fallbackDoc.fee) : 0);
+
+        state.assignedDoctorId = res.doctor_id;
+        state.assignedDoctor = {
+          id: res.doctor_id,
+          name: docName,
+          title: docTitle,
+          photo_url: docPhoto,
+          rating_avg: docRatingAvg,
+          rating_count: docRatingCount,
+          fee: docFee
+        };
+
+        renderAssignedDoctorCard();
+        renderPriceBox();
+        updateUIState();
       }
 
       // Area Doctors Trust Section
@@ -2734,18 +3198,31 @@
 
       function hideAreaDoctors() {
         state.doctorsRequestId++;
+        state.areaDoctors = [];
+        state.areaDoctorsLoading = false;
+        state.areaDoctorsEmpty = false;
+        state.feeRange = null;
         el.areaDoctorsSection.classList.add('hidden');
         el.areaDoctorsList.textContent = '';
         el.areaDoctorsFootnote.classList.add('hidden');
+        renderPriceBox();
       }
 
       async function fetchAreaDoctors() {
         if (!state.specialtyId || !state.governorateId || !state.areaId) {
           hideAreaDoctors();
+          updateUIState();
           return;
         }
 
         const reqId = ++state.doctorsRequestId;
+        state.areaDoctors = [];
+        state.areaDoctorsLoading = true;
+        state.areaDoctorsEmpty = false;
+        state.feeRange = null;
+        renderPriceBox();
+        updateUIState();
+
         el.areaDoctorsTitle.textContent = 'دكاترة ' + state.specialtyName + ' في ' + state.areaName;
         el.areaDoctorsFootnote.classList.add('hidden');
         renderDoctorsSkeleton();
@@ -2762,12 +3239,28 @@
 
         if (reqId !== state.doctorsRequestId) return;
 
+        state.areaDoctorsLoading = false;
+
         if (error || !Array.isArray(data) || !data.length) {
+          state.areaDoctors = [];
+          state.feeRange = null;
+          state.areaDoctorsEmpty = !error;
           el.areaDoctorsSection.classList.add('hidden');
           el.areaDoctorsList.textContent = '';
           el.areaDoctorsFootnote.classList.add('hidden');
+          renderPriceBox();
+          updateUIState();
           return;
         }
+
+        state.areaDoctors = data;
+        state.areaDoctorsEmpty = false;
+        const fees = data
+          .map(d => (d && d.fee != null && d.fee !== '' ? Number(d.fee) : NaN))
+          .filter(n => !Number.isNaN(n));
+        state.feeRange = fees.length
+          ? { min: Math.min(...fees), max: Math.max(...fees) }
+          : null;
 
         const frag = document.createDocumentFragment();
         data.forEach(doc => {
@@ -2779,6 +3272,8 @@
         el.areaDoctorsList.appendChild(frag);
         el.areaDoctorsFootnote.classList.remove('hidden');
         el.areaDoctorsSection.classList.remove('hidden');
+        renderPriceBox();
+        updateUIState();
       }
 
       // Cascade reset helpers
@@ -2811,6 +3306,7 @@
       function resetFromSlot() {
         state.slot = null;
         state.slotLabel = '';
+        clearAssignedDoctor();
         showSlotAlert('');
         showFormError('');
       }
@@ -2924,6 +3420,7 @@
           p_gender: state.gender || null,
           p_fee_min,
           p_fee_max,
+          p_doctor_id: state.assignedDoctorId,
           p_fbp: getCookie('_fbp') || null,
           p_fbc: getFbcValue(),
           p_source_url: location.href
@@ -2945,9 +3442,10 @@
           if (code === 'slot_taken') {
             state.slot = null;
             state.slotLabel = '';
+            clearAssignedDoctor();
             updateUIState();
-            showSlotAlert('الميعاد ده اتحجز حالًا — اختار ميعاد تاني');
-            showFormError('الميعاد ده اتحجز حالًا — اختار ميعاد تاني');
+            showSlotAlert('الميعاد ده اتحجز دلوقتي، اختار ميعاد تاني');
+            showFormError('الميعاد ده اتحجز دلوقتي، اختار ميعاد تاني');
             document.getElementById('slot-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
             fetchSlots();
           } else if (code === 'too_many') {
@@ -2984,13 +3482,32 @@
           });
         }
 
+        const confirmedDoctorName = String(
+          res.doctor_name ?? res.name ?? (state.assignedDoctor && state.assignedDoctor.name) ?? ''
+        ).trim();
+
         el.successBookingId.textContent = '#' + res.booking_id;
         el.successSpecialty.textContent = state.specialtyName;
         el.successGovernorate.textContent = state.governorateName;
         el.successArea.textContent = state.areaName;
         el.successDay.textContent = state.dayLabel;
         el.successSlot.textContent = state.slotLabel;
-        el.successFeeBox.textContent = 'سعر الكشف: ' + Number(res.fee || 0).toLocaleString('ar-EG') + ' ج.م — بيتدفع في العيادة';
+        el.successDoctor.textContent = confirmedDoctorName ? 'د. ' + confirmedDoctorName : '—';
+
+        if (res.reassigned === true) {
+          el.successReassignedNote.textContent =
+            'الدكتور اللي ظهرلك اتحجز في نفس اللحظة، فحجزنالك نفس الميعاد مع د. ' +
+            confirmedDoctorName +
+            ' — سعر الكشف ' +
+            formatFee(res.fee) +
+            ' ج.م';
+          el.successReassignedNote.classList.remove('hidden');
+        } else {
+          el.successReassignedNote.textContent = '';
+          el.successReassignedNote.classList.add('hidden');
+        }
+
+        el.successFeeBox.textContent = 'سعر الكشف: ' + formatFee(res.fee) + ' ج.م — بيتدفع في العيادة';
 
         el.bookingFlow.classList.add('hidden');
         el.mobileStickyBar.classList.add('hidden');
@@ -3002,6 +3519,9 @@
         state.specialtyId = null;
         state.specialtyName = '';
         el.selSpecialty.value = '';
+        el.successDoctor.textContent = '';
+        el.successReassignedNote.textContent = '';
+        el.successReassignedNote.classList.add('hidden');
         resetFromGovernorate();
         hideAreaDoctors();
         populateGovernorates();
