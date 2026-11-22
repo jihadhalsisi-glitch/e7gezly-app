@@ -904,6 +904,353 @@
         display: none;
       }
     }
+
+    /* Top Doctors Board Section */
+    .top-doctors-section {
+      border-top: 1px solid var(--border-hairline);
+      scroll-margin-top: 76px;
+    }
+
+    .top-doc-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding: 2px 2px 12px;
+      margin-bottom: 14px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--brand-100) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .top-doc-tab {
+      flex: 0 0 auto;
+      min-height: 42px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--brand-100);
+      background-color: var(--brand-50);
+      color: var(--brand);
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .top-doc-tab:hover {
+      border-color: var(--brand);
+    }
+
+    .top-doc-tab.active {
+      background-color: var(--brand);
+      border-color: var(--brand);
+      color: #ffffff;
+    }
+
+    .top-doc-tab:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    .top-doc-grid {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 2px 12px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--brand-100) transparent;
+      align-items: stretch;
+    }
+
+    .top-doc-card,
+    .top-doc-skel {
+      flex: 0 0 84%;
+      max-width: 320px;
+      scroll-snap-align: start;
+      background-color: #ffffff;
+      border: 1px solid var(--brand-100);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .top-doc-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding: 0;
+      }
+
+      .top-doc-card,
+      .top-doc-skel {
+        flex: none;
+        max-width: none;
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .top-doc-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .top-doc-rank {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 3px 9px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.35;
+      font-variant-numeric: tabular-nums;
+      background-color: var(--brand-50);
+      color: var(--brand);
+      border: 1px solid var(--brand-100);
+    }
+
+    .top-doc-rank.is-top3 {
+      background-color: var(--lime);
+      color: var(--brand);
+      border-color: var(--lime-dark);
+    }
+
+    .top-doc-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-left: 44px;
+    }
+
+    .top-doc-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-doc-avatar img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .top-doc-initial {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1;
+      user-select: none;
+    }
+
+    .top-doc-identity {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .top-doc-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-doc-title {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-doc-spec-area {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .top-doc-ratings {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-top: 10px;
+      border-top: 1px solid var(--brand-100);
+    }
+
+    .top-doc-google-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.84rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .top-doc-google-score {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .top-doc-stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .top-doc-star {
+      width: 14px;
+      height: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-doc-star svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .top-doc-reviews-count {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .top-doc-platform-rating {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--brand);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .top-doc-fee-chip {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background-color: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      color: var(--ink);
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .top-doc-cta {
+      margin-top: auto;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background-color: var(--lime);
+      color: var(--brand);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: background-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .top-doc-cta:hover {
+      background-color: var(--lime-dark);
+    }
+
+    .top-doc-cta:active {
+      transform: scale(0.99);
+    }
+
+    .top-doc-note {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .td-skel-shimmer {
+      background: linear-gradient(90deg, #F2F0FB 25%, #E4E0F7 50%, #F2F0FB 75%);
+      background-size: 200% 100%;
+      animation: td-shimmer 1.2s infinite linear;
+    }
+
+    @keyframes td-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .td-skel-tab {
+      width: 104px;
+      height: 40px;
+      border-radius: 12px;
+      flex: 0 0 auto;
+    }
+
+    .td-skel-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .td-skel-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .td-skel-lines {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .td-skel-line {
+      height: 12px;
+      border-radius: 6px;
+    }
+
+    .td-skel-btn {
+      height: 44px;
+      border-radius: 12px;
+      margin-top: auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .td-skel-shimmer { animation: none; }
+    }
   </style>
 </head>
 <body>
@@ -925,6 +1272,7 @@
       </a>
 
       <nav class="nav-links" aria-label="التنقل الرئيسي">
+        <a href="#top-doctors">أعلى تقييمًا</a>
         <a href="#how-it-works">إزاي بنشتغل</a>
         <a href="#specialties">التخصصات</a>
         <a href="#faq">الأسئلة الشائعة</a>
@@ -944,6 +1292,7 @@
     </div>
 
     <div id="mobile-menu" class="mobile-menu hidden">
+      <a href="#top-doctors">أعلى تقييمًا</a>
       <a href="#how-it-works">إزاي بنشتغل</a>
       <a href="#specialties">التخصصات</a>
       <a href="#faq">الأسئلة الشائعة</a>
@@ -1075,6 +1424,20 @@
           <p class="usp-text">الكشف بيتدفع في العيادة</p>
         </article>
       </div>
+    </div>
+  </section>
+
+  <!-- 3.5 Top Doctors Board -->
+  <section id="top-doctors" class="section top-doctors-section" aria-labelledby="top-doctors-heading">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="top-doctors-heading" class="section-h2">أشهر وأعلى الدكاترة تقييمًا</h2>
+        <p class="section-desc">دكاترة مختارين في كل تخصص — بتقييمات حقيقية من آلاف المرضى على جوجل</p>
+      </div>
+
+      <div id="top-doctors-tabs" class="top-doc-tabs" role="tablist" aria-label="تخصصات أعلى الدكاترة تقييمًا"></div>
+      <div id="top-doctors-grid" class="top-doc-grid" role="tabpanel"></div>
+      <p id="top-doctors-note" class="top-doc-note hidden">الترتيب حسب تقييم جوجل وعدد التقييمات. الحجز بيتم على أقرب ميعاد متاح في نفس التخصص والمنطقة.</p>
     </div>
   </section>
 
@@ -1396,7 +1759,377 @@
         }
       }
 
+      // Top Doctors Board
+      const topDoctorsSection = document.getElementById('top-doctors');
+      const topDoctorsTabs = document.getElementById('top-doctors-tabs');
+      const topDoctorsGrid = document.getElementById('top-doctors-grid');
+      const topDoctorsNote = document.getElementById('top-doctors-note');
+      let topDoctorsGroups = [];
+      let activeTopTab = 'all';
+      let topStarGradCounter = 0;
+
+      function isSafePhotoUrl(url) {
+        if (typeof url !== 'string') return false;
+        return /^https?:\/\//i.test(url.trim());
+      }
+
+      function createTopAvatarFallback(name) {
+        const span = document.createElement('span');
+        span.className = 'top-doc-initial';
+        const trimmed = String(name || '').trim();
+        const chars = Array.from(trimmed);
+        span.textContent = chars.length ? chars[0] : 'د';
+        span.setAttribute('aria-hidden', 'true');
+        return span;
+      }
+
+      function createTopStars(rating) {
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+        const score = Math.max(0, Math.min(5, Number(rating) || 0));
+        const wrap = document.createElement('span');
+        wrap.className = 'top-doc-stars';
+        wrap.setAttribute('aria-label', score.toFixed(1) + ' من 5');
+
+        for (let i = 1; i <= 5; i++) {
+          const fillRatio = Math.max(0, Math.min(1, score - (i - 1)));
+          const fillPct = Math.round(fillRatio * 100);
+          const gradId = 'top-star-g-' + (++topStarGradCounter);
+
+          const slot = document.createElement('span');
+          slot.className = 'top-doc-star';
+
+          const svg = document.createElementNS(SVG_NS, 'svg');
+          svg.setAttribute('viewBox', '0 0 24 24');
+          svg.setAttribute('aria-hidden', 'true');
+
+          const defs = document.createElementNS(SVG_NS, 'defs');
+          const grad = document.createElementNS(SVG_NS, 'linearGradient');
+          grad.setAttribute('id', gradId);
+          grad.setAttribute('x1', '100%');
+          grad.setAttribute('y1', '0%');
+          grad.setAttribute('x2', '0%');
+          grad.setAttribute('y2', '0%');
+
+          const stop1 = document.createElementNS(SVG_NS, 'stop');
+          stop1.setAttribute('offset', fillPct + '%');
+          stop1.setAttribute('stop-color', '#F59E0B');
+
+          const stop2 = document.createElementNS(SVG_NS, 'stop');
+          stop2.setAttribute('offset', fillPct + '%');
+          stop2.setAttribute('stop-color', '#D5D0EE');
+
+          grad.appendChild(stop1);
+          grad.appendChild(stop2);
+          defs.appendChild(grad);
+          svg.appendChild(defs);
+
+          const path = document.createElementNS(SVG_NS, 'path');
+          path.setAttribute('fill', 'url(#' + gradId + ')');
+          path.setAttribute('d', 'M12 2.4l2.92 5.92 6.53.95-4.73 4.61 1.12 6.5L12 17.3l-5.84 3.08 1.12-6.5-4.73-4.61 6.53-.95L12 2.4z');
+          svg.appendChild(path);
+
+          slot.appendChild(svg);
+          wrap.appendChild(slot);
+        }
+        return wrap;
+      }
+
+      function renderTopDoctorsSkeleton() {
+        topDoctorsTabs.textContent = '';
+        for (let i = 0; i < 4; i++) {
+          const skelTab = document.createElement('div');
+          skelTab.className = 'td-skel-tab td-skel-shimmer';
+          skelTab.setAttribute('aria-hidden', 'true');
+          topDoctorsTabs.appendChild(skelTab);
+        }
+
+        topDoctorsGrid.textContent = '';
+        for (let i = 0; i < 3; i++) {
+          const skelCard = document.createElement('div');
+          skelCard.className = 'top-doc-skel';
+          skelCard.setAttribute('aria-hidden', 'true');
+
+          const head = document.createElement('div');
+          head.className = 'td-skel-head';
+
+          const circle = document.createElement('div');
+          circle.className = 'td-skel-circle td-skel-shimmer';
+
+          const lines = document.createElement('div');
+          lines.className = 'td-skel-lines';
+
+          const l1 = document.createElement('div');
+          l1.className = 'td-skel-line td-skel-shimmer';
+          l1.style.width = '76%';
+
+          const l2 = document.createElement('div');
+          l2.className = 'td-skel-line td-skel-shimmer';
+          l2.style.width = '58%';
+
+          lines.appendChild(l1);
+          lines.appendChild(l2);
+          head.appendChild(circle);
+          head.appendChild(lines);
+
+          const mid = document.createElement('div');
+          mid.className = 'td-skel-line td-skel-shimmer';
+          mid.style.width = '88%';
+
+          const btn = document.createElement('div');
+          btn.className = 'td-skel-btn td-skel-shimmer';
+
+          skelCard.appendChild(head);
+          skelCard.appendChild(mid);
+          skelCard.appendChild(btn);
+          topDoctorsGrid.appendChild(skelCard);
+        }
+      }
+
+      function buildTopDoctorCard(entry) {
+        const doc = entry.doc;
+        const specialtyId = entry.specialty_id;
+        const specialtyName = String(entry.specialty || '').trim();
+        const rawName = String(doc && doc.name != null ? doc.name : '').trim();
+        const areaName = String(doc && doc.area != null ? doc.area : '').trim();
+        const rankNum = doc && doc.rank != null && !Number.isNaN(Number(doc.rank))
+          ? Number(doc.rank)
+          : entry.fallbackRank;
+
+        const card = document.createElement('article');
+        card.className = 'top-doc-card';
+
+        // Rank badge
+        const rankBadge = document.createElement('span');
+        rankBadge.className = rankNum <= 3 ? 'top-doc-rank is-top3' : 'top-doc-rank';
+        rankBadge.dir = 'ltr';
+        rankBadge.textContent = '#' + rankNum;
+        card.appendChild(rankBadge);
+
+        // Head: avatar + identity
+        const head = document.createElement('div');
+        head.className = 'top-doc-head';
+
+        const avatarWrap = document.createElement('div');
+        avatarWrap.className = 'top-doc-avatar';
+        if (doc && isSafePhotoUrl(doc.photo_url)) {
+          const img = document.createElement('img');
+          img.src = doc.photo_url.trim();
+          img.alt = rawName;
+          img.width = 64;
+          img.height = 64;
+          img.loading = 'lazy';
+          img.referrerPolicy = 'no-referrer';
+          img.addEventListener('error', () => {
+            avatarWrap.textContent = '';
+            avatarWrap.appendChild(createTopAvatarFallback(rawName));
+          });
+          avatarWrap.appendChild(img);
+        } else {
+          avatarWrap.appendChild(createTopAvatarFallback(rawName));
+        }
+        head.appendChild(avatarWrap);
+
+        const identity = document.createElement('div');
+        identity.className = 'top-doc-identity';
+
+        const nameEl = document.createElement('h3');
+        nameEl.className = 'top-doc-name';
+        nameEl.textContent = rawName;
+        nameEl.title = rawName;
+        identity.appendChild(nameEl);
+
+        if (doc && doc.title && String(doc.title).trim()) {
+          const titleStr = String(doc.title).trim();
+          const titleEl = document.createElement('p');
+          titleEl.className = 'top-doc-title';
+          titleEl.textContent = titleStr;
+          titleEl.title = titleStr;
+          identity.appendChild(titleEl);
+        }
+
+        const specAreaText = [specialtyName, areaName].filter(Boolean).join(' · ');
+        if (specAreaText) {
+          const specAreaEl = document.createElement('p');
+          specAreaEl.className = 'top-doc-spec-area';
+          specAreaEl.textContent = specAreaText;
+          identity.appendChild(specAreaEl);
+        }
+
+        head.appendChild(identity);
+        card.appendChild(head);
+
+        // Ratings block
+        const ratingsBlock = document.createElement('div');
+        ratingsBlock.className = 'top-doc-ratings';
+
+        const gRatingNum = doc && doc.google_rating != null && doc.google_rating !== ''
+          ? Number(doc.google_rating)
+          : NaN;
+        const gReviewsNum = doc && doc.google_reviews != null && doc.google_reviews !== ''
+          ? Number(doc.google_reviews)
+          : NaN;
+
+        if (!Number.isNaN(gRatingNum)) {
+          const gRow = document.createElement('div');
+          gRow.className = 'top-doc-google-row';
+
+          const scoreSpan = document.createElement('span');
+          scoreSpan.className = 'top-doc-google-score';
+          scoreSpan.textContent = '⭐ ' + gRatingNum.toFixed(1);
+          gRow.appendChild(scoreSpan);
+
+          gRow.appendChild(createTopStars(gRatingNum));
+
+          if (!Number.isNaN(gReviewsNum) && gReviewsNum > 0) {
+            const revSpan = document.createElement('span');
+            revSpan.className = 'top-doc-reviews-count';
+            revSpan.textContent = '(' + gReviewsNum.toLocaleString('en-US') + ' تقييم على جوجل)';
+            gRow.appendChild(revSpan);
+          }
+
+          ratingsBlock.appendChild(gRow);
+        }
+
+        const pCount = doc && doc.rating_count != null ? Number(doc.rating_count) : 0;
+        if (!Number.isNaN(pCount) && pCount > 0) {
+          const pAvg = doc && doc.rating_avg != null && !Number.isNaN(Number(doc.rating_avg))
+            ? Number(doc.rating_avg).toFixed(1)
+            : '0.0';
+          const pLine = document.createElement('div');
+          pLine.className = 'top-doc-platform-rating';
+          pLine.textContent = 'تقييم مرضى احجزلي: ' + pAvg + ' (' + pCount.toLocaleString('en-US') + ')';
+          ratingsBlock.appendChild(pLine);
+        }
+
+        if (ratingsBlock.childNodes.length) {
+          card.appendChild(ratingsBlock);
+        }
+
+        // Fee chip
+        const feeNum = doc && doc.fee != null && doc.fee !== '' ? Number(doc.fee) : NaN;
+        if (!Number.isNaN(feeNum)) {
+          const feeChip = document.createElement('span');
+          feeChip.className = 'top-doc-fee-chip';
+          feeChip.textContent = 'الكشف ' + feeNum.toLocaleString('en-US') + ' ج.م';
+          card.appendChild(feeChip);
+        }
+
+        // CTA button
+        const cta = document.createElement('a');
+        cta.className = 'top-doc-cta';
+        const params = new URLSearchParams();
+        if (specialtyId != null) params.set('spec', String(specialtyId));
+        if (doc && doc.gov_id != null) params.set('gov', String(doc.gov_id));
+        if (doc && doc.area_id != null) params.set('area', String(doc.area_id));
+        cta.href = 'book.html?' + params.toString();
+        cta.textContent = areaName
+          ? 'احجز ' + specialtyName + ' في ' + areaName
+          : 'احجز ' + specialtyName;
+        card.appendChild(cta);
+
+        return card;
+      }
+
+      function renderTopDoctorsCards() {
+        const entries = [];
+        if (activeTopTab === 'all') {
+          topDoctorsGroups.forEach(group => {
+            const firstDoc = group.doctors.find(d => Number(d && d.rank) === 1) || group.doctors[0];
+            if (firstDoc) {
+              entries.push({
+                specialty_id: group.specialty_id,
+                specialty: group.specialty,
+                doc: firstDoc,
+                fallbackRank: 1
+              });
+            }
+          });
+        } else {
+          const selected = topDoctorsGroups.find(g => String(g.specialty_id) === String(activeTopTab));
+          if (selected) {
+            selected.doctors.slice(0, 6).forEach((doc, idx) => {
+              entries.push({
+                specialty_id: selected.specialty_id,
+                specialty: selected.specialty,
+                doc,
+                fallbackRank: idx + 1
+              });
+            });
+          }
+        }
+
+        const frag = document.createDocumentFragment();
+        entries.forEach(entry => {
+          frag.appendChild(buildTopDoctorCard(entry));
+        });
+
+        topDoctorsGrid.textContent = '';
+        topDoctorsGrid.appendChild(frag);
+      }
+
+      function renderTopDoctorsTabs() {
+        topDoctorsTabs.textContent = '';
+
+        const allBtn = document.createElement('button');
+        allBtn.type = 'button';
+        allBtn.role = 'tab';
+        allBtn.className = 'top-doc-tab' + (activeTopTab === 'all' ? ' active' : '');
+        allBtn.setAttribute('aria-selected', activeTopTab === 'all' ? 'true' : 'false');
+        allBtn.textContent = 'الأوائل 🏆';
+        allBtn.addEventListener('click', () => {
+          activeTopTab = 'all';
+          renderTopDoctorsTabs();
+          renderTopDoctorsCards();
+        });
+        topDoctorsTabs.appendChild(allBtn);
+
+        topDoctorsGroups.forEach(group => {
+          const key = String(group.specialty_id);
+          const isActive = String(activeTopTab) === key;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.role = 'tab';
+          btn.className = 'top-doc-tab' + (isActive ? ' active' : '');
+          btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          btn.textContent = String(group.specialty || '').trim();
+          btn.addEventListener('click', () => {
+            activeTopTab = key;
+            renderTopDoctorsTabs();
+            renderTopDoctorsCards();
+          });
+          topDoctorsTabs.appendChild(btn);
+        });
+      }
+
+      async function loadTopDoctors() {
+        if (!topDoctorsSection) return;
+        renderTopDoctorsSkeleton();
+
+        try {
+          const { data, error } = await sb.rpc('get_top_doctors', { p_limit: 6 });
+          if (error || !Array.isArray(data)) {
+            topDoctorsSection.classList.add('hidden');
+            return;
+          }
+
+          const groups = data.filter(g => g && Array.isArray(g.doctors) && g.doctors.length > 0);
+          if (!groups.length) {
+            topDoctorsSection.classList.add('hidden');
+            return;
+          }
+
+          topDoctorsGroups = groups;
+          activeTopTab = 'all';
+          renderTopDoctorsTabs();
+          renderTopDoctorsCards();
+          topDoctorsNote.classList.remove('hidden');
+        } catch (_) {
+          topDoctorsSection.classList.add('hidden');
+        }
+      }
+
       loadOptions();
+      loadTopDoctors();
     })();
   </script>
 </body>
