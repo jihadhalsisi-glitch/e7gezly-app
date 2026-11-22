@@ -471,7 +471,7 @@
       color: var(--text-secondary);
     }
 
-    /* USPs Grid (6 cards) */
+    /* USPs Grid (8 cards) */
     .usp-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -484,9 +484,9 @@
       }
     }
 
-    @media (min-width: 960px) {
+    @media (min-width: 1024px) {
       .usp-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
     }
 
@@ -522,6 +522,21 @@
       font-size: 0.92rem;
       color: var(--text-secondary);
       line-height: 1.65;
+    }
+
+    .usp-lime-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      padding: 3px 10px;
+      border-radius: 8px;
+      background-color: var(--lime);
+      color: var(--brand);
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.4;
+      font-variant-numeric: tabular-nums;
     }
 
     /* Steps (How it works) */
@@ -631,6 +646,11 @@
       color: var(--brand);
       font-weight: 700;
       margin-left: 6px;
+    }
+
+    .compare-topic {
+      font-weight: 700;
+      color: var(--ink);
     }
 
     /* Specialties Grid */
@@ -965,7 +985,7 @@
     </div>
   </section>
 
-  <!-- 3. Why E7gezly (6 USP cards) -->
+  <!-- 3. Why E7gezly (8 USP cards) -->
   <section class="section">
     <div class="container">
       <div class="section-head">
@@ -974,6 +994,27 @@
       </div>
 
       <div class="usp-grid">
+        <article class="card">
+          <div class="usp-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <h3 class="usp-title">أعلى الدكاترة تقييمًا بس</h3>
+          <p class="usp-text">مش أي دكتور بينضم لاحجزلي. بنختار الأعلى تقييمًا في كل تخصص — متوسط تقييم دكاترتنا 4.7 على جوجل، وكل زيارة بتتقيّم من المرضى عشان نحافظ على المستوى.</p>
+          <span class="usp-lime-badge">⭐ 4.7 متوسط التقييم</span>
+        </article>
+
+        <article class="card">
+          <div class="usp-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/><polyline points="12 7 12 12 15 14"/>
+            </svg>
+          </div>
+          <h3 class="usp-title">احجز في أي وقت، لكل التخصصات</h3>
+          <p class="usp-text">الحجز أونلاين شغال 24 ساعة طول الأسبوع — أسنان، جلدية، أطفال، عيون، نسا وتوليد، عظام، قلب، باطنة، أنف وأذن ونفسية. اختار أقرب ميعاد من الموبايل في دقيقة، حتى بالليل.</p>
+        </article>
+
         <article class="card">
           <div class="usp-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1087,6 +1128,14 @@
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td class="cell-old"><span class="mark-no">✗</span> <span class="compare-topic">اختيار الدكاترة:</span> أي دكتور متاح</td>
+              <td class="cell-new"><span class="mark-yes">✓</span> <span class="compare-topic">اختيار الدكاترة:</span> الأعلى تقييمًا بس (متوسط 4.7)</td>
+            </tr>
+            <tr>
+              <td class="cell-old"><span class="mark-no">✗</span> <span class="compare-topic">وقت الحجز:</span> في مواعيد العيادة بس</td>
+              <td class="cell-new"><span class="mark-yes">✓</span> <span class="compare-topic">وقت الحجز:</span> 24 ساعة طول الأسبوع</td>
+            </tr>
             <tr>
               <td class="cell-old"><span class="mark-no">✗</span> تتصل بكذا عيادة ومحدش بيرد</td>
               <td class="cell-new"><span class="mark-yes">✓</span> حجز أونلاين في دقيقة 24 ساعة</td>
