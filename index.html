@@ -25,6 +25,22 @@
 
     w.__E7_TRACKING_ENABLED = true;
 
+    // OpenAI (ChatGPT Ads) Measurement Pixel — runs immediately in <head> to catch oppref click id
+    (function (w, d, s, u) {
+      if (w.oaiq) return;
+      var q = function () { q.q.push(arguments); };
+      q.q = []; w.oaiq = q;
+      var js = d.createElement(s); js.async = true; js.src = u;
+      var f = d.getElementsByTagName(s)[0];
+      if (f && f.parentNode) {
+        f.parentNode.insertBefore(js, f);
+      } else {
+        (d.head || d.documentElement).appendChild(js);
+      }
+    })(w, d, 'script', 'https://bzrcdn.openai.com/sdk/oaiq.min.js');
+    w.oaiq('init', { pixelId: 'XErMNbw8Ekfz9cBD3QD7nP' });
+    w.oaiq('measure', 'page_viewed', { type: 'contents' });
+
     w.dataLayer = w.dataLayer || [];
     w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 

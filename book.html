@@ -25,6 +25,22 @@
 
     w.__E7_TRACKING_ENABLED = true;
 
+    // OpenAI (ChatGPT Ads) Measurement Pixel — runs immediately in <head> to catch oppref click id
+    (function (w, d, s, u) {
+      if (w.oaiq) return;
+      var q = function () { q.q.push(arguments); };
+      q.q = []; w.oaiq = q;
+      var js = d.createElement(s); js.async = true; js.src = u;
+      var f = d.getElementsByTagName(s)[0];
+      if (f && f.parentNode) {
+        f.parentNode.insertBefore(js, f);
+      } else {
+        (d.head || d.documentElement).appendChild(js);
+      }
+    })(w, d, 'script', 'https://bzrcdn.openai.com/sdk/oaiq.min.js');
+    w.oaiq('init', { pixelId: 'XErMNbw8Ekfz9cBD3QD7nP' });
+    w.oaiq('measure', 'page_viewed', { type: 'contents' });
+
     w.dataLayer = w.dataLayer || [];
     w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 
@@ -4705,6 +4721,16 @@
         trackClarityEvent('booking_submitted');
 
         const { p_fee_min, p_fee_max } = getPriceBounds();
+        let sourceUrlStr = location.href;
+        try {
+          const u = new URL(location.href);
+          const op = getCookie('__oppref');
+          if (op && !u.searchParams.has('oppref')) u.searchParams.set('oppref', op);
+          const ob = getCookie('__obref');
+          if (ob && !u.searchParams.has('obref')) u.searchParams.set('obref', ob);
+          sourceUrlStr = u.toString();
+        } catch (err) {}
+
         let data, error;
         try {
           const rpcRes = await sb.rpc('book_slot', {
@@ -4720,7 +4746,7 @@
             p_doctor_id: state.assignedDoctorId,
             p_fbp: getCookie('_fbp') || null,
             p_fbc: getFbcValue(),
-            p_source_url: location.href
+            p_source_url: sourceUrlStr
           });
           data = rpcRes.data;
           error = rpcRes.error;
@@ -4788,6 +4814,23 @@
           }, {
             eventID: 'booking_' + res.booking_id
           });
+        }
+
+        if (typeof window.oaiq === 'function') {
+          try {
+            const rawFee = res.fee != null && res.fee !== ''
+              ? res.fee
+              : (state.assignedDoctor && state.assignedDoctor.fee != null && state.assignedDoctor.fee !== ''
+                ? state.assignedDoctor.fee
+                : null);
+            const feeNum = rawFee !== null ? Number(rawFee) : NaN;
+            const oaiqPayload = Number.isFinite(feeNum) && feeNum > 0
+              ? { type: 'customer_action', amount: Math.round(feeNum * 100), currency: 'EGP' }
+              : { type: 'customer_action' };
+            window.oaiq('measure', 'appointment_scheduled', oaiqPayload, {
+              event_id: 'booking_' + res.booking_id
+            });
+          } catch (err) {}
         }
 
         el.successBookingId.textContent = '#' + res.booking_id;
