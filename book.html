@@ -2638,6 +2638,10 @@
         availabilityRequestId: 0,
         slotsRequestId: 0,
         doctorsRequestId: 0,
+        previewTimeoutId: null,
+        availabilityTimeoutId: null,
+        slotsTimeoutId: null,
+        doctorsTimeoutId: null,
         submitting: false
       };
 
@@ -3125,6 +3129,8 @@
       }
 
       function clearAssignedDoctor() {
+        clearTimeout(state.previewTimeoutId);
+        state.previewTimeoutId = null;
         state.previewRequestId++;
         state.previewLoading = false;
         state.assignedDoctorId = null;
@@ -3491,16 +3497,19 @@
       }
 
       async function fetchDayAvailability(isUserAction) {
+        clearTimeout(state.availabilityTimeoutId);
+        state.availabilityTimeoutId = null;
+
         if (!state.specialtyId || !state.areaId) {
           state.availableDays = [];
           renderAvailableDays();
           return;
         }
 
-        const reqId = ++state.availabilityRequestId;
+        // Perform all resets and UI setup BEFORE capturing availabilityRequestId
+        resetFromDay();
         state.availableDays = [];
         state.dayMode = 'earliest';
-        resetFromDay();
         el.whenSection.classList.remove('hidden');
         el.selectedDayHint.classList.add('hidden');
         el.slotsContainer.textContent = '';
@@ -3513,6 +3522,16 @@
           '<div class="days-skeleton-item doc-skel-shimmer"></div>' +
           '</div>';
         updateUIState();
+
+        const reqId = ++state.availabilityRequestId;
+        state.availabilityTimeoutId = setTimeout(() => {
+          state.availabilityTimeoutId = null;
+          const stillLoadingSkeleton = Boolean(state.specialtyId && state.areaId && el.daysContainer.querySelector('.days-skeleton'));
+          if (reqId !== state.availabilityRequestId && !stillLoadingSkeleton) return;
+          state.availabilityRequestId++;
+          console.error('Supabase get_day_availability timed out after 8s');
+          renderNoSlotsWhatsAppBox();
+        }, 8000);
 
         const { p_fee_min, p_fee_max } = getPriceBounds();
         let data, error;
@@ -3532,6 +3551,8 @@
         }
 
         if (reqId !== state.availabilityRequestId) return;
+        clearTimeout(state.availabilityTimeoutId);
+        state.availabilityTimeoutId = null;
 
         if (error) {
           console.error('Supabase get_day_availability failed:', error);
@@ -3687,17 +3708,35 @@
         const autoSelectFirst = Boolean(opts && opts.autoSelectFirst);
         const isUserAction = Boolean(opts && opts.isUserAction);
 
+        clearTimeout(state.slotsTimeoutId);
+        state.slotsTimeoutId = null;
+
         if (!state.specialtyId || !state.areaId || !state.day) {
           el.slotsContainer.textContent = '';
           return;
         }
 
-        const reqId = ++state.slotsRequestId;
+        // Perform all UI setup BEFORE capturing slotsRequestId
         const targetDay = state.day;
+        clearSlotRescue();
         el.slotsContainer.innerHTML =
           '<div class="skeleton-grid">' +
           '<div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div>' +
           '</div>';
+
+        const reqId = ++state.slotsRequestId;
+        state.slotsTimeoutId = setTimeout(() => {
+          state.slotsTimeoutId = null;
+          const stillLoadingSkeleton = Boolean(state.specialtyId && state.areaId && state.day && el.slotsContainer.querySelector('.skeleton-grid'));
+          if (reqId !== state.slotsRequestId && !stillLoadingSkeleton) return;
+          state.slotsRequestId++;
+          console.error('Supabase get_slots timed out after 8s');
+          state.currentDaySlots = [];
+          el.slotsContainer.textContent = '';
+          el.slotsContainer.appendChild(createWhatsAppRescueBox());
+          trackClarityEvent('no_slots_shown');
+          updateUIState();
+        }, 8000);
 
         const { p_fee_min, p_fee_max } = getPriceBounds();
         let data, error;
@@ -3717,6 +3756,8 @@
         }
 
         if (reqId !== state.slotsRequestId) return;
+        clearTimeout(state.slotsTimeoutId);
+        state.slotsTimeoutId = null;
 
         if (error) {
           console.error('Supabase get_slots failed:', error);
@@ -3760,14 +3801,35 @@
       async function previewSlot(slotVal) {
         if (!state.specialtyId || !state.areaId || !state.day || !slotVal) return;
 
-        const reqId = ++state.previewRequestId;
-        state.previewLoading = true;
-        state.assignedDoctorId = null;
-        state.assignedDoctor = null;
+        // Perform all resets and UI setup BEFORE capturing previewRequestId
+        clearAssignedDoctor();
         clearSlotRescue();
+        state.previewLoading = true;
         renderAssignedDoctorCard();
         renderPriceBox();
         updateUIState();
+
+        const reqId = ++state.previewRequestId;
+        state.previewTimeoutId = setTimeout(() => {
+          state.previewTimeoutId = null;
+          const stillLoadingBox = Boolean(state.previewLoading && el.previewLoadingBox && !el.previewLoadingBox.classList.contains('hidden'));
+          if (reqId !== state.previewRequestId && !stillLoadingBox) return;
+          state.previewRequestId++;
+          state.previewLoading = false;
+          state.slot = null;
+          state.slotLabel = '';
+          state.assignedDoctorId = null;
+          state.assignedDoctor = null;
+          el.slotsContainer.querySelectorAll('.slot-chip').forEach(c => {
+            c.classList.remove('selected');
+            c.setAttribute('aria-pressed', 'false');
+          });
+          renderAssignedDoctorCard();
+          renderPriceBox();
+          updateUIState();
+          console.error('Supabase preview_slot timed out after 8s');
+          showSlotRescue();
+        }, 8000);
 
         const { p_fee_min, p_fee_max } = getPriceBounds();
         let data, error;
@@ -3788,6 +3850,8 @@
         }
 
         if (reqId !== state.previewRequestId) return;
+        clearTimeout(state.previewTimeoutId);
+        state.previewTimeoutId = null;
 
         state.previewLoading = false;
 
@@ -4332,6 +4396,8 @@
       }
 
       function hideAreaDoctors() {
+        clearTimeout(state.doctorsTimeoutId);
+        state.doctorsTimeoutId = null;
         state.doctorsRequestId++;
         state.areaDoctors = [];
         state.areaDoctorsLoading = false;
@@ -4345,13 +4411,16 @@
       }
 
       async function fetchAreaDoctors() {
+        clearTimeout(state.doctorsTimeoutId);
+        state.doctorsTimeoutId = null;
+
         if (!state.specialtyId || !state.areaId) {
           hideAreaDoctors();
           updateUIState();
           return;
         }
 
-        const reqId = ++state.doctorsRequestId;
+        // Perform all resets and UI setup BEFORE capturing doctorsRequestId
         state.areaDoctors = [];
         state.areaDoctorsLoading = true;
         state.areaDoctorsEmpty = false;
@@ -4362,6 +4431,23 @@
         el.areaDoctorsTitle.textContent = 'دكاترة ' + state.specialtyName + ' في ' + state.areaName;
         el.areaDoctorsFootnote.classList.add('hidden');
         renderDoctorsSkeleton();
+
+        const reqId = ++state.doctorsRequestId;
+        state.doctorsTimeoutId = setTimeout(() => {
+          state.doctorsTimeoutId = null;
+          const stillLoadingSkeleton = Boolean(state.areaDoctorsLoading && el.areaDoctorsList.querySelector('.doc-skel-card'));
+          if (reqId !== state.doctorsRequestId && !stillLoadingSkeleton) return;
+          state.doctorsRequestId++;
+          state.areaDoctorsLoading = false;
+          state.areaDoctors = [];
+          state.feeRange = null;
+          el.areaDoctorsList.textContent = '';
+          el.areaDoctorsList.appendChild(createWhatsAppRescueBox());
+          el.areaDoctorsFootnote.classList.add('hidden');
+          renderPriceBox();
+          updateUIState();
+          console.error('Supabase get_area_doctors timed out after 8s');
+        }, 8000);
 
         const { p_fee_min, p_fee_max } = getPriceBounds();
         let data, error;
@@ -4380,6 +4466,8 @@
         }
 
         if (reqId !== state.doctorsRequestId) return;
+        clearTimeout(state.doctorsTimeoutId);
+        state.doctorsTimeoutId = null;
 
         state.areaDoctorsLoading = false;
 
@@ -4438,6 +4526,10 @@
       }
 
       function resetFromDay() {
+        clearTimeout(state.availabilityTimeoutId);
+        state.availabilityTimeoutId = null;
+        clearTimeout(state.slotsTimeoutId);
+        state.slotsTimeoutId = null;
         state.availabilityRequestId++;
         state.slotsRequestId++;
         state.day = null;
