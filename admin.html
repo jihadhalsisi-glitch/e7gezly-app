@@ -1772,7 +1772,21 @@
               </div>
 
               <div class="field">
-                <span class="field-label">النوع *</span>
+                <label for="doc-display-name">الاسم المعروض</label>
+                <input id="doc-display-name" type="text" class="input-ctrl" placeholder="يُترك فاضي لاستخدام الاسم المختصر تلقائيًا" />
+              </div>
+
+              <div class="field">
+                <label for="doc-provider-type">النوع</label>
+                <select id="doc-provider-type" class="select-ctrl">
+                  <option value="doctor">دكتور</option>
+                  <option value="clinic">عيادة</option>
+                  <option value="center">مركز</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <span class="field-label">جنس الطبيب *</span>
                 <div class="radio-pills">
                   <label class="radio-pill">
                     <input type="radio" name="doc-gender" value="male" checked />
@@ -2100,9 +2114,11 @@
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="provider-helpers.js"></script>
   <script>
     (function () {
+      const { formatProviderName, getSpecialtyIcon } = window.E7gezlyHelpers;
       const SUPABASE_URL = 'https://nubyqdyjtradjndauzkx.supabase.co';
       const SUPABASE_KEY = 'sb_publishable_tyYjOcfnXLFvc4c96KoTvw_ipNGgavy';
       const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -2250,6 +2266,8 @@
         removeDocPhotoBtn: document.getElementById('remove-doc-photo-btn'),
         docPhotoError: document.getElementById('doc-photo-error'),
         docName: document.getElementById('doc-name'),
+        docDisplayName: document.getElementById('doc-display-name'),
+        docProviderType: document.getElementById('doc-provider-type'),
         docTitle: document.getElementById('doc-title'),
         docYearsExperience: document.getElementById('doc-years-experience'),
         docBio: document.getElementById('doc-bio'),
@@ -2749,7 +2767,7 @@
         el.bookingsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">جاري تحميل الحجوزات...</div>';
         const { data, error } = await sb
           .from('bookings')
-          .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, status, notes, rating_token, doctors(name, clinic_name, clinic_whatsapp, address, maps_url, areas(name_ar, governorates(name_ar)))')
+          .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, status, notes, rating_token, doctors(name, display_name, provider_type, clinic_name, clinic_whatsapp, address, maps_url, areas(name_ar, governorates(name_ar)))')
           .eq('day', state.bookingsDate)
           .order('slot', { ascending: true });
 
@@ -2789,13 +2807,14 @@
         const waPhone = normalizeDigits(doc.clinic_whatsapp || '');
         const timeText = formatTimeAr(booking.slot);
         const dayText = formatDateAr(booking.day);
+        const providerName = formatProviderName(doc);
         const text =
           'حجز جديد من احجزلي #' + booking.id + '\n' +
           'المريض: ' + booking.patient_name + '\n' +
           'الموبايل: ' + booking.patient_phone + '\n' +
           'اليوم: ' + dayText + '\n' +
           'الميعاد: ' + timeText + '\n' +
-          'الدكتور: ' + (doc.name || '') + '\n' +
+          'الدكتور: ' + providerName + '\n' +
           'العيادة: ' + (doc.clinic_name || '') + '\n' +
           'الكشف: ' + booking.fee + ' ج.م';
         return 'https://wa.me/' + encodeURIComponent(waPhone) + '?text=' + encodeURIComponent(text);
@@ -2808,11 +2827,12 @@
         const dayText = formatDateAr(booking.day);
         const addressText = doc.address || '—';
         const mapsText = doc.maps_url || '—';
+        const providerName = formatProviderName(doc);
         const text =
           'أهلًا ' + booking.patient_name + ' 👋\n' +
           'تم تأكيد حجزك مع احجزلي ✅\n' +
           'الميعاد: ' + dayText + ' الساعة ' + timeText + '\n' +
-          'الدكتور: ' + (doc.name || '') + '\n' +
+          'الدكتور: ' + providerName + '\n' +
           'العيادة: ' + (doc.clinic_name || '') + '\n' +
           'العنوان: ' + addressText + '\n' +
           'اللوكيشن: ' + mapsText + '\n' +
@@ -2836,11 +2856,11 @@
         const doc = booking.doctors || {};
         const waPhone = toPatientRatingWaPhone(booking.patient_phone);
         const firstName = String(booking.patient_name || '').trim().split(/\s+/)[0] || '';
-        const doctorName = String(doc.name || '').trim().replace(/^د\.?\s*/, '');
+        const providerName = formatProviderName(doc);
         const ratingLink = buildRatingUrl(booking.rating_token);
         const text =
           'أهلًا ' + firstName + ' 👋\n' +
-          'إن شاء الله الكشف مع د. ' + doctorName + ' كان كويس.\n' +
+          'إن شاء الله الكشف مع ' + providerName + ' كان كويس.\n' +
           'ممكن دقيقة تقيّم الزيارة؟ رأيك بيساعد مرضى تانيين يختاروا صح 🙏\n' +
           ratingLink + '\n' +
           'احجزلي E7gezly';
@@ -2916,7 +2936,7 @@
             '<div class="info-rows">' +
               '<div class="info-line"><span class="info-label">المريض</span><span class="info-val">' + escapeHtml(booking.patient_name) + '</span></div>' +
               '<div class="info-line"><span class="info-label">الموبايل</span><a class="phone-link tabular-nums" dir="ltr" href="tel:' + escapeHtml(booking.patient_phone) + '">' + escapeHtml(booking.patient_phone) + '</a></div>' +
-              '<div class="info-line"><span class="info-label">الدكتور</span><span class="info-val">' + escapeHtml(doc.name || 'غير محدد') + '</span></div>' +
+              '<div class="info-line"><span class="info-label">الدكتور</span><span class="info-val">' + escapeHtml(formatProviderName(doc) || 'غير محدد') + '</span></div>' +
               '<div class="info-line"><span class="info-label">العيادة</span><span class="info-val">' + escapeHtml(doc.clinic_name || '—') + '</span></div>' +
               '<div class="info-line"><span class="info-label">المكان</span><span class="info-val">' + escapeHtml(locationPath) + '</span></div>' +
             '</div>' +
@@ -3567,14 +3587,12 @@
 
       function populateDoctorAreasForGov(govId, selectedAreaId) {
         el.docArea.innerHTML = '';
-        if (!govId) {
-          el.docArea.disabled = true;
-          el.docArea.innerHTML = '<option value="">اختر المحافظة الأول...</option>';
-          return;
-        }
+        const govMap = new Map(state.governorates.map(g => [Number(g.id), g.name_ar]));
+        const list = govId
+          ? state.areas.filter(a => Number(a.governorate_id) === Number(govId))
+          : state.areas;
 
-        const filtered = state.areas.filter(a => Number(a.governorate_id) === Number(govId));
-        if (!filtered.length) {
+        if (!list.length) {
           el.docArea.disabled = false;
           el.docArea.innerHTML = '<option value="">مفيش مناطق — أضف منطقة جديدة</option>';
           return;
@@ -3582,14 +3600,15 @@
 
         el.docArea.disabled = false;
         el.docArea.innerHTML = '<option value="">اختر المنطقة...</option>';
-        filtered.forEach(a => {
+        list.forEach(a => {
           const opt = document.createElement('option');
           opt.value = String(a.id);
-          opt.textContent = a.name_ar;
+          const govLabel = !govId ? govMap.get(Number(a.governorate_id)) : '';
+          opt.textContent = govLabel ? (a.name_ar + ' (' + govLabel + ')') : a.name_ar;
           el.docArea.appendChild(opt);
         });
 
-        if (selectedAreaId) {
+        if (selectedAreaId != null && selectedAreaId !== '') {
           el.docArea.value = String(selectedAreaId);
         }
       }
@@ -3597,6 +3616,16 @@
       el.docGovernorate.addEventListener('change', () => {
         const govId = el.docGovernorate.value ? Number(el.docGovernorate.value) : null;
         populateDoctorAreasForGov(govId, null);
+      });
+
+      el.docArea.addEventListener('change', () => {
+        const areaId = el.docArea.value ? Number(el.docArea.value) : null;
+        if (!areaId || el.docGovernorate.value) return;
+        const areaObj = state.areas.find(a => Number(a.id) === areaId);
+        if (areaObj && areaObj.governorate_id != null) {
+          el.docGovernorate.value = String(areaObj.governorate_id);
+          populateDoctorAreasForGov(areaObj.governorate_id, areaId);
+        }
       });
 
       // Inline "+ منطقة جديدة" inside doctor form
@@ -3752,9 +3781,10 @@
         return typeof url === 'string' && /^https?:\/\//i.test(url.trim());
       }
 
-      function getFirstLetter(name) {
-        const chars = Array.from(String(name || '').trim().replace(/^د\.?\s*/, ''));
-        return chars.length ? chars[0] : 'د';
+      function getSelectedFormSpecialtyIcon() {
+        const selId = el.docSpecialty.value ? Number(el.docSpecialty.value) : null;
+        const specObj = selId != null ? state.specialties.find(s => Number(s.id) === selId) : null;
+        return getSpecialtyIcon(specObj ? specObj.name_ar : '');
       }
 
       function revokePhotoObjectUrl() {
@@ -3785,12 +3815,12 @@
           img.height = 80;
           img.referrerPolicy = 'no-referrer';
           img.addEventListener('error', () => {
-            el.docPhotoPreview.textContent = getFirstLetter(el.docName.value);
+            el.docPhotoPreview.textContent = getSelectedFormSpecialtyIcon();
           });
           el.docPhotoPreview.appendChild(img);
           el.removeDocPhotoBtn.classList.remove('hidden');
         } else {
-          el.docPhotoPreview.textContent = getFirstLetter(el.docName.value);
+          el.docPhotoPreview.textContent = getSelectedFormSpecialtyIcon();
           el.removeDocPhotoBtn.classList.add('hidden');
         }
       }
@@ -3801,9 +3831,9 @@
       }
 
       el.docBio.addEventListener('input', updateBioCounter);
-      el.docName.addEventListener('input', () => {
+      el.docSpecialty.addEventListener('change', () => {
         if (!state.photoPreviewObjectUrl && !state.editingDoctorPhotoUrl) {
-          el.docPhotoPreview.textContent = getFirstLetter(el.docName.value);
+          el.docPhotoPreview.textContent = getSelectedFormSpecialtyIcon();
         }
       });
 
@@ -3892,6 +3922,8 @@
           el.doctorFormTitle.textContent = 'إضافة دكتور جديد';
           el.docId.value = '';
           el.docName.value = '';
+          el.docDisplayName.value = '';
+          el.docProviderType.value = 'doctor';
           el.docTitle.value = '';
           el.docYearsExperience.value = '';
           el.docBio.value = '';
@@ -3929,6 +3961,8 @@
           el.doctorFormTitle.textContent = 'إضافة دكتور من طلب الانضمام: ' + (doctor.name || '');
           el.docId.value = '';
           el.docName.value = doctor.name || '';
+          el.docDisplayName.value = doctor.display_name || '';
+          el.docProviderType.value = ['doctor', 'clinic', 'center'].includes(doctor.provider_type) ? doctor.provider_type : 'doctor';
           el.docTitle.value = doctor.title || '';
           el.docYearsExperience.value = doctor.years_experience ?? '';
           el.docBio.value = doctor.bio || '';
@@ -3969,9 +4003,11 @@
         // Editing existing doctor
         state.convertingAgreementId = null;
         state.editingDoctorPhotoUrl = doctor.photo_url || null;
-        el.doctorFormTitle.textContent = 'تعديل بيانات: ' + doctor.name;
+        el.doctorFormTitle.textContent = 'تعديل بيانات: ' + formatProviderName(doctor);
         el.docId.value = doctor.id;
         el.docName.value = doctor.name || '';
+        el.docDisplayName.value = doctor.display_name || '';
+        el.docProviderType.value = ['doctor', 'clinic', 'center'].includes(doctor.provider_type) ? doctor.provider_type : 'doctor';
         el.docTitle.value = doctor.title || '';
         el.docYearsExperience.value = doctor.years_experience ?? '';
         el.docBio.value = doctor.bio || '';
@@ -3980,7 +4016,7 @@
         el.docSpecialty.value = String(doctor.specialty_id || '');
         el.docFee.value = doctor.fee ?? 0;
 
-        const docAreaObj = state.areas.find(a => a.id === doctor.area_id);
+        const docAreaObj = state.areas.find(a => Number(a.id) === Number(doctor.area_id));
         const govId = docAreaObj ? docAreaObj.governorate_id : null;
         el.docGovernorate.value = govId ? String(govId) : '';
         populateDoctorAreasForGov(govId, doctor.area_id);
@@ -4096,8 +4132,13 @@
         const genderRadio = document.querySelector('input[name="doc-gender"]:checked');
         const yearsExpRaw = el.docYearsExperience.value.trim();
         const yearsExpVal = yearsExpRaw !== '' && !Number.isNaN(Number(yearsExpRaw)) ? Number(yearsExpRaw) : null;
+        const providerTypeVal = ['doctor', 'clinic', 'center'].includes(el.docProviderType.value)
+          ? el.docProviderType.value
+          : 'doctor';
         const payload = {
           name: el.docName.value.trim(),
+          display_name: el.docDisplayName.value.trim() || null,
+          provider_type: providerTypeVal,
           gender: genderRadio ? genderRadio.value : 'male',
           title: el.docTitle.value.trim() || null,
           years_experience: yearsExpVal,
@@ -4351,6 +4392,12 @@
           const govName = areaObj ? (govMap.get(areaObj.governorate_id) || '') : '';
           const areaName = areaObj ? areaObj.name_ar : '—';
           const locationText = [govName, areaName].filter(Boolean).join(' › ');
+          const specName = specMap.get(doc.specialty_id) || '—';
+          const specIcon = getSpecialtyIcon(specName);
+          const formattedName = formatProviderName(doc);
+          const typeLabel = doc.provider_type === 'clinic'
+            ? 'عيادة'
+            : (doc.provider_type === 'center' ? 'مركز' : genderLabel(doc.gender));
           const hasPhoto = isSafeHttpUrl(doc.photo_url);
 
           const card = document.createElement('article');
@@ -4360,15 +4407,15 @@
               '<div class="doctor-header-main">' +
                 '<div class="doctor-thumb">' +
                   (hasPhoto
-                    ? '<img src="' + escapeHtml(doc.photo_url.trim()) + '" alt="' + escapeHtml(doc.name) + '" width="48" height="48" loading="lazy" referrerpolicy="no-referrer" />'
-                    : escapeHtml(getFirstLetter(doc.name))) +
+                    ? '<img src="' + escapeHtml(doc.photo_url.trim()) + '" alt="' + escapeHtml(formattedName) + '" width="48" height="48" loading="lazy" referrerpolicy="no-referrer" />'
+                    : escapeHtml(specIcon)) +
                 '</div>' +
                 '<div style="min-width:0;">' +
-                  '<div class="doctor-name">' + escapeHtml(doc.name) + '</div>' +
+                  '<div class="doctor-name">' + escapeHtml(formattedName) + '</div>' +
                   (doc.title ? '<div class="meta-sub">' + escapeHtml(doc.title) + '</div>' : '') +
                   '<div class="doctor-meta">' +
-                    escapeHtml(genderLabel(doc.gender)) + ' · ' +
-                    escapeHtml(specMap.get(doc.specialty_id) || '—') + ' · ' +
+                    escapeHtml(typeLabel) + ' · ' +
+                    escapeHtml(specName) + ' · ' +
                     escapeHtml(locationText) +
                   '</div>' +
                 '</div>' +
@@ -4398,7 +4445,7 @@
           if (thumbImg) {
             thumbImg.addEventListener('error', () => {
               const wrap = thumbImg.parentElement;
-              if (wrap) wrap.textContent = getFirstLetter(doc.name);
+              if (wrap) wrap.textContent = specIcon;
             });
           }
 
@@ -4797,7 +4844,7 @@
 
         const { data, error } = await sb
           .from('doctor_ratings')
-          .select('*, doctors(name), bookings(patient_name, patient_phone, day)')
+          .select('*, doctors(name, display_name, provider_type), bookings(patient_name, patient_phone, day)')
           .order('created_at', { ascending: false });
 
         if (error) {
@@ -4820,11 +4867,11 @@
       function populateRatingsDoctorFilter() {
         const docMap = new Map();
         state.doctors.forEach(d => {
-          docMap.set(String(d.id), d.name);
+          docMap.set(String(d.id), formatProviderName(d) || d.name);
         });
         state.ratings.forEach(r => {
           if (r.doctor_id != null && !docMap.has(String(r.doctor_id))) {
-            docMap.set(String(r.doctor_id), r.doctors?.name || ('دكتور #' + r.doctor_id));
+            docMap.set(String(r.doctor_id), formatProviderName(r.doctors) || ('دكتور #' + r.doctor_id));
           }
         });
 
@@ -4879,7 +4926,7 @@
             });
             groups.set(docId, {
               doctorId: docId,
-              name: r.doctors?.name || ('دكتور #' + docId),
+              name: formatProviderName(r.doctors) || ('دكتور #' + docId),
               count: 0,
               overallSum: 0,
               recTrue: 0,
@@ -5009,7 +5056,7 @@
         filtered.forEach(r => {
           const overall = getRatingOverall(r);
           const isHidden = Boolean(r.is_hidden);
-          const docName = r.doctors?.name || ('دكتور #' + (r.doctor_id ?? ''));
+          const docName = formatProviderName(r.doctors) || ('دكتور #' + (r.doctor_id ?? ''));
           const bookingInfo = r.bookings || {};
           const patientName = bookingInfo.patient_name || '—';
           const patientPhone = bookingInfo.patient_phone || '';
@@ -5028,7 +5075,7 @@
           const leftCol = document.createElement('div');
           const docHeading = document.createElement('div');
           docHeading.className = 'doctor-name';
-          docHeading.textContent = 'د. ' + docName.replace(/^د\.?\s*/, '');
+          docHeading.textContent = docName;
           leftCol.appendChild(docHeading);
 
           const subMeta = document.createElement('div');

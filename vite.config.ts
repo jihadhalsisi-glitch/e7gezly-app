@@ -25,6 +25,11 @@ export default defineConfig(() => {
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
           }
+          const helpersSrc = path.resolve(__dirname, 'provider-helpers.js');
+          const helpersDist = path.resolve(distDir, 'provider-helpers.js');
+          if (fs.existsSync(distDir) && fs.existsSync(helpersSrc)) {
+            fs.copyFileSync(helpersSrc, helpersDist);
+          }
         },
       },
     ],

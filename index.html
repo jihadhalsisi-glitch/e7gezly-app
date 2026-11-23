@@ -3,9 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M4L6Q78W');</script>
-  <!-- End Google Tag Manager -->
+  <!-- Production-Only Deferred Tracking (GTM + Clarity via GTM + Meta Pixel) -->
+  <script>
+  (function(w, d) {
+    var hasInternalParam = /(?:[?&#]|^)internal=1(?:[&#]|$)/.test(w.location.search + w.location.hash) || w.location.href.indexOf('internal=1') !== -1;
+    var isInternal = hasInternalParam;
+    try {
+      if (hasInternalParam) {
+        w.localStorage.setItem('e7_internal', '1');
+      }
+      if (w.localStorage.getItem('e7_internal') === '1') {
+        isInternal = true;
+      }
+    } catch (e) {}
+
+    var isProd = w.location.hostname === 'e7gezly-app.vip';
+    if (!isProd || isInternal) {
+      w.__E7_TRACKING_ENABLED = false;
+      return;
+    }
+
+    w.__E7_TRACKING_ENABLED = true;
+
+    w.dataLayer = w.dataLayer || [];
+    w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+
+    if (!w.fbq) {
+      var n = w.fbq = function() {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!w._fbq) w._fbq = n;
+      n.push = n;
+      n.loaded = true;
+      n.version = '2.0';
+      n.queue = [];
+    }
+    w.fbq('init', '2670836706701296');
+    w.fbq('track', 'PageView');
+
+    var tagsLoaded = false;
+    function injectTagScripts() {
+      if (tagsLoaded) return;
+      tagsLoaded = true;
+      var firstScript = d.getElementsByTagName('script')[0];
+      var gtm = d.createElement('script');
+      gtm.async = true;
+      gtm.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-M4L6Q78W';
+      var fb = d.createElement('script');
+      fb.async = true;
+      fb.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      if (firstScript && firstScript.parentNode) {
+        firstScript.parentNode.insertBefore(gtm, firstScript);
+        firstScript.parentNode.insertBefore(fb, firstScript);
+      } else {
+        (d.head || d.documentElement).appendChild(gtm);
+        (d.head || d.documentElement).appendChild(fb);
+      }
+    }
+
+    function scheduleTags() {
+      if (typeof w.requestIdleCallback === 'function') {
+        w.requestIdleCallback(injectTagScripts, { timeout: 2000 });
+      } else {
+        w.setTimeout(injectTagScripts, 1);
+      }
+    }
+
+    if (d.readyState === 'complete') {
+      scheduleTags();
+    } else {
+      w.addEventListener('load', scheduleTags, { once: true });
+    }
+  })(window, document);
+  </script>
   <link rel="icon" type="image/png" sizes="32x32" href="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/favicon-32.png" />
   <link rel="apple-touch-icon" href="https://nubyqdyjtradjndauzkx.supabase.co/storage/v1/object/public/brand/e7gezly-icon-180.png" />
   <meta name="theme-color" content="#3B2A9B" />
@@ -22,22 +92,9 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="احجزلي | احجز دكتورك في دقيقة" />
   <meta name="twitter:description" content="احجز كشفك في أقل من دقيقة في منطقتك، تأكيد سريع على واتساب والكشف في العيادة." />
-  <!-- Meta Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '2670836706701296');
-  fbq('track', 'PageView');
-  </script>
-  <!-- End Meta Pixel Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://nubyqdyjtradjndauzkx.supabase.co" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
   <script type="application/ld+json">
   {
@@ -312,12 +369,21 @@
       background: radial-gradient(circle at 14% 18%, rgba(198, 242, 92, 0.22) 0%, rgba(198, 242, 92, 0) 46%), var(--brand);
       color: #ffffff;
       padding: 46px 0 54px;
+      scroll-margin-top: 76px;
     }
 
     .hero-inner {
       max-width: 860px;
       margin: 0 auto;
       text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--lime);
+      margin-bottom: 8px;
+      line-height: 1.4;
     }
 
     .hero-h1 {
@@ -346,32 +412,26 @@
       background-color: #ffffff;
       border: 1px solid var(--brand-100);
       border-radius: var(--radius-card);
-      padding: 16px;
+      padding: 18px;
       box-shadow: 0 14px 34px rgba(23, 19, 58, 0.24);
       text-align: right;
     }
 
     .quick-search-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      align-items: end;
-    }
-
-    @media (min-width: 720px) {
-      .quick-search-grid {
-        grid-template-columns: 1fr 1fr auto;
-      }
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     .field {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
 
-    .field label {
-      font-size: 0.84rem;
+    .field label,
+    .field-label {
+      font-size: 0.86rem;
       font-weight: 700;
       color: var(--brand);
     }
@@ -391,6 +451,78 @@
       outline: none;
       border-color: var(--brand);
       box-shadow: 0 0 0 3px rgba(59, 42, 155, 0.16);
+    }
+
+    .select-ctrl.is-invalid {
+      border-color: #dc2626;
+    }
+
+    .hero-area-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-area-chip {
+      min-height: 44px;
+      padding: 9px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--brand-100);
+      background-color: #ffffff;
+      color: var(--ink);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .hero-area-chip:hover {
+      border-color: var(--brand);
+      background-color: var(--brand-50);
+    }
+
+    .hero-area-chip.selected {
+      background-color: var(--brand);
+      border-color: var(--brand);
+      color: #ffffff;
+    }
+
+    .hero-area-chip:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    .hero-field-error {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #dc2626;
+      line-height: 1.45;
+    }
+
+    .hero-wa-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .hero-wa-link {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--brand);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      padding: 4px 8px;
+    }
+
+    .hero-wa-link:hover {
+      color: var(--brand-dark);
     }
 
     .btn-primary {
@@ -1166,15 +1298,19 @@
       font-variant-numeric: tabular-nums;
     }
 
+    .top-doc-board-cta-wrap {
+      margin-top: 22px;
+      display: flex;
+      justify-content: center;
+    }
+
     .top-doc-cta {
-      margin-top: auto;
-      width: 100%;
-      min-height: 44px;
-      padding: 10px 14px;
+      min-height: 48px;
+      padding: 12px 28px;
       border-radius: 12px;
       background-color: var(--lime);
       color: var(--brand);
-      font-size: 0.9rem;
+      font-size: 0.96rem;
       font-weight: 700;
       text-decoration: none;
       display: inline-flex;
@@ -1193,7 +1329,7 @@
     }
 
     .top-doc-note {
-      margin-top: 16px;
+      margin-top: 14px;
       text-align: center;
       font-size: 0.82rem;
       color: var(--muted);
@@ -1254,12 +1390,6 @@
   </style>
 </head>
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M4L6Q78W" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  <!-- Meta Pixel Code (noscript) -->
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2670836706701296&ev=PageView&noscript=1" /></noscript>
-  <!-- End Meta Pixel Code (noscript) -->
   <!-- 1. Sticky Header -->
   <header class="header">
     <div class="container header-inner">
@@ -1301,28 +1431,34 @@
   </header>
 
   <!-- 2. Hero -->
-  <section class="hero">
+  <section id="top" class="hero">
     <div class="container hero-inner">
+      <p class="hero-eyebrow">احجزلي بيحجزلك</p>
       <h1 class="hero-h1">مش هتدوّر على دكتور… <span>احنا بنلاقيلك أقرب ميعاد</span></h1>
       <p class="hero-sub">
         اختار التخصص والمنطقة، واحجز كشفك في أقل من دقيقة — من غير تطبيق، من غير حساب، ومن غير ما تدفع أي حاجة مقدمًا.
       </p>
 
-      <form id="quick-search-form" class="quick-search-card">
+      <form id="quick-search-form" class="quick-search-card" novalidate>
         <div class="quick-search-grid">
           <div class="field">
             <label for="qs-specialty">التخصص</label>
             <select id="qs-specialty" class="select-ctrl">
-              <option value="">كل التخصصات</option>
+              <option value="">اختار التخصص...</option>
             </select>
+            <span id="qs-spec-error" class="hero-field-error hidden" role="alert"></span>
           </div>
           <div class="field">
-            <label for="qs-governorate">المحافظة</label>
-            <select id="qs-governorate" class="select-ctrl">
-              <option value="">كل المحافظات المتاحة</option>
-            </select>
+            <span class="field-label">منطقتك</span>
+            <div id="qs-area-chips" class="hero-area-chips" role="group" aria-label="اختار منطقتك"></div>
+            <span id="qs-area-error" class="hero-field-error hidden" role="alert"></span>
           </div>
           <button type="submit" class="btn-primary">شوف المواعيد المتاحة</button>
+          <div class="hero-wa-wrap">
+            <a id="hero-wa-link" class="hero-wa-link" href="https://wa.me/201144988882" target="_blank" rel="noopener">
+              أو ابعتلنا واتساب واحنا نحجزلك
+            </a>
+          </div>
         </div>
       </form>
 
@@ -1437,6 +1573,7 @@
 
       <div id="top-doctors-tabs" class="top-doc-tabs" role="tablist" aria-label="تخصصات أعلى الدكاترة تقييمًا"></div>
       <div id="top-doctors-grid" class="top-doc-grid" role="tabpanel"></div>
+      <div id="top-doctors-cta-wrap" class="top-doc-board-cta-wrap hidden"></div>
       <p id="top-doctors-note" class="top-doc-note hidden">الترتيب حسب تقييم جوجل وعدد التقييمات. الحجز بيتم على أقرب ميعاد متاح في نفس التخصص والمنطقة.</p>
     </div>
   </section>
@@ -1615,9 +1752,11 @@
     <span class="wa-tooltip">محتاج مساعدة؟ كلمنا واتساب</span>
   </a>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="provider-helpers.js"></script>
   <script>
     (function () {
+      const { formatProviderName, getSpecialtyIcon } = window.E7gezlyHelpers;
       const SUPABASE_URL = 'https://nubyqdyjtradjndauzkx.supabase.co';
       const SUPABASE_KEY = 'sb_publishable_tyYjOcfnXLFvc4c96KoTvw_ipNGgavy';
       const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -1649,73 +1788,204 @@
         });
       });
 
-      // Quick Search + Specialties Grid from get_options()
+      // Quick Search + Specialties Grid from areas + get_options()
       const qsSpec = document.getElementById('qs-specialty');
-      const qsGov = document.getElementById('qs-governorate');
+      const qsSpecError = document.getElementById('qs-spec-error');
+      const qsAreaChips = document.getElementById('qs-area-chips');
+      const qsAreaError = document.getElementById('qs-area-error');
       const qsForm = document.getElementById('quick-search-form');
+      const heroWaLink = document.getElementById('hero-wa-link');
       const specsSection = document.getElementById('specialties');
       const specsGrid = document.getElementById('specialties-grid');
 
+      const PREFERRED_AREA_ORDER = [
+        'مدينة نصر',
+        'التجمع الخامس',
+        'المعادي',
+        'الشيخ زايد وأكتوبر',
+        'الهرم وفيصل'
+      ];
+
       let allOptions = [];
+      let allAreas = [];
+      let selectedAreaId = null;
+      let selectedGovId = null;
 
-      function populateQuickGovernorates(specId) {
-        const currentGov = qsGov.value;
-        const govMap = new Map();
-        allOptions.forEach(r => {
-          if (specId && r.specialty_id !== specId) return;
-          if (r.governorate_id != null && !govMap.has(r.governorate_id)) {
-            govMap.set(r.governorate_id, { id: r.governorate_id, name: r.governorate, sort: r.gov_sort ?? 999 });
-          }
-        });
-
-        const govs = Array.from(govMap.values()).sort((a, b) => a.sort - b.sort || a.name.localeCompare(b.name, 'ar'));
-        qsGov.innerHTML = '<option value="">كل المحافظات المتاحة</option>';
-        govs.forEach(g => {
-          const opt = document.createElement('option');
-          opt.value = String(g.id);
-          opt.textContent = g.name;
-          qsGov.appendChild(opt);
-        });
-        if (currentGov && govMap.has(Number(currentGov))) {
-          qsGov.value = currentGov;
+      function trackWhatsAppClick() {
+        if (typeof window.fbq === 'function') window.fbq('track', 'Contact');
+        if (Array.isArray(window.dataLayer)) {
+          window.dataLayer.push({ event: 'whatsapp_click' });
         }
       }
-
-      qsSpec.addEventListener('change', () => {
-        const specId = qsSpec.value ? Number(qsSpec.value) : null;
-        populateQuickGovernorates(specId);
-      });
 
       const waUrl = 'https://wa.me/201144988882?text=' + encodeURIComponent('أهلاً احجزلي 👋 محتاج مساعدة في حجز كشف');
       [document.getElementById('wa-float-btn'), document.getElementById('footer-wa-link')].forEach(el => {
         if (!el) return;
         el.href = waUrl;
-        el.addEventListener('click', () => {
-          if (window.fbq) fbq('track', 'Contact');
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({ event: 'whatsapp_click' });
+        el.addEventListener('click', trackWhatsAppClick);
+      });
+
+      if (heroWaLink) {
+        heroWaLink.href = 'https://wa.me/201144988882?text=' + encodeURIComponent('عايز أحجز كشف');
+        heroWaLink.addEventListener('click', trackWhatsAppClick);
+      }
+
+      function showSpecError(msg) {
+        if (!msg) {
+          qsSpecError.textContent = '';
+          qsSpecError.classList.add('hidden');
+          qsSpec.classList.remove('is-invalid');
+        } else {
+          qsSpecError.textContent = msg;
+          qsSpecError.classList.remove('hidden');
+          qsSpec.classList.add('is-invalid');
+        }
+      }
+
+      function showAreaError(msg) {
+        if (!msg) {
+          qsAreaError.textContent = '';
+          qsAreaError.classList.add('hidden');
+        } else {
+          qsAreaError.textContent = msg;
+          qsAreaError.classList.remove('hidden');
+        }
+      }
+
+      function getPreferredAreaRank(name) {
+        const clean = String(name || '').trim();
+        const exact = PREFERRED_AREA_ORDER.indexOf(clean);
+        if (exact !== -1) return exact;
+        for (let i = 0; i < PREFERRED_AREA_ORDER.length; i++) {
+          if (clean.includes(PREFERRED_AREA_ORDER[i]) || PREFERRED_AREA_ORDER[i].includes(clean)) {
+            return i;
+          }
+        }
+        return PREFERRED_AREA_ORDER.length + 10;
+      }
+
+      function getActiveAreasForHero(specId) {
+        const activeAreaIds = new Set();
+        const relevant = specId
+          ? allOptions.filter(r => Number(r.specialty_id) === Number(specId))
+          : allOptions;
+
+        relevant.forEach(r => {
+          if (r.area_id != null) activeAreaIds.add(Number(r.area_id));
         });
+
+        let list = [];
+        if (allAreas.length) {
+          list = allAreas.filter(a => a && a.active !== false && activeAreaIds.has(Number(a.id)));
+        }
+
+        if (!list.length) {
+          const fallbackMap = new Map();
+          relevant.forEach(r => {
+            if (r.area_id != null && !fallbackMap.has(Number(r.area_id))) {
+              fallbackMap.set(Number(r.area_id), {
+                id: Number(r.area_id),
+                name_ar: r.area,
+                governorate_id: Number(r.governorate_id),
+                active: true
+              });
+            }
+          });
+          list = Array.from(fallbackMap.values());
+        }
+
+        list.sort((a, b) => {
+          const rA = getPreferredAreaRank(a.name_ar);
+          const rB = getPreferredAreaRank(b.name_ar);
+          if (rA !== rB) return rA - rB;
+          return String(a.name_ar || '').localeCompare(String(b.name_ar || ''), 'ar');
+        });
+
+        return list;
+      }
+
+      function renderHeroAreaChips(specId) {
+        const areas = getActiveAreasForHero(specId);
+        if (selectedAreaId != null && !areas.some(a => Number(a.id) === Number(selectedAreaId))) {
+          selectedAreaId = null;
+          selectedGovId = null;
+        }
+
+        qsAreaChips.textContent = '';
+        const frag = document.createDocumentFragment();
+        areas.forEach(areaObj => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          const isSelected = selectedAreaId != null && Number(selectedAreaId) === Number(areaObj.id);
+          btn.className = 'hero-area-chip' + (isSelected ? ' selected' : '');
+          btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+          btn.textContent = areaObj.name_ar;
+          btn.addEventListener('click', () => {
+            selectedAreaId = Number(areaObj.id);
+            selectedGovId = areaObj.governorate_id != null ? Number(areaObj.governorate_id) : null;
+            showAreaError('');
+            renderHeroAreaChips(qsSpec.value ? Number(qsSpec.value) : null);
+          });
+          frag.appendChild(btn);
+        });
+        qsAreaChips.appendChild(frag);
+      }
+
+      qsSpec.addEventListener('change', () => {
+        const specId = qsSpec.value ? Number(qsSpec.value) : null;
+        if (specId) showSpecError('');
+        renderHeroAreaChips(specId);
       });
 
       qsForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const selectedSpecName = qsSpec.value && qsSpec.selectedIndex >= 0
+        let hasError = false;
+
+        if (!qsSpec.value) {
+          showSpecError('اختار التخصص الأول');
+          hasError = true;
+        } else {
+          showSpecError('');
+        }
+
+        if (!selectedAreaId) {
+          showAreaError('اختار منطقتك');
+          hasError = true;
+        } else {
+          showAreaError('');
+        }
+
+        if (hasError) {
+          if (!qsSpec.value) qsSpec.focus();
+          return;
+        }
+
+        const selectedSpecName = qsSpec.selectedIndex >= 0
           ? qsSpec.options[qsSpec.selectedIndex].textContent
-          : 'كل التخصصات';
-        if (window.fbq) fbq('track', 'Search', { content_category: selectedSpecName });
+          : '';
+        if (typeof window.fbq === 'function') window.fbq('track', 'Search', { content_category: selectedSpecName });
+
         const params = new URLSearchParams();
-        if (qsSpec.value) params.set('spec', qsSpec.value);
-        if (qsGov.value) params.set('gov', qsGov.value);
-        const query = params.toString();
-        window.location.href = 'book.html' + (query ? '?' + query : '');
+        params.set('spec', String(qsSpec.value));
+        params.set('area', String(selectedAreaId));
+        if (selectedGovId != null) params.set('gov', String(selectedGovId));
+        window.location.href = 'book.html?' + params.toString();
       });
 
       async function loadOptions() {
-        const { data, error } = await sb.rpc('get_options');
-        if (error || !Array.isArray(data) || !data.length) {
+        const [optRes, areasRes] = await Promise.all([
+          sb.rpc('get_options'),
+          sb.from('areas').select('id,name_ar,governorate_id,active').order('id')
+        ]);
+
+        if (!areasRes.error && Array.isArray(areasRes.data)) {
+          allAreas = areasRes.data;
+        }
+
+        if (optRes.error || !Array.isArray(optRes.data) || !optRes.data.length) {
           return;
         }
-        allOptions = data;
+        allOptions = optRes.data;
 
         const specMap = new Map();
         allOptions.forEach(r => {
@@ -1734,7 +2004,7 @@
           qsSpec.appendChild(opt);
         });
 
-        populateQuickGovernorates(null);
+        renderHeroAreaChips(null);
 
         if (specs.length) {
           specsGrid.innerHTML = '';
@@ -1763,6 +2033,7 @@
       const topDoctorsSection = document.getElementById('top-doctors');
       const topDoctorsTabs = document.getElementById('top-doctors-tabs');
       const topDoctorsGrid = document.getElementById('top-doctors-grid');
+      const topDoctorsCtaWrap = document.getElementById('top-doctors-cta-wrap');
       const topDoctorsNote = document.getElementById('top-doctors-note');
       let topDoctorsGroups = [];
       let activeTopTab = 'all';
@@ -1773,12 +2044,10 @@
         return /^https?:\/\//i.test(url.trim());
       }
 
-      function createTopAvatarFallback(name) {
+      function createTopAvatarFallback(specialtyName) {
         const span = document.createElement('span');
         span.className = 'top-doc-initial';
-        const trimmed = String(name || '').trim();
-        const chars = Array.from(trimmed);
-        span.textContent = chars.length ? chars[0] : 'د';
+        span.textContent = getSpecialtyIcon(specialtyName);
         span.setAttribute('aria-hidden', 'true');
         return span;
       }
@@ -1875,12 +2144,8 @@
           mid.className = 'td-skel-line td-skel-shimmer';
           mid.style.width = '88%';
 
-          const btn = document.createElement('div');
-          btn.className = 'td-skel-btn td-skel-shimmer';
-
           skelCard.appendChild(head);
           skelCard.appendChild(mid);
-          skelCard.appendChild(btn);
           topDoctorsGrid.appendChild(skelCard);
         }
       }
@@ -1889,7 +2154,7 @@
         const doc = entry.doc;
         const specialtyId = entry.specialty_id;
         const specialtyName = String(entry.specialty || '').trim();
-        const rawName = String(doc && doc.name != null ? doc.name : '').trim();
+        const displayDocName = formatProviderName(doc);
         const areaName = String(doc && doc.area != null ? doc.area : '').trim();
         const rankNum = doc && doc.rank != null && !Number.isNaN(Number(doc.rank))
           ? Number(doc.rank)
@@ -1914,18 +2179,18 @@
         if (doc && isSafePhotoUrl(doc.photo_url)) {
           const img = document.createElement('img');
           img.src = doc.photo_url.trim();
-          img.alt = rawName;
+          img.alt = displayDocName;
           img.width = 64;
           img.height = 64;
           img.loading = 'lazy';
           img.referrerPolicy = 'no-referrer';
           img.addEventListener('error', () => {
             avatarWrap.textContent = '';
-            avatarWrap.appendChild(createTopAvatarFallback(rawName));
+            avatarWrap.appendChild(createTopAvatarFallback(specialtyName));
           });
           avatarWrap.appendChild(img);
         } else {
-          avatarWrap.appendChild(createTopAvatarFallback(rawName));
+          avatarWrap.appendChild(createTopAvatarFallback(specialtyName));
         }
         head.appendChild(avatarWrap);
 
@@ -1934,8 +2199,8 @@
 
         const nameEl = document.createElement('h3');
         nameEl.className = 'top-doc-name';
-        nameEl.textContent = rawName;
-        nameEl.title = rawName;
+        nameEl.textContent = displayDocName;
+        nameEl.title = displayDocName;
         identity.appendChild(nameEl);
 
         if (doc && doc.title && String(doc.title).trim()) {
@@ -2014,20 +2279,30 @@
           card.appendChild(feeChip);
         }
 
-        // CTA button
+        return card;
+      }
+
+      function renderTopDoctorsCta() {
+        topDoctorsCtaWrap.textContent = '';
         const cta = document.createElement('a');
         cta.className = 'top-doc-cta';
-        const params = new URLSearchParams();
-        if (specialtyId != null) params.set('spec', String(specialtyId));
-        if (doc && doc.gov_id != null) params.set('gov', String(doc.gov_id));
-        if (doc && doc.area_id != null) params.set('area', String(doc.area_id));
-        cta.href = 'book.html?' + params.toString();
-        cta.textContent = areaName
-          ? 'احجز ' + specialtyName + ' في ' + areaName
-          : 'احجز ' + specialtyName;
-        card.appendChild(cta);
 
-        return card;
+        if (activeTopTab === 'all') {
+          cta.href = '#top';
+          cta.textContent = 'اختار التخصص واحجز';
+        } else {
+          const selected = topDoctorsGroups.find(g => String(g.specialty_id) === String(activeTopTab));
+          if (!selected) {
+            topDoctorsCtaWrap.classList.add('hidden');
+            return;
+          }
+          const specName = String(selected.specialty || '').trim();
+          cta.href = 'book.html?spec=' + encodeURIComponent(String(selected.specialty_id));
+          cta.textContent = 'احجز ' + specName + ' في منطقتك';
+        }
+
+        topDoctorsCtaWrap.appendChild(cta);
+        topDoctorsCtaWrap.classList.remove('hidden');
       }
 
       function renderTopDoctorsCards() {
@@ -2065,6 +2340,7 @@
 
         topDoctorsGrid.textContent = '';
         topDoctorsGrid.appendChild(frag);
+        renderTopDoctorsCta();
       }
 
       function renderTopDoctorsTabs() {
