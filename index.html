@@ -1403,9 +1403,150 @@
     @media (prefers-reduced-motion: reduce) {
       .td-skel-shimmer { animation: none; }
     }
+
+    /* Promo Floating Bar (Bottom on mobile, Top on desktop) */
+    .promo-float-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      background-color: var(--brand);
+      color: #ffffff;
+      border-top: 2px solid var(--lime);
+      box-shadow: 0 -4px 18px rgba(15, 23, 42, 0.16);
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .promo-float-bar.hidden {
+      display: none !important;
+    }
+
+    .promo-float-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: nowrap;
+    }
+
+    .promo-float-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.35;
+      min-width: 0;
+    }
+
+    .promo-float-link:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .promo-float-code {
+      display: inline-block;
+      color: var(--lime);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      unicode-bidi: isolate;
+    }
+
+    .promo-float-copy {
+      flex-shrink: 0;
+      font-family: inherit;
+      font-size: 0.76rem;
+      font-weight: 700;
+      background-color: var(--lime);
+      color: #1A1438;
+      border: none;
+      border-radius: 8px;
+      padding: 5px 10px;
+      min-height: 30px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .promo-float-copy:hover {
+      background-color: var(--lime-hover);
+    }
+
+    .promo-float-copy.is-copied {
+      background-color: #ffffff;
+      color: var(--brand);
+    }
+
+    .promo-float-close {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .promo-float-close:hover {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    body.has-promo-bar {
+      padding-bottom: calc(var(--promo-bar-h, 48px) + 8px);
+    }
+
+    body.has-promo-bar .wa-float {
+      bottom: calc(var(--promo-bar-h, 48px) + 14px);
+    }
+
+    @media (min-width: 900px) {
+      .promo-float-bar {
+        top: 0;
+        bottom: auto;
+        border-top: none;
+        border-bottom: 2px solid var(--lime);
+        box-shadow: 0 2px 12px rgba(15, 23, 42, 0.12);
+        padding: 7px 16px;
+      }
+
+      .promo-float-link {
+        font-size: 0.88rem;
+      }
+
+      body.has-promo-bar {
+        padding-bottom: 0;
+        padding-top: var(--promo-bar-h, 44px);
+      }
+
+      body.has-promo-bar .header {
+        top: var(--promo-bar-h, 44px);
+      }
+
+      body.has-promo-bar .wa-float {
+        bottom: 20px;
+      }
+    }
   </style>
 </head>
 <body>
+  <div id="promo-float-bar" class="promo-float-bar hidden" role="region" aria-label="عرض كود الخصم">
+    <div class="promo-float-inner">
+      <a href="book.html?promo=E7GEZLY" class="promo-float-link">خصم لحد 50% على كشفك 🎉 استخدم كود <span class="promo-float-code" dir="ltr">E7GEZLY</span></a>
+      <button id="promo-bar-copy" type="button" class="promo-float-copy">انسخ الكود</button>
+      <button id="promo-bar-close" type="button" class="promo-float-close" aria-label="إغلاق الشريط">×</button>
+    </div>
+  </div>
+
   <!-- 1. Sticky Header -->
   <header class="header">
     <div class="container header-inner">
@@ -1778,6 +1919,77 @@
       const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
       document.getElementById('footer-year').textContent = String(new Date().getFullYear());
+
+      // Promo Floating Bar (dismissal in sessionStorage + copy E7GEZLY)
+      (function initPromoBar() {
+        const bar = document.getElementById('promo-float-bar');
+        const copyBtn = document.getElementById('promo-bar-copy');
+        const closeBtn = document.getElementById('promo-bar-close');
+        if (!bar) return;
+
+        const STORAGE_KEY = 'e7_promo_bar_dismissed';
+        let dismissed = false;
+        try {
+          dismissed = sessionStorage.getItem(STORAGE_KEY) === '1';
+        } catch (err) {}
+
+        function syncBarHeight() {
+          if (bar.classList.contains('hidden')) return;
+          const h = Math.ceil(bar.getBoundingClientRect().height || 44);
+          document.documentElement.style.setProperty('--promo-bar-h', h + 'px');
+        }
+
+        if (!dismissed) {
+          bar.classList.remove('hidden');
+          document.body.classList.add('has-promo-bar');
+          syncBarHeight();
+          window.addEventListener('resize', syncBarHeight, { passive: true });
+        }
+
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            bar.classList.add('hidden');
+            document.body.classList.remove('has-promo-bar');
+            try {
+              sessionStorage.setItem(STORAGE_KEY, '1');
+            } catch (err) {}
+          });
+        }
+
+        if (copyBtn) {
+          let resetTimer = null;
+          copyBtn.addEventListener('click', async () => {
+            const code = 'E7GEZLY';
+            let copied = false;
+            try {
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                await navigator.clipboard.writeText(code);
+                copied = true;
+              }
+            } catch (err) {}
+            if (!copied) {
+              try {
+                const ta = document.createElement('textarea');
+                ta.value = code;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                copied = document.execCommand('copy');
+                document.body.removeChild(ta);
+              } catch (err) {}
+            }
+            copyBtn.textContent = 'اتنسخ ✓';
+            copyBtn.classList.add('is-copied');
+            clearTimeout(resetTimer);
+            resetTimer = setTimeout(() => {
+              copyBtn.textContent = 'انسخ الكود';
+              copyBtn.classList.remove('is-copied');
+            }, 2200);
+          });
+        }
+      })();
 
       // Mobile Hamburger Menu
       const menuBtn = document.getElementById('menu-toggle');

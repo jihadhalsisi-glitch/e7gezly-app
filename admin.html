@@ -1893,6 +1893,12 @@
               </div>
 
               <div class="field">
+                <label for="doc-discount-pct">نسبة الخصم %</label>
+                <input id="doc-discount-pct" type="number" min="0" max="50" step="1" value="0" class="input-ctrl tabular-nums" />
+                <span class="field-hint">من 0 إلى 50% (تُطبّق عند استخدام كود E7GEZLY)</span>
+              </div>
+
+              <div class="field">
                 <label for="doc-package">الباقة</label>
                 <select id="doc-package" class="select-ctrl">
                   <option value="trial">تجربة مجانية (3 حجوزات)</option>
@@ -2290,6 +2296,7 @@
         docWebsite: document.getElementById('doc-website'),
         docSlotMinutes: document.getElementById('doc-slot-minutes'),
         docPriority: document.getElementById('doc-priority'),
+        docDiscountPct: document.getElementById('doc-discount-pct'),
         docPackage: document.getElementById('doc-package'),
         docPackageStart: document.getElementById('doc-package-start'),
         docActive: document.getElementById('doc-active'),
@@ -2763,13 +2770,38 @@
         loadBookings();
       });
 
+      function getBookingDiscountInfo(booking) {
+        const promoCode = booking && booking.promo_code ? String(booking.promo_code).trim() : '';
+        const discountPct = booking && booking.discount_pct != null && !Number.isNaN(Number(booking.discount_pct))
+          ? Math.max(0, Math.min(50, Math.round(Number(booking.discount_pct))))
+          : 0;
+        const baseFee = booking && booking.fee != null && !Number.isNaN(Number(booking.fee))
+          ? Number(booking.fee)
+          : 0;
+        const hasDiscount = Boolean(promoCode && discountPct > 0);
+        const finalFee = booking && booking.final_fee != null && booking.final_fee !== '' && !Number.isNaN(Number(booking.final_fee))
+          ? Number(booking.final_fee)
+          : (hasDiscount ? Math.round(baseFee * (100 - discountPct) / 100) : baseFee);
+        return { promoCode, discountPct, baseFee, finalFee, hasDiscount };
+      }
+
       async function loadBookings() {
         el.bookingsList.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">جاري تحميل الحجوزات...</div>';
-        const { data, error } = await sb
+        let { data, error } = await sb
           .from('bookings')
-          .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, status, notes, rating_token, doctors(name, display_name, provider_type, clinic_name, clinic_whatsapp, address, maps_url, areas(name_ar, governorates(name_ar)))')
+          .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, promo_code, discount_pct, final_fee, status, notes, rating_token, doctors(name, display_name, provider_type, clinic_name, clinic_whatsapp, address, maps_url, areas(name_ar, governorates(name_ar)))')
           .eq('day', state.bookingsDate)
           .order('slot', { ascending: true });
+
+        if (error && /promo_code|discount_pct|final_fee|42703|PGRST204/i.test(String(error.message || '') + ' ' + String(error.code || ''))) {
+          const fallbackRes = await sb
+            .from('bookings')
+            .select('id, created_at, patient_name, patient_phone, doctor_id, day, slot, fee, status, notes, rating_token, doctors(name, display_name, provider_type, clinic_name, clinic_whatsapp, address, maps_url, areas(name_ar, governorates(name_ar)))')
+            .eq('day', state.bookingsDate)
+            .order('slot', { ascending: true });
+          data = fallbackRes.data;
+          error = fallbackRes.error;
+        }
 
         if (error) {
           console.error('Bookings load error:', error);
@@ -2808,6 +2840,12 @@
         const timeText = formatTimeAr(booking.slot);
         const dayText = formatDateAr(booking.day);
         const providerName = formatProviderName(doc);
+        const disc = getBookingDiscountInfo(booking);
+        const feeLine = disc.hasDiscount
+          ? 'الكشف: ' + disc.finalFee + ' ج.م بعد الخصم (بدلًا من ' + disc.baseFee + ' ج.م — كود ' + disc.promoCode + ' خصم ' + disc.discountPct + '%)'
+          : (disc.promoCode
+            ? 'الكشف: ' + booking.fee + ' ج.م (كود: ' + disc.promoCode + ')'
+            : 'الكشف: ' + booking.fee + ' ج.م');
         const text =
           'حجز جديد من احجزلي #' + booking.id + '\n' +
           'المريض: ' + booking.patient_name + '\n' +
@@ -2816,7 +2854,7 @@
           'الميعاد: ' + timeText + '\n' +
           'الدكتور: ' + providerName + '\n' +
           'العيادة: ' + (doc.clinic_name || '') + '\n' +
-          'الكشف: ' + booking.fee + ' ج.م';
+          feeLine;
         return 'https://wa.me/' + encodeURIComponent(waPhone) + '?text=' + encodeURIComponent(text);
       }
 
@@ -2828,6 +2866,12 @@
         const addressText = doc.address || '—';
         const mapsText = doc.maps_url || '—';
         const providerName = formatProviderName(doc);
+        const disc = getBookingDiscountInfo(booking);
+        const feeLine = disc.hasDiscount
+          ? 'سعر الكشف: ' + disc.finalFee + ' ج.م بعد خصم ' + disc.discountPct + '% بكود ' + disc.promoCode + ' (بدلًا من ' + disc.baseFee + ' ج.م) — يُدفع في العيادة'
+          : (disc.promoCode
+            ? 'سعر الكشف: ' + booking.fee + ' ج.م (كود: ' + disc.promoCode + ') — يُدفع في العيادة'
+            : 'سعر الكشف: ' + booking.fee + ' ج.م — يُدفع في العيادة');
         const text =
           'أهلًا ' + booking.patient_name + ' 👋\n' +
           'تم تأكيد حجزك مع احجزلي ✅\n' +
@@ -2836,7 +2880,7 @@
           'العيادة: ' + (doc.clinic_name || '') + '\n' +
           'العنوان: ' + addressText + '\n' +
           'اللوكيشن: ' + mapsText + '\n' +
-          'سعر الكشف: ' + booking.fee + ' ج.م — يُدفع في العيادة\n' +
+          feeLine + '\n' +
           'لو حابب تلغي أو تغيّر الميعاد رد على الرسالة دي.';
         return 'https://wa.me/' + encodeURIComponent(waPhone) + '?text=' + encodeURIComponent(text);
       }
@@ -2922,6 +2966,23 @@
               '</div>'
             : '';
 
+          const disc = getBookingDiscountInfo(booking);
+          const feeHeaderHtml = disc.hasDiscount
+            ? '<div style="text-align:left; font-weight:700;" class="tabular-nums">' +
+                '<span style="text-decoration:line-through; color:var(--text-muted); font-weight:500; font-size:0.82rem; margin-left:6px;">' + escapeHtml(disc.baseFee) + ' ج.م</span>' +
+                '<span style="color:#15803d;">' + escapeHtml(disc.finalFee) + ' ج.م</span>' +
+              '</div>'
+            : '<div style="text-align:left; font-weight:700;" class="tabular-nums">' + escapeHtml(booking.fee) + ' ج.م</div>';
+
+          const promoInfoRowHtml = disc.promoCode
+            ? '<div class="info-line"><span class="info-label">كود الخصم</span><span class="info-val tabular-nums">' +
+                '<strong dir="ltr">' + escapeHtml(disc.promoCode) + '</strong>' +
+                (disc.hasDiscount
+                  ? ' · خصم ' + escapeHtml(disc.discountPct) + '% → ' + escapeHtml(disc.finalFee) + ' ج.م'
+                  : ' · بدون خصم') +
+              '</span></div>'
+            : '';
+
           card.innerHTML =
             '<div class="card-top">' +
               '<div>' +
@@ -2929,7 +2990,7 @@
                 '<div class="meta-sub">حجز #' + escapeHtml(booking.id) + '</div>' +
               '</div>' +
               '<div class="booking-top-right">' +
-                '<div style="text-align:left; font-weight:700;" class="tabular-nums">' + escapeHtml(booking.fee) + ' ج.م</div>' +
+                feeHeaderHtml +
                 (isRated ? '<span class="rated-badge">✅ اتقيّم</span>' : '') +
               '</div>' +
             '</div>' +
@@ -2939,6 +3000,7 @@
               '<div class="info-line"><span class="info-label">الدكتور</span><span class="info-val">' + escapeHtml(formatProviderName(doc) || 'غير محدد') + '</span></div>' +
               '<div class="info-line"><span class="info-label">العيادة</span><span class="info-val">' + escapeHtml(doc.clinic_name || '—') + '</span></div>' +
               '<div class="info-line"><span class="info-label">المكان</span><span class="info-val">' + escapeHtml(locationPath) + '</span></div>' +
+              promoInfoRowHtml +
             '</div>' +
             '<div class="card-controls">' +
               '<div class="field">' +
@@ -3942,6 +4004,7 @@
           el.docWebsite.value = '';
           el.docSlotMinutes.value = '20';
           el.docPriority.value = '1';
+          el.docDiscountPct.value = '0';
           el.docPackage.value = '5000';
           el.docPackageStart.value = getCairoTodayISO();
           el.docActive.checked = true;
@@ -3981,6 +4044,7 @@
           el.docWebsite.value = doctor.website_url || '';
           el.docSlotMinutes.value = '20';
           el.docPriority.value = '1';
+          el.docDiscountPct.value = '0';
           const agPkg = String(doctor.package || '').trim();
           el.docPackage.value = ['5000', '9000', '17000'].includes(agPkg) ? agPkg : '5000';
           el.docPackageStart.value = doctor.package_start ? String(doctor.package_start).slice(0, 10) : getCairoTodayISO();
@@ -4030,6 +4094,7 @@
         el.docWebsite.value = doctor.website_url || '';
         el.docSlotMinutes.value = doctor.slot_minutes ?? 20;
         el.docPriority.value = doctor.priority ?? 1;
+        el.docDiscountPct.value = doctor.discount_pct != null ? String(doctor.discount_pct) : '0';
         const existingPkg = String(doctor.package || '').trim();
         el.docPackage.value = VALID_DOCTOR_PACKAGES.includes(existingPkg) ? existingPkg : '5000';
         el.docPackageStart.value = doctor.package_start ? String(doctor.package_start).slice(0, 10) : getCairoTodayISO();
@@ -4135,6 +4200,14 @@
         const providerTypeVal = ['doctor', 'clinic', 'center'].includes(el.docProviderType.value)
           ? el.docProviderType.value
           : 'doctor';
+        const discountRaw = el.docDiscountPct.value.trim();
+        const discountParsed = discountRaw === '' ? 0 : Number(discountRaw);
+        if (!Number.isFinite(discountParsed) || discountParsed < 0 || discountParsed > 50 || !Number.isInteger(discountParsed)) {
+          el.doctorFormError.textContent = 'نسبة الخصم لازم تكون رقم صحيح بين 0 و 50.';
+          el.doctorFormError.classList.remove('hidden');
+          el.docDiscountPct.focus();
+          return;
+        }
         const payload = {
           name: el.docName.value.trim(),
           display_name: el.docDisplayName.value.trim() || null,
@@ -4146,6 +4219,7 @@
           specialty_id: Number(el.docSpecialty.value),
           area_id: Number(el.docArea.value),
           fee: Number(el.docFee.value),
+          discount_pct: discountParsed,
           clinic_name: el.docClinicName.value.trim(),
           address: el.docAddress.value.trim(),
           clinic_whatsapp: whatsappClean,
@@ -4183,7 +4257,13 @@
             payload.photo_url = state.editingDoctorPhotoUrl || null;
           }
 
-          const { error } = await sb.from('doctors').update(payload).eq('id', existingId);
+          let { error } = await sb.from('doctors').update(payload).eq('id', existingId);
+          if (error && /discount_pct|42703|PGRST204/i.test(String(error.message || '') + ' ' + String(error.code || ''))) {
+            const fallbackPayload = Object.assign({}, payload);
+            delete fallbackPayload.discount_pct;
+            const retryRes = await sb.from('doctors').update(fallbackPayload).eq('id', existingId);
+            error = retryRes.error;
+          }
           if (error) {
             console.error('Update doctor error:', error);
             el.saveDoctorBtn.disabled = false;
@@ -4195,7 +4275,14 @@
           }
         } else {
           payload.photo_url = null;
-          const { data, error } = await sb.from('doctors').insert(payload).select().single();
+          let { data, error } = await sb.from('doctors').insert(payload).select().single();
+          if (error && /discount_pct|42703|PGRST204/i.test(String(error.message || '') + ' ' + String(error.code || ''))) {
+            const fallbackPayload = Object.assign({}, payload);
+            delete fallbackPayload.discount_pct;
+            const retryRes = await sb.from('doctors').insert(fallbackPayload).select().single();
+            data = retryRes.data;
+            error = retryRes.error;
+          }
           if (error || !data) {
             console.error('Insert doctor error:', error);
             el.saveDoctorBtn.disabled = false;
@@ -4428,7 +4515,7 @@
             '<div class="info-rows">' +
               '<div class="info-line"><span class="info-label">العيادة</span><span class="info-val">' + escapeHtml(doc.clinic_name) + '</span></div>' +
               '<div class="info-line"><span class="info-label">العنوان</span><span class="info-val">' + escapeHtml(doc.address || '—') + '</span></div>' +
-              '<div class="info-line"><span class="info-label">سعر الكشف / المدة</span><span class="info-val tabular-nums">' + escapeHtml(doc.fee) + ' ج.م · ' + escapeHtml(doc.slot_minutes) + ' د</span></div>' +
+              '<div class="info-line"><span class="info-label">سعر الكشف / المدة</span><span class="info-val tabular-nums">' + escapeHtml(doc.fee) + ' ج.م · ' + escapeHtml(doc.slot_minutes) + ' د' + (Number(doc.discount_pct) > 0 ? ' · <strong style="color:#15803d;">خصم ' + escapeHtml(doc.discount_pct) + '%</strong>' : '') + '</span></div>' +
               '<div class="info-line"><span class="info-label">واتساب / الأولوية</span><span class="info-val tabular-nums" dir="ltr">' + escapeHtml(doc.clinic_whatsapp) + ' · P' + escapeHtml(doc.priority) + '</span></div>' +
             '</div>' +
             '<div style="padding-top: 8px; border-top: 1px solid var(--border-hairline); display:flex; justify-content:space-between; align-items:center; gap:10px;">' +
