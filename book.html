@@ -2201,12 +2201,26 @@
       flex-wrap: nowrap;
     }
 
+    .promo-float-copy-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+    }
+
     .promo-float-text {
       color: #ffffff;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      line-height: 1.35;
+      line-height: 1.3;
       min-width: 0;
+    }
+
+    .promo-float-sub {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.7rem;
+      font-weight: 500;
+      line-height: 1.25;
     }
 
     .promo-float-code {
@@ -2265,20 +2279,20 @@
     }
 
     body.has-promo-bar .mobile-sticky-bar {
-      bottom: var(--promo-bar-h, 46px);
+      bottom: var(--promo-bar-h, 54px);
       padding-bottom: 10px;
     }
 
     body.has-promo-bar .wa-float {
-      bottom: calc(var(--promo-bar-h, 46px) + 74px);
+      bottom: calc(var(--promo-bar-h, 54px) + 74px);
     }
 
     body.has-promo-bar.success-shown .wa-float {
-      bottom: calc(var(--promo-bar-h, 46px) + 14px);
+      bottom: calc(var(--promo-bar-h, 54px) + 14px);
     }
 
     body.has-promo-bar .main-wrap {
-      padding-bottom: calc(var(--promo-bar-h, 46px) + 104px);
+      padding-bottom: calc(var(--promo-bar-h, 54px) + 104px);
     }
 
     @media (min-width: 900px) {
@@ -2291,8 +2305,24 @@
         padding: 7px 16px;
       }
 
+      .promo-float-copy-wrap {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 8px;
+      }
+
       .promo-float-text {
         font-size: 0.88rem;
+      }
+
+      .promo-float-sub {
+        font-size: 0.76rem;
+      }
+
+      .promo-float-sub::before {
+        content: '·';
+        margin-left: 6px;
+        opacity: 0.7;
       }
 
       body.has-promo-bar {
@@ -2427,55 +2457,15 @@
       color: #166534;
       font-weight: 600;
     }
-
-    .summary-promo-note.is-muted {
-      color: #92400e;
-    }
-
-    .summary-promo-note.is-info {
-      color: var(--brand);
-    }
-
-    .price-strike {
-      text-decoration: line-through;
-      color: #94a3b8;
-      font-weight: 500;
-      font-size: 0.84rem;
-      margin-left: 6px;
-    }
-
-    .price-discounted {
-      color: #15803d;
-      font-weight: 800;
-    }
-
-    .price-discount-tag {
-      display: inline-block;
-      margin-right: 6px;
-      padding: 2px 7px;
-      border-radius: 6px;
-      background-color: #dcfce7;
-      color: #166534;
-      font-size: 0.74rem;
-      font-weight: 700;
-    }
-
-    .assigned-doc-promo-note {
-      margin-top: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #166534;
-    }
-
-    .assigned-doc-promo-note.is-muted {
-      color: #92400e;
-    }
   </style>
 </head>
 <body>
   <div id="promo-float-bar" class="promo-float-bar hidden" role="region" aria-label="عرض كود الخصم">
     <div class="promo-float-inner">
-      <span class="promo-float-text">خصم لحد 50% على كشفك 🎉 استخدم كود <span class="promo-float-code" dir="ltr">E7GEZLY</span></span>
+      <div class="promo-float-copy-wrap">
+        <span class="promo-float-text">خصم لحد 50% على كشفك 🎉 استخدم كود <span class="promo-float-code" dir="ltr">E7GEZLY</span></span>
+        <span class="promo-float-sub">الخصم بيتأكد بعد تأكيد الحجز</span>
+      </div>
       <button id="promo-bar-copy" type="button" class="promo-float-copy">انسخ الكود</button>
       <button id="promo-bar-close" type="button" class="promo-float-close" aria-label="إغلاق الشريط">×</button>
     </div>
@@ -2729,7 +2719,7 @@
             <button id="promo-apply-btn" type="button" class="summary-promo-btn">تطبيق</button>
           </div>
           <div id="promo-applied-bar" class="summary-promo-applied hidden">
-            <span class="summary-promo-applied-code">تم تطبيق الكود: <strong id="promo-applied-code" dir="ltr">E7GEZLY</strong></span>
+            <span class="summary-promo-applied-code">تم تطبيق الكود <strong id="promo-applied-code" dir="ltr">E7GEZLY</strong> ✓</span>
             <button id="promo-remove-btn" type="button" class="summary-promo-remove">إزالة</button>
           </div>
           <div id="promo-error" class="summary-promo-error hidden" role="alert"></div>
@@ -2978,7 +2968,6 @@
         slotsTimeoutId: null,
         doctorsTimeoutId: null,
         promoCode: null,
-        bookSlotSupportsPromo: true,
         submitting: false
       };
 
@@ -3064,25 +3053,6 @@
           .toUpperCase();
       }
 
-      function clampDiscountPct(val) {
-        const num = val != null && val !== '' ? Number(val) : 0;
-        if (!Number.isFinite(num)) return 0;
-        return Math.max(0, Math.min(50, Math.round(num)));
-      }
-
-      function getCurrentDiscountInfo() {
-        const codeApplied = state.promoCode === VALID_PROMO_CODE;
-        const doc = state.assignedDoctor;
-        const hasDocFee = Boolean(doc && doc.fee != null && !Number.isNaN(Number(doc.fee)));
-        const baseFee = hasDocFee ? Number(doc.fee) : null;
-        const discountPct = doc ? clampDiscountPct(doc.discount_pct) : 0;
-        const hasActiveDiscount = Boolean(codeApplied && hasDocFee && discountPct > 0);
-        const finalFee = hasActiveDiscount
-          ? Math.round(baseFee * (100 - discountPct) / 100)
-          : baseFee;
-        return { codeApplied, hasDocFee, baseFee, discountPct, hasActiveDiscount, finalFee };
-      }
-
       function showPromoError(msg) {
         if (!el.promoError) return;
         if (!msg) {
@@ -3098,52 +3068,38 @@
 
       function renderPromoState() {
         if (!el.promoInputRow || !el.promoAppliedBar || !el.promoNote) return;
-        const info = getCurrentDiscountInfo();
-        el.promoInputRow.classList.toggle('hidden', info.codeApplied);
-        el.promoAppliedBar.classList.toggle('hidden', !info.codeApplied);
+        const codeApplied = state.promoCode === VALID_PROMO_CODE;
+        el.promoInputRow.classList.toggle('hidden', codeApplied);
+        el.promoAppliedBar.classList.toggle('hidden', !codeApplied);
         if (el.promoAppliedCode && state.promoCode) {
           el.promoAppliedCode.textContent = state.promoCode;
         }
 
-        el.promoNote.classList.remove('is-muted', 'is-info');
-        if (!info.codeApplied) {
+        if (!codeApplied) {
           el.promoNote.textContent = '';
           el.promoNote.classList.add('hidden');
           return;
         }
 
+        el.promoNote.textContent = 'نسبة الخصم (لحد 50%) هتتأكد لك بعد تأكيد الحجز مع العيادة';
         el.promoNote.classList.remove('hidden');
-        if (!state.assignedDoctor) {
-          el.promoNote.classList.add('is-info');
-          el.promoNote.textContent = 'تم تطبيق كود E7GEZLY — هيظهر الخصم بعد اختيار الميعاد';
-        } else if (info.discountPct > 0) {
-          el.promoNote.textContent = 'الخصم بيتطبق في العيادة عند الكشف';
-        } else {
-          el.promoNote.classList.add('is-muted');
-          el.promoNote.textContent = 'الدكتور ده مفيش عليه خصم حاليًا — جرّب ميعاد تاني';
-        }
       }
 
-      function applyPromoCode(rawCode, { silentInvalid = false } = {}) {
+      function applyPromoCode(rawCode) {
         const normalized = normalizePromoCode(rawCode);
         if (normalized !== VALID_PROMO_CODE) {
-          if (!silentInvalid) {
-            showPromoError('الكود ده مش صحيح');
-          }
+          showPromoError('الكود ده مش صحيح');
           return false;
         }
         showPromoError('');
         const wasAlreadyApplied = state.promoCode === VALID_PROMO_CODE;
         state.promoCode = VALID_PROMO_CODE;
         if (el.promoInput) el.promoInput.value = VALID_PROMO_CODE;
-        renderAssignedDoctorCard();
-        updateUIState();
+        renderPromoState();
         if (!wasAlreadyApplied && Array.isArray(window.dataLayer)) {
-          const discPct = state.assignedDoctor ? clampDiscountPct(state.assignedDoctor.discount_pct) : 0;
           window.dataLayer.push({
             event: 'promo_applied',
-            code: VALID_PROMO_CODE,
-            discount_pct: discPct
+            code: VALID_PROMO_CODE
           });
         }
         return true;
@@ -3153,8 +3109,7 @@
         state.promoCode = null;
         if (el.promoInput) el.promoInput.value = '';
         showPromoError('');
-        renderAssignedDoctorCard();
-        updateUIState();
+        renderPromoState();
       }
 
       if (el.promoApplyBtn) {
@@ -3655,53 +3610,17 @@
         const priceRow = document.createElement('div');
         priceRow.className = 'assigned-doc-price-row';
 
-        const discInfo = getCurrentDiscountInfo();
         const priceText = document.createElement('span');
         priceText.className = 'assigned-doc-price';
+        priceText.textContent = 'سعر الكشف: ' + formatFee(doc.fee) + ' ج.م';
 
-        if (discInfo.hasActiveDiscount) {
-          const labelSpan = document.createElement('span');
-          labelSpan.textContent = 'سعر الكشف: ';
-          const oldSpan = document.createElement('span');
-          oldSpan.className = 'price-strike';
-          oldSpan.textContent = formatFee(discInfo.baseFee) + ' ج.م';
-          const newSpan = document.createElement('span');
-          newSpan.className = 'price-discounted';
-          newSpan.textContent = formatFee(discInfo.finalFee) + ' ج.م';
-          priceText.appendChild(labelSpan);
-          priceText.appendChild(oldSpan);
-          priceText.appendChild(newSpan);
+        const badge = document.createElement('span');
+        badge.className = 'final-price-badge';
+        badge.textContent = 'نهائي';
 
-          const badge = document.createElement('span');
-          badge.className = 'final-price-badge';
-          badge.textContent = 'خصم ' + discInfo.discountPct + '%';
-
-          priceRow.appendChild(priceText);
-          priceRow.appendChild(badge);
-          container.appendChild(priceRow);
-
-          const noteEl = document.createElement('div');
-          noteEl.className = 'assigned-doc-promo-note';
-          noteEl.textContent = 'الخصم بيتطبق في العيادة عند الكشف';
-          container.appendChild(noteEl);
-        } else {
-          priceText.textContent = 'سعر الكشف: ' + formatFee(doc.fee) + ' ج.م';
-
-          const badge = document.createElement('span');
-          badge.className = 'final-price-badge';
-          badge.textContent = 'نهائي';
-
-          priceRow.appendChild(priceText);
-          priceRow.appendChild(badge);
-          container.appendChild(priceRow);
-
-          if (discInfo.codeApplied) {
-            const noteEl = document.createElement('div');
-            noteEl.className = 'assigned-doc-promo-note is-muted';
-            noteEl.textContent = 'الدكتور ده مفيش عليه خصم حاليًا — جرّب ميعاد تاني';
-            container.appendChild(noteEl);
-          }
-        }
+        priceRow.appendChild(priceText);
+        priceRow.appendChild(badge);
+        container.appendChild(priceRow);
 
         container.classList.remove('hidden');
       }
@@ -3737,26 +3656,8 @@
           el.sumDoctorRow.classList.add('hidden');
         }
 
-        const discInfo = getCurrentDiscountInfo();
-        if (discInfo.hasDocFee) {
-          if (discInfo.hasActiveDiscount) {
-            el.sumPrice.textContent = '';
-            el.sumPrice.classList.remove('is-empty');
-            const oldEl = document.createElement('span');
-            oldEl.className = 'price-strike';
-            oldEl.textContent = formatFee(discInfo.baseFee) + ' ج.م';
-            const newEl = document.createElement('span');
-            newEl.className = 'price-discounted';
-            newEl.textContent = formatFee(discInfo.finalFee) + ' ج.م';
-            const pctEl = document.createElement('span');
-            pctEl.className = 'price-discount-tag';
-            pctEl.textContent = 'خصم ' + discInfo.discountPct + '%';
-            el.sumPrice.appendChild(oldEl);
-            el.sumPrice.appendChild(newEl);
-            el.sumPrice.appendChild(pctEl);
-          } else {
-            setSummaryField(el.sumPrice, formatFee(discInfo.baseFee) + ' ج.م');
-          }
+        if (state.assignedDoctor && state.assignedDoctor.fee != null && !Number.isNaN(Number(state.assignedDoctor.fee))) {
+          setSummaryField(el.sumPrice, formatFee(state.assignedDoctor.fee) + ' ج.م');
         } else if (state.previewLoading) {
           setSummaryField(el.sumPrice, 'جاري التحديد...');
         } else if (state.feeRange) {
@@ -4507,11 +4408,6 @@
         const docFee = res.fee != null
           ? Number(res.fee)
           : (fallbackDoc && fallbackDoc.fee != null ? Number(fallbackDoc.fee) : 0);
-        const docDiscountPct = clampDiscountPct(
-          res.discount_pct != null
-            ? res.discount_pct
-            : (fallbackDoc && fallbackDoc.discount_pct != null ? fallbackDoc.discount_pct : 0)
-        );
 
         state.assignedDoctorId = res.doctor_id;
         state.assignedDoctor = {
@@ -4523,8 +4419,7 @@
           photo_url: docPhoto,
           rating_avg: docRatingAvg,
           rating_count: docRatingCount,
-          fee: docFee,
-          discount_pct: docDiscountPct
+          fee: docFee
         };
 
         renderAssignedDoctorCard();
@@ -5315,43 +5210,31 @@
           if (op && !u.searchParams.has('oppref')) u.searchParams.set('oppref', op);
           const ob = getCookie('__obref');
           if (ob && !u.searchParams.has('obref')) u.searchParams.set('obref', ob);
+          if (state.promoCode === VALID_PROMO_CODE) {
+            u.searchParams.set('promo', VALID_PROMO_CODE);
+          } else {
+            u.searchParams.delete('promo');
+          }
           sourceUrlStr = u.toString();
         } catch (err) {}
 
-        const baseRpcParams = {
-          p_specialty: state.specialtyId,
-          p_area: state.areaId,
-          p_day: state.day,
-          p_slot: state.slot,
-          p_name: name,
-          p_phone: phone,
-          p_gender: state.gender || null,
-          p_fee_min,
-          p_fee_max,
-          p_doctor_id: state.assignedDoctorId,
-          p_fbp: getCookie('_fbp') || null,
-          p_fbc: getFbcValue(),
-          p_source_url: sourceUrlStr
-        };
-
         let data, error;
-        const shouldPassPromo = Boolean(state.promoCode && state.bookSlotSupportsPromo);
-        const rpcParams = shouldPassPromo
-          ? Object.assign({}, baseRpcParams, { p_promo_code: state.promoCode })
-          : baseRpcParams;
-
         try {
-          let rpcRes = await sb.rpc('book_slot', rpcParams);
-          if (
-            shouldPassPromo &&
-            rpcRes.error &&
-            /p_promo_code|PGRST202|42883|Could not find the function/i.test(
-              String(rpcRes.error.message || '') + ' ' + String(rpcRes.error.code || '')
-            )
-          ) {
-            state.bookSlotSupportsPromo = false;
-            rpcRes = await sb.rpc('book_slot', baseRpcParams);
-          }
+          const rpcRes = await sb.rpc('book_slot', {
+            p_specialty: state.specialtyId,
+            p_area: state.areaId,
+            p_day: state.day,
+            p_slot: state.slot,
+            p_name: name,
+            p_phone: phone,
+            p_gender: state.gender || null,
+            p_fee_min,
+            p_fee_max,
+            p_doctor_id: state.assignedDoctorId,
+            p_fbp: getCookie('_fbp') || null,
+            p_fbc: getFbcValue(),
+            p_source_url: sourceUrlStr
+          });
           data = rpcRes.data;
           error = rpcRes.error;
         } catch (err) {
@@ -5394,18 +5277,6 @@
           return;
         }
 
-        const baseFeeVal = res.fee != null && res.fee !== '' && !Number.isNaN(Number(res.fee))
-          ? Number(res.fee)
-          : (state.assignedDoctor && state.assignedDoctor.fee != null ? Number(state.assignedDoctor.fee) : 0);
-        const appliedDiscountPct = res.discount_pct != null && !Number.isNaN(Number(res.discount_pct))
-          ? clampDiscountPct(res.discount_pct)
-          : (state.promoCode === VALID_PROMO_CODE && state.assignedDoctor ? clampDiscountPct(state.assignedDoctor.discount_pct) : 0);
-        const effectiveFee = res.final_fee != null && res.final_fee !== '' && !Number.isNaN(Number(res.final_fee))
-          ? Number(res.final_fee)
-          : (state.promoCode === VALID_PROMO_CODE && appliedDiscountPct > 0
-            ? Math.round(baseFeeVal * (100 - appliedDiscountPct) / 100)
-            : baseFeeVal);
-
         // Analytics events
         trackClarityEvent('booking_success');
         if (Array.isArray(window.dataLayer)) {
@@ -5416,7 +5287,7 @@
             specialty: state.specialtyName,
             governorate: state.governorateName,
             area: state.areaName,
-            value: Number(effectiveFee),
+            value: Number(res.fee),
             currency: 'EGP',
             user_data: { phone_number: '+20' + phone.slice(1) }
           });
@@ -5424,7 +5295,7 @@
 
         if (typeof window.fbq === 'function') {
           window.fbq('track', 'Schedule', {
-            value: effectiveFee,
+            value: res.fee,
             currency: 'EGP',
             content_category: state.specialtyName
           }, {
@@ -5495,11 +5366,6 @@
         const areaParam = params.get('area');
         const genderParam = params.get('gender');
         const priceParam = params.get('price');
-        const promoParam = params.get('promo');
-
-        if (promoParam) {
-          applyPromoCode(promoParam, { silentInvalid: true });
-        }
 
         if (specParam) {
           const specOpt = Array.from(el.selSpecialty.options).find(o => o.value === specParam && !o.disabled);

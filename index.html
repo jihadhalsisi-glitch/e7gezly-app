@@ -1432,18 +1432,32 @@
       flex-wrap: nowrap;
     }
 
+    .promo-float-copy-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+    }
+
     .promo-float-link {
       color: #ffffff;
       text-decoration: none;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      line-height: 1.35;
+      line-height: 1.3;
       min-width: 0;
     }
 
     .promo-float-link:hover {
       text-decoration: underline;
       text-underline-offset: 3px;
+    }
+
+    .promo-float-sub {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.7rem;
+      font-weight: 500;
+      line-height: 1.25;
     }
 
     .promo-float-code {
@@ -1502,11 +1516,11 @@
     }
 
     body.has-promo-bar {
-      padding-bottom: calc(var(--promo-bar-h, 48px) + 8px);
+      padding-bottom: calc(var(--promo-bar-h, 54px) + 8px);
     }
 
     body.has-promo-bar .wa-float {
-      bottom: calc(var(--promo-bar-h, 48px) + 14px);
+      bottom: calc(var(--promo-bar-h, 54px) + 14px);
     }
 
     @media (min-width: 900px) {
@@ -1519,8 +1533,24 @@
         padding: 7px 16px;
       }
 
+      .promo-float-copy-wrap {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 8px;
+      }
+
       .promo-float-link {
         font-size: 0.88rem;
+      }
+
+      .promo-float-sub {
+        font-size: 0.76rem;
+      }
+
+      .promo-float-sub::before {
+        content: '·';
+        margin-left: 6px;
+        opacity: 0.7;
       }
 
       body.has-promo-bar {
@@ -1541,7 +1571,10 @@
 <body>
   <div id="promo-float-bar" class="promo-float-bar hidden" role="region" aria-label="عرض كود الخصم">
     <div class="promo-float-inner">
-      <a href="book.html?promo=E7GEZLY" class="promo-float-link">خصم لحد 50% على كشفك 🎉 استخدم كود <span class="promo-float-code" dir="ltr">E7GEZLY</span></a>
+      <div class="promo-float-copy-wrap">
+        <a href="book.html" class="promo-float-link">خصم لحد 50% على كشفك 🎉 استخدم كود <span class="promo-float-code" dir="ltr">E7GEZLY</span></a>
+        <span class="promo-float-sub">الخصم بيتأكد بعد تأكيد الحجز</span>
+      </div>
       <button id="promo-bar-copy" type="button" class="promo-float-copy">انسخ الكود</button>
       <button id="promo-bar-close" type="button" class="promo-float-close" aria-label="إغلاق الشريط">×</button>
     </div>
